@@ -32,6 +32,12 @@
         --apple-black: #000000;
         --google-red: #db4437; 
         --google-blue-text: #4285f4;
+
+        /* Màu cho nút Đăng xuất */
+        --logout-btn-bg: #dc3545; /* Màu đỏ cho sự chú ý (Bootstrap danger) */
+        --logout-btn-text: var(--white-color);
+        --logout-btn-hover-bg: #c82333; /* Màu đỏ đậm hơn khi hover */
+        --logout-btn-border: #dc3545;
       }
 
       * {
@@ -218,6 +224,38 @@
       .header-buttons .btn-outline:hover {
         background-color: var(--primary-accent);
         color: var(--header-bg); /* Blue text on white background */
+      }
+
+      /* Nút Đăng xuất trong Sidebar */
+      .sidebar-logout {
+        margin-top: 1.5rem; /* Khoảng cách với danh sách nav ở trên */
+        padding-top: 1rem; /* Thêm padding nếu có border top */
+        border-top: 1px solid var(--light-border-color); /* Đường kẻ phân cách nhẹ nhàng */
+      }
+      .btn-logout {
+        display: flex; 
+        align-items: center;
+        justify-content: center; 
+        gap: 0.6rem; /* Khoảng cách giữa icon và chữ */
+        width: 100%;
+        padding: 0.75rem 1rem; /* Padding giống các nút khác */
+        border-radius: 0.5rem;
+        font-weight: 500;
+        text-decoration: none;
+        transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+        background-color: var(--logout-btn-bg);
+        color: var(--logout-btn-text);
+        border: 1px solid var(--logout-btn-border);
+        text-align: center;
+      }
+      .btn-logout i {
+        font-size: 0.9em; /* Kích thước icon tương đối với chữ */
+      }
+      .btn-logout:hover {
+        background-color: var(--logout-btn-hover-bg);
+        border-color: var(--logout-btn-hover-bg);
+        color: var(--logout-btn-text);
+        text-decoration: none;
       }
 
       /* Main Content Layout */
@@ -754,7 +792,7 @@
         <div class="header-icons">
           <a class="icon-wrapper"><i class="fas fa-bell"></i><span class="badge"></span></a>
           <a href="saved_products.html" class="icon-wrapper"><i class="fas fa-shopping-cart"></i><span class="badge">2</span></a>
-          <a class="icon-wrapper"><i class="fas fa-comment-dots"></i><span class="badge"></span></a>
+          <a href="chat.html" class="icon-wrapper"><i class="fas fa-comment-dots"></i><span class="badge">3</span></a>
           <a href="profile_edit.html" class="icon-wrapper"><i class="fas fa-user"></i></a>
         </div>
         <div class="header-buttons">
@@ -774,6 +812,11 @@
             <li><a href="profile_loginhistory.html">Quản lý lịch sử đăng nhập</a></li>
           </ul>
         </nav>
+        <div class="sidebar-logout">
+            <a href="login.html" class="btn-logout">
+                <i class="fas fa-sign-out-alt"></i> Đăng xuất
+            </a>
+        </div>
       </aside>
 
       <main class="profile-content">
