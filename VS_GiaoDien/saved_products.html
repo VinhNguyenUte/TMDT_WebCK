@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sản phẩm đã lưu - H! TMDT</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --primary-accent: #ffffff;
+        --header-bg: #2b6eff; 
+        --footer-bg: #20232a;
+        --footer-bottom-bg: #1a1d23;
+        --main-bg: #ebebeb; 
+        --card-bg: #ffffff; 
+        --text-light: #3f3f3f; 
+        --text-lighter: #000000; 
+        --text-muted: #6c757d; 
+        --text-link-blue: var(--header-bg);
+        --border-color: #ced4da; 
+        --light-border-color: #e0e0e0;
+        --input-bg: #ffffff;
+        --input-border: #ced4da; 
+        --input-border-focus: #86b7fe; 
+        --input-placeholder-color: #6c757d;
+        --required-asterisk-color: red;
+        --button-hover: #268cbd;
+        --white-color: #ffffff;
+        
+        --btn-grey-bg: #e9ecef; 
+        --btn-grey-text: #212529; 
+        --btn-grey-border: #ced4da; 
+        --btn-grey-hover-bg: #d3d9df;
+
+        --product-price-color: #d0021b; 
+        --btn-chat-bg: #f0f2f5; 
+        --btn-chat-text: var(--header-bg); 
+        --btn-chat-border: #ced4da;
+        --heart-icon-color: #adb5bd; 
+      }
+
+      * {
+        box-sizing: border-box; margin: 0; padding: 0;
+        -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+      }
+      body {
+        font-family: "Inter", sans-serif; line-height: 1.6;
+        color: var(--text-light); background-color: var(--main-bg);
+      }
+      a { text-decoration: none; color: var(--text-link-blue); }
+      a:hover { text-decoration: underline; }
+      input, button, textarea, select { font-family: "Inter", sans-serif; font-size: 0.95rem; }
+
+      /* Header Styles */
+      .header { background-color: var(--header-bg); padding: 1rem 2rem; display: flex;
+        justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; }
+      .header-left { display: flex; align-items: center; gap: 1.5rem; }
+      .header-logo img { height: 35px; }
+      .header-menu-toggle { display: none; background: none; border: none;
+        color: var(--white-color); font-size: 1.5rem; cursor: pointer; }
+      .search-bar { display: flex; align-items: center; background-color: var(--input-bg);
+        border-radius: 0.5rem; overflow: hidden; width: 300px; }
+      .search-bar input { border: none; padding: 0.75rem 1rem; background: transparent;
+        color: var(--text-light); width: 100%; }
+      .search-bar input::placeholder { color: var(--input-placeholder-color); }
+      .search-bar button { background-color: transparent; border: none; padding: 0.75rem 1rem;
+        color: var(--text-light); cursor: pointer; transition: color 0.2s ease; }
+      .search-bar button:hover { color: var(--header-bg); }
+      .header-right { display: flex; align-items: center; gap: 1.5rem; }
+      .header-links a { color: var(--primary-accent); font-size: 0.95rem;
+        white-space: nowrap; transition: color 0.2s ease; }
+      .header-links a:hover { color: rgba(255, 255, 255, 0.8); text-decoration: none; }
+      .header-icons { display: flex; gap: 1rem; }
+      .header-icons .icon-wrapper { position: relative; cursor: pointer; }
+      .header-icons .icon-wrapper i { color: #ffffff; font-size: 1.3rem; transition: color 0.2s ease; }
+      .header-icons .icon-wrapper i:hover { color: rgba(255, 255, 255, 0.8); }
+      .header-icons .badge { position: absolute; top: -8px; right: -8px; background-color: #e53e3e;
+        color: var(--white-color); font-size: 0.7rem; padding: 0.2rem 0.4rem;
+        border-radius: 50%; min-width: 18px; text-align: center; }
+      .header-buttons .btn { padding: 0.75rem 1.25rem; border-radius: 0.5rem; font-weight: 500;
+        cursor: pointer; border: none; white-space: nowrap; display: inline-flex;
+        align-items: center; gap: 0.5rem; transition: background-color 0.2s ease, color 0.2s ease; }
+      .header-buttons .btn i { font-size: 1rem; }
+      .header-buttons .btn-post-news { background-color: var(--white-color); color: var(--header-bg); }
+      .header-buttons .btn-post-news:hover { background-color: rgba(255,255,255,0.9); }
+      .header-buttons .btn-outline { background-color: transparent; border: 1px solid var(--primary-accent);
+        color: var(--primary-accent); }
+      .header-buttons .btn-outline:hover { background-color: var(--primary-accent); color: var(--header-bg); }
+
+      /* Main Content Layout */
+      .main-content-wrapper { 
+        display: flex; /* Vẫn giữ flex để saved-products-container có thể dùng flex-grow */
+        max-width: 1200px; 
+        margin: 2rem auto;
+        padding: 0 1rem; 
+        /* gap: 2rem;  Không cần gap nếu chỉ có 1 child */
+        min-height: 60vh; 
+      }
+
+      /* Main Content Area (Sản phẩm đã lưu) */
+      .saved-products-container {
+        flex-grow: 1; /* Để chiếm toàn bộ không gian trong .main-content-wrapper */
+        width: 100%; /* Đảm bảo chiếm toàn bộ chiều rộng */
+        background-color: var(--card-bg);
+        border-radius: 0.75rem;
+        padding: 1.5rem;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        /* display: none; */ /* Mặc định có thể ẩn nếu được toggle bằng JS */
+      }
+      
+      .page-main-title {
+        font-size: 1.5rem; 
+        font-weight: 600;
+        color: var(--text-lighter);
+        margin-bottom: 1.5rem;
+      }
+      .page-main-title .product-count {
+        font-size: 1rem;
+        font-weight: normal;
+        color: var(--text-muted);
+      }
+      
+      .saved-product-list { display: flex; flex-direction: column; gap: 1rem; }
+      .saved-product-item { display: flex; gap: 1rem; padding: 1rem;
+        border: 1px solid var(--light-border-color); border-radius: 0.5rem; }
+      .product-thumbnail { width: 80px; height: 80px; object-fit: cover;
+        border-radius: 0.25rem; border: 1px solid var(--light-border-color); }
+      .product-info-actions { flex-grow: 1; display: flex; justify-content: space-between; gap: 1rem; }
+      .product-details { flex-grow: 1; }
+      .product-details .product-name { font-size: 1rem; font-weight: 600; color: var(--text-lighter);
+        margin-bottom: 0.25rem; display: -webkit-box; -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis;
+        line-height: 1.4; max-height: calc(1.4em * 2); }
+      .product-details .product-price { font-size: 1.1rem; font-weight: 600;
+        color: var(--product-price-color); margin-bottom: 0.35rem; }
+      .product-details .product-meta { font-size: 0.8rem; color: var(--text-muted); line-height: 1.3; }
+      .product-actions { display: flex; flex-direction: column; align-items: flex-end;
+        justify-content: space-between; gap: 0.5rem; flex-shrink: 0; }
+      .btn-chat { padding: 0.4rem 1.2rem; font-size: 0.85rem; font-weight: 500;
+        color: var(--btn-chat-text); background-color: var(--btn-chat-bg);
+        border: 1px solid var(--btn-chat-border); border-radius: 0.25rem; cursor: pointer;
+        transition: background-color 0.15s ease; }
+      .btn-chat:hover { background-color: #e2e6ea; }
+      .btn-favorite { background: none; border: none; color: var(--heart-icon-color);
+        font-size: 1.5rem; cursor: pointer; padding: 0.25rem; }
+      .btn-favorite:hover { color: #ff4d4f; }
+
+      /* Footer Styles */
+      .footer-top { background-color: var(--footer-bg); padding: 2.5rem 0; display: flex;
+        justify-content: center; align-items: center; gap: 3rem; flex-wrap: wrap;
+        border-top: 1px solid rgba(255, 255, 255, 0.1); }
+      .footer-feature { display: flex; align-items: center; gap: 0.75rem;
+        color: #ffffff; font-size: 0.95rem; }
+      .footer-feature i { font-size: 2rem; color: var(--primary-accent); }
+      .footer-bottom { background-color: var(--footer-bottom-bg); padding: 2.5rem 2rem; display: flex;
+        justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 2rem; }
+      .footer-section { flex: 1; min-width: 200px; max-width: 300px; }
+      .footer-logo img { height: 40px; margin-bottom: 1rem; }
+      .footer-section p { color: #ffffff; font-size: 0.9rem; margin-bottom: 1rem; }
+      .footer-section h4 { color: #ffffff; font-size: 1.1rem; margin-bottom: 1rem; }
+      .footer-section ul { list-style: none; }
+      .footer-section ul li { margin-bottom: 0.5rem; }
+      .footer-section ul a { color: #ffffff; font-size: 0.9rem; transition: color 0.2s ease; }
+      .footer-section ul a:hover { color: var(--input-border-focus); text-decoration: none; }
+      .payment-methods img { height: 30px; margin-right: 0.5rem; background-color: white; 
+        border-radius: 3px; padding: 2px; }
+      .social-icons { display: flex; gap: 1rem; margin-top: 1rem; }
+      .social-icons a { color: #ffffff; font-size: 1.5rem; transition: color 0.2s ease; }
+      .social-icons a:hover { color: var(--input-border-focus); }
+
+      /* Responsive adjustments */
+      @media (max-width: 1024px) {
+        /* .main-content-wrapper { flex-direction: column; gap: 1.5rem; } -> Không cần nếu chỉ có 1 child */
+        .header { padding: 1rem; }
+        .header-left { order: 1; width: auto; }
+        .search-bar { order: 3; width: 100%; margin-top: 0.75rem; }
+        .header-right { order: 2; width: auto; }
+        .header-menu-toggle { display: block; }
+      }
+      @media (max-width: 768px) {
+        .header { padding: 1rem; }
+        .header-left { flex-grow: 1; } .header-logo img { height: 30px; }
+        .search-bar { width: 100%; }
+        .header-right { gap: 1rem; width: 100%; justify-content: space-between; margin-top: 0.5rem; }
+        .header-links, .header-icons, .header-buttons { display: flex; justify-content: center; gap: 0.75rem; }
+        .header-links { order: 1; } .header-icons { order: 2; }
+        .header-buttons { order: 3; width: 100%; flex-direction: column; }
+        .header-buttons .btn { width: 100%; justify-content: center; }
+        .header-links a { font-size: 0.85rem; }
+        .saved-products-container { padding: 1rem; } 
+        .page-main-title { font-size: 1.25rem; }
+        .footer-top { flex-direction: column; gap: 1.5rem; padding: 1.5rem 1rem; text-align: center; }
+        .footer-feature { flex-direction: column; }
+        .footer-bottom { flex-direction: column; align-items: center; text-align: center; padding: 1.5rem 1rem; }
+        .footer-section { max-width: 100%; } .footer-section ul { padding-left: 0; }
+        .payment-methods, .social-icons { justify-content: center; margin-top: 0.5rem; }
+        .saved-product-item { flex-direction: column; align-items: flex-start; }
+        .product-info-actions { flex-direction: column; width: 100%; }
+        .product-actions { flex-direction: row; justify-content: flex-start; width: 100%; margin-top: 0.5rem;}
+      }
+      @media (max-width: 480px) {
+        .header { flex-direction: column; align-items: stretch; }
+        .header-left, .header-right { width: 100%; justify-content: space-between; }
+        .header-right { flex-direction: column; align-items: stretch; margin-top: 1rem; }
+        .search-bar { margin-top: 0.5rem; order: 0; }
+        .header-links, .header-icons, .header-buttons { flex-direction: row; flex-wrap: wrap; justify-content: center; width: 100%; }
+        .header-buttons { flex-direction: column; align-items: stretch; }
+        .header-links a, .header-buttons .btn { width: 100%; text-align: center; }
+        .header-icons { justify-content: space-around; margin-bottom: 0.5rem; }
+        .product-thumbnail { width: 60px; height: 60px;}
+        .product-details .product-name { font-size: 0.9rem; }
+        .product-details .product-price { font-size: 1rem; }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="header">
+      <div class="header-left">
+        <a href="#" class="header-logo"><img src="https://bizweb.dktcdn.net/100/479/080/themes/897121/assets/logo.png?1739930514069" alt="H! TMDT Logo"/></a>
+        <button class="header-menu-toggle" aria-label="Toggle menu"><i class="fas fa-bars"></i></button>
+        <div class="search-bar"><input type="text" placeholder="Tìm kiếm sản phẩm" /><button><i class="fas fa-search"></i></button></div>
+      </div>
+      <div class="header-right">
+        <div class="header-links"><a href="#"> Đóng góp ý kiến </a><a href="#"> Trợ giúp </a></div>
+        <div class="header-icons">
+          <a class="icon-wrapper"><i class="fas fa-bell"></i><span class="badge"></span></a>
+          <a href="saved_products.html" class="icon-wrapper"><i class="fas fa-shopping-cart"></i><span class="badge">2</span></a>
+          <a class="icon-wrapper"><i class="fas fa-comment-dots"></i><span class="badge"></span></a>
+          <a href="profile_edit.html" class="icon-wrapper"><i class="fas fa-user"></i></a>
+        </div>
+        <div class="header-buttons">
+          <button class="btn btn-outline"><i class="fas fa-user"></i> Quản lý tin</button>
+          <button class="btn btn-post-news"><i class="fas fa-pen"></i> Đăng Tin</button>
+        </div>
+      </div>
+    </header>
+
+    <div class="main-content-wrapper">
+      <main class="saved-products-container" id="savedProductsSection"> 
+        <h2 class="page-main-title">
+          Sản phẩm đã lưu <span class="product-count">(02 sản phẩm)</span>
+        </h2>
+
+        <div class="saved-product-list">
+          <div class="saved-product-item">
+            <img src="https://cdnv2.tgdd.vn/mwg-static/tgdd/Products/Images/5698/331502/mac-mini-m4-pro-24gb-512gb-bac-mcx44sa-a-55-638659246043648278-600x600.jpg" alt="Mac Mini M4" class="product-thumbnail">
+            <div class="product-info-actions">
+              <div class="product-details">
+                <h4 class="product-name">Mac Mini M4</h4>
+                <p class="product-price">12.700.000 đ</p>
+                <p class="product-meta">Cá nhân • 3 ngày trước • Quận Ngũ Hành Sơn, Thành phố Đà Nẵng</p>
+              </div>
+              <div class="product-actions">
+                <button class="btn-chat">Chat</button>
+                <button class="btn-favorite"><i class="far fa-heart"></i></button>
+              </div>
+            </div>
+          </div>
+
+          <div class="saved-product-item">
+            <img src="https://thegioidoxachtay.com/wp-content/uploads/2022/09/1f597678682f3dc3fbb29a18186f0c61.jpg" alt="Sạc iPhone Ipad Apple Cả Bộ New" class="product-thumbnail">
+            <div class="product-info-actions">
+              <div class="product-details">
+                <h4 class="product-name">Sạc iPhone Ipad Apple Cả Bộ New</h4>
+                <p class="product-price">50.000 đ</p>
+                <p class="product-meta">Cá nhân • 32 phút trước • Quận Hải Châu, Thành phố Đà Nẵng</p>
+              </div>
+              <div class="product-actions">
+                <button class="btn-chat">Chat</button>
+                <button class="btn-favorite"><i class="far fa-heart"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <footer class="main-footer">
+      <div class="footer-top">
+        <div class="footer-feature"><i class="fas fa-truck-fast"></i><span>Miễn phí vận chuyển <br />Cho đơn hàng trên 500K</span></div>
+        <div class="footer-feature"><i class="fas fa-shield-alt"></i><span>Thanh toán an toàn <br />100% bảo mật</span></div>
+        <div class="footer-feature"><i class="fas fa-headset"></i><span>Hỗ trợ khách hàng 24/7 <br />Liên hệ với chúng tôi ngay</span></div>
+        <div class="footer-feature"><i class="fas fa-undo-alt"></i><span>Miễn phí hoàn hàng <br />Nếu sản phẩm có lỗi</span></div>
+      </div>
+      <div class="footer-bottom">
+        <div class="footer-section">
+          <div class="footer-logo"><img src="https://bizweb.dktcdn.net/100/479/080/themes/897121/assets/logo.png?1739930514069" alt="H! TMDT Logo"/></div>
+          <p>H!TMDT là sàn thương mại điện tử hàng đầu Việt Nam, mang đến trải nghiệm mua sắm tiện lợi và an toàn.</p>
+        </div>
+        <div class="footer-section"><h4>Hỗ trợ khách hàng</h4><ul><li><a href="#">Trung tâm trợ giúp</a></li><li><a href="#">An toàn mua bán</a></li><li><a href="#">Hỗ trợ khách hàng</a></li></ul></div>
+        <div class="footer-section"><h4>Hướng dẫn</h4><ul><li><a href="#">Hướng dẫn mua hàng</a></li><li><a href="#">Hướng dẫn trả góp</a></li><li><a href="#">Hướng dẫn chuyển khoản</a></li><li><a href="#">Hướng dẫn hoàn hàng</a></li></ul></div>
+        <div class="footer-section"><h4>Chấp nhận thanh toán</h4>
+          <div class="payment-methods">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5TmYtrb-zQEppk0up4S5LDpCazv20kY7eMQ&s" alt="MasterCard"/>
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQw7cK1qUl1Vw4nBtRIvPVRV4vQ_pHID4lXOA&s" alt="Visa"/>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/JCB_logo.svg/1280px-JCB_logo.svg.png" alt="JCB"/>
+          </div>
+          <div class="social-icons">
+            <a href="#" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+            <a href="#" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          </div>
+        </div>
+      </div>
+    </footer>
+    </body>
+</html>

@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Thông tin cá nhân - H! TMDT</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --primary-accent: #ffffff;
+        --header-bg: #2b6eff;
+        --footer-bg: #20232a;
+        --footer-bottom-bg: #1a1d23;
+        --main-bg: #ebebeb;
+        --card-bg: #ffffff;
+        --text-light: #3f3f3f;
+        --text-lighter: #000000;
+        --border-color: #5c5c5c;
+        --light-border-color: #eeeeee;
+        --input-bg: #ffffff;
+        --input-border-focus: #5cb8e4;
+        --button-hover: #268cbd;
+        --white-color: #ffffff;
+        --facebook-blue: #1877f2;
+        --apple-black: #000000;
+        --google-red: #db4437; 
+        --google-blue-text: #4285f4;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        line-height: 1.6;
+        color: var(--text-light);
+        background-color: var(--main-bg); 
+      }
+
+      a {
+        text-decoration: none;
+        color: var(--header-bg); /* Default link color */
+      }
+
+      a:hover {
+        color: var(--input-border-focus);
+        text-decoration: underline;
+      }
+
+      input,
+      button,
+      textarea,
+      select {
+        font-family: "Inter", sans-serif;
+        font-size: 1rem;
+      }
+
+      /* Header */
+      .header {
+        background-color: var(--header-bg);
+        padding: 1rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+
+      .header-left {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+      }
+
+      .header-logo img {
+        height: 35px;
+      }
+
+      .header-menu-toggle {
+        display: none; /* Hidden on desktop */
+        background: none;
+        border: none;
+        color: var(--white-color); /* Ensure toggle is visible on blue bg */
+        font-size: 1.5rem;
+        cursor: pointer;
+      }
+
+      .search-bar {
+        display: flex;
+        align-items: center;
+        background-color: var(--input-bg);
+        border-radius: 0.5rem;
+        overflow: hidden;
+        width: 300px;
+        /* border: 1px solid var(--border-color); No border in image for search bar itself */
+      }
+
+      .search-bar input {
+        border: none;
+        padding: 0.75rem 1rem;
+        background: transparent;
+        color: var(--text-light);
+        width: 100%;
+      }
+
+      .search-bar input::placeholder {
+        color: #757575; 
+      }
+
+      .search-bar button {
+        background-color: transparent;
+        border: none;
+        padding: 0.75rem 1rem;
+        color: var(--text-light); /* Icon color */
+        cursor: pointer;
+        transition: color 0.2s ease;
+      }
+
+      .search-bar button:hover {
+        color: var(--header-bg);
+      }
+
+      .header-right {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+      }
+
+      .header-links a {
+        color: var(--primary-accent); /* White links on blue bg */
+        font-size: 0.95rem;
+        white-space: nowrap;
+        transition: color 0.2s ease;
+      }
+
+      .header-links a:hover {
+        color: rgba(255, 255, 255, 0.8); /* Slightly dimmer white on hover */
+        text-decoration: none;
+      }
+
+      .header-icons {
+        display: flex;
+        gap: 1rem;
+      }
+
+      .header-icons .icon-wrapper {
+        position: relative;
+        cursor: pointer;
+      }
+
+      .header-icons .icon-wrapper i {
+        color: #ffffff;
+        font-size: 1.3rem;
+        transition: color 0.2s ease;
+      }
+
+      .header-icons .icon-wrapper i:hover {
+        color: rgba(255, 255, 255, 0.8);
+      }
+
+      .header-icons .badge {
+        position: absolute;
+        top: -8px;
+        right: -8px;
+        background-color: #e53e3e;
+        color: var(--white-color);
+        font-size: 0.7rem;
+        padding: 0.2rem 0.4rem;
+        border-radius: 50%;
+        min-width: 18px;
+        text-align: center;
+      }
+
+      .header-buttons .btn {
+        padding: 0.75rem 1.25rem;
+        border-radius: 0.5rem;
+        font-weight: 500;
+        cursor: pointer;
+        border: none;
+        white-space: nowrap;
+        display: inline-flex; /* Use flex for icon and text alignment */
+        align-items: center;
+        gap: 0.5rem;
+        transition: background-color 0.2s ease, color 0.2s ease;
+      }
+
+      .header-buttons .btn i {
+        font-size: 1rem; /* Adjust icon size in button */
+      }
+
+      .header-buttons .btn-primary {
+        background-color: var(--white-color); /* White button */
+        color: var(--header-bg); /* Blue text */
+      }
+
+      .header-buttons .btn-primary:hover {
+        background-color: rgba(255, 255, 255, 0.9);
+      }
+
+      .header-buttons .btn-outline {
+        background-color: transparent;
+        border: 1px solid var(--primary-accent);
+        color: var(--primary-accent);
+      }
+
+      .header-buttons .btn-outline:hover {
+        background-color: var(--primary-accent);
+        color: var(--header-bg); /* Blue text on white background */
+      }
+
+      /* Main Content Layout */
+      .main-content-wrapper {
+        display: flex;
+        max-width: 1200px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+        gap: 2rem;
+        min-height: 60vh;
+      }
+
+      /* Sidebar */
+      .sidebar {
+        flex: 0 0 250px;
+        background-color: var(--card-bg);
+        border-radius: 0.75rem;
+        padding: 1.5rem;
+        height: fit-content;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      }
+
+      .sidebar-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: var(--text-lighter); /* Black as per image */
+        margin-bottom: 1rem;
+        padding-bottom: 0.75rem;
+        border-bottom: 1px solid var(--light-border-color);
+      }
+
+      .sidebar-nav ul {
+        list-style: none;
+      }
+
+      .sidebar-nav li {
+        margin-bottom: 0.25rem; /* Reduced margin */
+      }
+
+      .sidebar-nav a {
+        display: block;
+        padding: 0.85rem 1rem; /* Slightly adjusted padding */
+        color: var(--text-light); /* Normal text color for inactive */
+        font-weight: 500;
+        border-radius: 0.5rem;
+        transition: background-color 0.2s ease, color 0.2s ease;
+      }
+
+      .sidebar-nav a:hover {
+        background-color: rgba(43, 110, 255, 0.1); /* Light blue tint on hover */
+        color: var(--header-bg); /* Blue text on hover */
+        text-decoration: none;
+      }
+
+      .sidebar-nav a.active {
+        background-color: var(--primary-accent); /* White background for active */
+        color: var(--header-bg); /* Blue text for active */
+        font-weight: 600; /* Bolder text for active */
+        box-shadow: 0 1px 3px rgba(43,110,255,0.2); /* Subtle shadow for active */
+      }
+
+      /* Main Profile Content (shared by all profile pages) */
+      .profile-content {
+        flex-grow: 1;
+        background-color: var(--card-bg);
+        border-radius: 0.75rem;
+        padding: 2rem;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      }
+
+      .profile-section-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: var(--text-lighter); /* Black as per image */
+        margin-bottom: 2rem; /* Increased margin as per image */
+        /* Removed border-bottom to match image's "Liên kết mạng xã hội" title */
+      }
+      
+      /* Styles for Social Link Options */
+      .social-link-options {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem; /* Gap between items */
+      }
+
+      .social-link-option {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.25rem 0; /* Vertical padding, no horizontal as it's full width */
+        border-bottom: 1px solid var(--light-border-color);
+      }
+
+      .social-link-option:last-child {
+        border-bottom: none;
+      }
+
+      .social-identifier {
+        display: flex;
+        align-items: center;
+        gap: 1rem; /* Gap between icon and name */
+      }
+
+      .social-logo {
+        font-size: 2.25rem; /* Adjust size to match image */
+        width: 36px; /* Fixed width for alignment */
+        text-align: center;
+      }
+
+      .fb-logo {
+        color: var(--facebook-blue);
+      }
+
+      .google-logo {
+        /* FontAwesome Google icon is single color. Using red as a placeholder. */
+        /* For multi-color, an SVG or <img> would be needed. */
+        color: var(--google-red); 
+      }
+
+      .apple-logo-main {
+        color: var(--apple-black);
+      }
+
+      .social-platform-name {
+        font-size: 1rem;
+        font-weight: 500;
+        color: var(--text-lighter); /* Black text */
+      }
+
+      .btn-social-action {
+        padding: 0.65rem 1rem; /* Adjusted padding */
+        border-radius: 6px;
+        color: var(--white-color);
+        font-weight: 500;
+        font-size: 0.9rem; /* Slightly smaller font */
+        border: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.75rem; /* Gap between icon and text in button */
+        cursor: pointer;
+        transition: opacity 0.2s ease;
+      }
+      .btn-social-action i.btn-icon {
+        font-size: 1.1rem; /* Size of icon inside button */
+      }
+
+      .btn-social-action:hover {
+        opacity: 0.85;
+      }
+
+      .btn-facebook-connect {
+        background-color: var(--facebook-blue);
+      }
+      .btn-facebook-connect .fa-facebook-f { /* Specific icon styling if needed */
+          position: relative;
+          top: -1px; /* Minor adjustment for visual centering */
+      }
+
+
+      .btn-apple-connect {
+        background-color: var(--apple-black);
+      }
+      .btn-apple-connect .fa-apple {
+          font-size: 1.2rem; /* Apple icon tends to be larger */
+      }
+
+
+      .social-connection-status {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+
+      .social-logo-small {
+        font-size: 1rem; /* Smaller icon for status */
+        color: var(--google-blue-text); /* Google blue 'G' if possible */
+      }
+       /* Fallback for FA Google icon (single color) */
+      .social-connection-status .fa-google.social-logo-small {
+        color: var(--google-red); /* Or default text color */
+      }
+
+
+      .status-text {
+        font-size: 0.95rem; /* Match image text size */
+        color: var(--text-lighter); /* Black text */
+      }
+
+      .unlink-action {
+        color: var(--header-bg); /* Site's main blue for the link */
+        font-size: 0.95rem; /* Match image text size */
+        text-decoration: none;
+        font-weight: 500;
+      }
+
+      .unlink-action:hover {
+        text-decoration: underline;
+      }
+
+
+      /* Footer (Copied from original, ensure it remains functional) */
+      .footer-top {
+        background-color: var(--footer-bg);
+        padding: 2.5rem 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 3rem;
+        flex-wrap: wrap;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .footer-feature {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        color: #ffffff;
+        font-size: 0.95rem;
+      }
+
+      .footer-feature i {
+        font-size: 2rem;
+        color: var(--primary-accent); /* White icons as per original */
+      }
+       /* Specific icon colors from image if different */
+      .footer-top .fa-truck-fast { color: #ffffff; }
+      .footer-top .fa-shield-alt { color: #ffffff; }
+      .footer-top .fa-headset { color: #ffffff; }
+      .footer-top .fa-undo-alt { color: #ffffff; }
+
+
+      .footer-bottom {
+        background-color: var(--footer-bottom-bg);
+        padding: 2.5rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        flex-wrap: wrap;
+        gap: 2rem;
+      }
+
+      .footer-section {
+        flex: 1;
+        min-width: 200px;
+        max-width: 300px;
+      }
+
+      .footer-logo img {
+        height: 40px;
+        margin-bottom: 1rem;
+      }
+
+      .footer-section p {
+        color: #ffffff;
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+      }
+
+      .footer-section h4 {
+        color: #ffffff;
+        font-size: 1.1rem;
+        margin-bottom: 1rem;
+      }
+
+      .footer-section ul {
+        list-style: none;
+      }
+
+      .footer-section ul li {
+        margin-bottom: 0.5rem;
+      }
+
+      .footer-section ul a {
+        color: #ffffff; /* White links in footer */
+        font-size: 0.9rem;
+        transition: color 0.2s ease;
+      }
+
+      .footer-section ul a:hover {
+        color: var(--input-border-focus); /* Lighter blue on hover */
+        text-decoration: none;
+      }
+
+      .payment-methods img {
+        height: 30px;
+        margin-right: 0.5rem;
+        background-color: white; /* Add white background for visibility if needed */
+        border-radius: 3px; /* Rounded corners for payment icons */
+        padding: 2px;
+      }
+
+      .social-icons {
+        display: flex;
+        gap: 1rem;
+        margin-top: 1rem;
+      }
+
+      .social-icons a {
+        color: #ffffff; /* White social icons in footer */
+        font-size: 1.5rem;
+        transition: color 0.2s ease;
+      }
+
+      .social-icons a:hover {
+        color: var(--input-border-focus); /* Lighter blue on hover */
+      }
+
+      /* Responsive adjustments (Copied from original, ensure it remains functional) */
+      @media (max-width: 1024px) {
+        .main-content-wrapper {
+          flex-direction: column;
+          gap: 1.5rem;
+        }
+
+        .sidebar {
+          width: 100%;
+          flex: none;
+        }
+
+        .header {
+          padding: 1rem; /* Adjust padding for smaller screens */
+        }
+        .header-left {
+          order: 1; 
+          width: auto; /* Allow it to size naturally */
+          /* justify-content: space-between; This might be too much with search bar */
+        }
+        .search-bar {
+            order: 3;
+            width: 100%; /* Full width on new line */
+            margin-top: 0.75rem; /* Space it out */
+        }
+        .header-right {
+            order: 2;
+            width: auto; /* Allow to size naturally */
+            /* justify-content: flex-end; */
+        }
+        .header-menu-toggle {
+          display: block; 
+          color: var(--white-color);
+        }
+
+        .social-link-option {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+        .btn-social-action, .social-connection-status {
+            width: 100%; /* Make buttons/status take full width */
+        }
+        .btn-social-action {
+            justify-content: center; /* Center button content */
+        }
+        .social-connection-status {
+            justify-content: space-between; /* Keep status text and Hủy spread */
+        }
+
+
+      }
+
+      @media (max-width: 768px) {
+        .header {
+          padding: 1rem;
+        }
+        .header-left {
+            flex-grow: 1; /* Allow logo to take space */
+        }
+        .header-logo img {
+          height: 30px;
+        }
+        .search-bar {
+            width: 100%; /* Ensure it's full width */
+        }
+        .header-right {
+            gap: 1rem; /* Adjust gap */
+            width: 100%; /* Make it full width to stack items */
+            justify-content: space-between; /* Spread out remaining items */
+            margin-top: 0.5rem;
+        }
+
+        .header-links,
+        .header-icons,
+        .header-buttons {
+          /* width: 100%; Allow natural flow or specific widths if needed */
+          display: flex;
+          justify-content: center; /* Center if they stack or are in a row */
+          gap: 0.75rem;
+        }
+        .header-links {
+            order: 1; /* Example reordering if needed */
+        }
+        .header-icons {
+            order: 2;
+        }
+        .header-buttons {
+            order: 3;
+            width: 100%; /* Make buttons stack */
+            flex-direction: column;
+        }
+        .header-buttons .btn {
+            width: 100%;
+            justify-content: center;
+        }
+
+
+        .header-links a {
+          font-size: 0.85rem;
+        }
+
+
+        .profile-content {
+          padding: 1.5rem;
+        }
+
+        .profile-section-title {
+          font-size: 1.3rem; /* Adjusted size */
+          margin-bottom: 1.5rem;
+        }
+
+
+        .footer-top {
+          flex-direction: column;
+          gap: 1.5rem;
+          padding: 1.5rem 1rem;
+          text-align: center;
+        }
+        .footer-feature {
+            flex-direction: column; /* Stack icon and text */
+        }
+
+        .footer-bottom {
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+          padding: 1.5rem 1rem;
+        }
+
+        .footer-section {
+          max-width: 100%;
+        }
+
+        .footer-section ul {
+          padding-left: 0;
+        }
+
+        .payment-methods,
+        .social-icons {
+          justify-content: center;
+          margin-top: 0.5rem;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .header {
+            flex-direction: column; /* Stack everything in header */
+            align-items: stretch;
+        }
+        .header-left, .header-right {
+            width: 100%;
+            justify-content: space-between;
+        }
+        .header-right {
+            flex-direction: column;
+            align-items: stretch; /* Make items full width */
+            margin-top: 1rem;
+        }
+        .search-bar {
+            margin-top: 0.5rem; /* Small margin if it's not first */
+            order: 0; /* Reset order to be after logo/toggle */
+        }
+        .header-links, .header-icons, .header-buttons {
+            flex-direction: row; /* Default for links/icons if space allows */
+            flex-wrap: wrap; /* Allow wrapping */
+            justify-content: center;
+            width: 100%;
+        }
+        .header-buttons {
+            flex-direction: column; /* Stack buttons */
+            align-items: stretch;
+        }
+
+        .header-links a,
+        .header-buttons .btn {
+          width: 100%; 
+          text-align: center;
+        }
+        .header-icons {
+            justify-content: space-around; /* Spread icons */
+            margin-bottom: 0.5rem;
+        }
+
+        .social-link-option {
+            padding: 1rem 0;
+        }
+        .social-logo {
+            font-size: 2rem;
+        }
+        .social-platform-name {
+            font-size: 0.9rem;
+        }
+        .btn-social-action {
+            padding: 0.6rem 0.8rem;
+            font-size: 0.85rem;
+        }
+        .status-text, .unlink-action {
+            font-size: 0.85rem;
+        }
+
+      }
+    </style>
+  </head>
+  <body>
+    <header class="header">
+      <div class="header-left">
+        <a href="#" class="header-logo">
+          <img
+            src="https://bizweb.dktcdn.net/100/479/080/themes/897121/assets/logo.png?1739930514069"
+            alt="H! TMDT Logo"
+          />
+        </a>
+        <button class="header-menu-toggle" aria-label="Toggle menu">
+          <i class="fas fa-bars"></i>
+        </button>
+        <div class="search-bar">
+          <input type="text" placeholder="Tìm kiếm sản phẩm" />
+          <button><i class="fas fa-search"></i></button>
+        </div>
+      </div>
+      <div class="header-right">
+        <div class="header-links">
+          <a href="#"> Đóng góp ý kiến </a>
+          <a href="#"> Trợ giúp </a>
+        </div>
+        <div class="header-icons">
+          <a class="icon-wrapper"><i class="fas fa-bell"></i><span class="badge"></span></a>
+          <a href="saved_products.html" class="icon-wrapper"><i class="fas fa-shopping-cart"></i><span class="badge">2</span></a>
+          <a class="icon-wrapper"><i class="fas fa-comment-dots"></i><span class="badge"></span></a>
+          <a href="profile_edit.html" class="icon-wrapper"><i class="fas fa-user"></i></a>
+        </div>
+        <div class="header-buttons">
+          <button class="btn btn-outline"><i class="fas fa-user"></i> Quản lý tin</button>
+          <button class="btn btn-primary"><i class="fas fa-pen"></i> Đăng Tin</button>
+        </div>
+      </div>
+    </header>
+
+    <div class="main-content-wrapper">
+      <aside class="sidebar">
+        <h3 class="sidebar-title">Tài khoản của tôi</h3> <nav class="sidebar-nav">
+          <ul>
+            <li><a href="profile_edit.html">Thông tin cá nhân</a></li>
+            <li><a href="profile_connetion.html" class="active">Liên kết mạng xã hội</a></li>
+            <li><a href="profile_setting.html">Cài đặt tài khoản</a></li>
+            <li><a href="profile_loginhistory.html">Quản lý lịch sử đăng nhập</a></li>
+          </ul>
+        </nav>
+      </aside>
+
+      <main class="profile-content">
+        <section class="profile-section">
+          <h2 class="profile-section-title">Liên kết mạng xã hội</h2>
+          <div class="social-link-options">
+            <div class="social-link-option">
+              <div class="social-identifier">
+                <i class="fab fa-facebook-square social-logo fb-logo"></i>
+                <span class="social-platform-name">Facebook</span>
+              </div>
+              <button class="btn btn-social-action btn-facebook-connect">
+                <i class="fab fa-facebook-f btn-icon"></i> Liên kết với Facebook
+              </button>
+            </div>
+
+            <div class="social-link-option">
+              <div class="social-identifier">
+                <i class="fab fa-google social-logo google-logo"></i> 
+                <span class="social-platform-name">Google</span>
+              </div>
+              <div class="social-connection-status">
+                <i class="fab fa-google social-logo-small"></i> 
+                <span class="status-text">Đã liên kết với Google</span>
+                <a href="#" class="unlink-action">Hủy</a>
+              </div>
+            </div>
+
+            <div class="social-link-option">
+              <div class="social-identifier">
+                <i class="fab fa-apple social-logo apple-logo-main"></i>
+                <span class="social-platform-name">Apple ID</span>
+              </div>
+              <button class="btn btn-social-action btn-apple-connect">
+                <i class="fab fa-apple btn-icon"></i> Liên kết với Apple ID
+              </button>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <footer class="main-footer">
+      <div class="footer-top">
+        <div class="footer-feature">
+          <i class="fas fa-truck-fast"></i>
+          <span>
+            Miễn phí vận chuyển <br />
+            Cho đơn hàng trên 500K </span>
+        </div>
+        <div class="footer-feature">
+          <i class="fas fa-shield-alt"></i>
+          <span>
+            Thanh toán an toàn <br />
+            100% bảo mật
+          </span>
+        </div>
+        <div class="footer-feature">
+          <i class="fas fa-headset"></i>
+          <span>
+            Hỗ trợ khách hàng 24/7 <br />
+            Liên hệ với chúng tôi ngay
+          </span>
+        </div>
+        <div class="footer-feature">
+          <i class="fas fa-undo-alt"></i>
+          <span>
+            Miễn phí hoàn hàng <br />
+            Nếu sản phẩm có lỗi
+          </span>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div class="footer-section">
+          <div class="footer-logo">
+            <img
+              src="https://bizweb.dktcdn.net/100/479/080/themes/897121/assets/logo.png?1739930514069"
+              alt="H! TMDT Logo"
+            />
+          </div>
+          <p>
+            H!TMDT là sàn thương mại điện tử hàng đầu Việt Nam, mang đến trải nghiệm mua sắm tiện
+            lợi và an toàn.
+          </p>
+        </div>
+
+        <div class="footer-section">
+          <h4>Hỗ trợ khách hàng</h4>
+          <ul>
+            <li><a href="#">Trung tâm trợ giúp</a></li>
+            <li><a href="#">An toàn mua bán</a></li>
+            <li><a href="#">Hỗ trợ khách hàng</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h4>Hướng dẫn</h4>
+          <ul>
+            <li><a href="#">Hướng dẫn mua hàng</a></li>
+            <li><a href="#">Hướng dẫn trả góp</a></li>
+            <li><a href="#">Hướng dẫn chuyển khoản</a></li>
+            <li><a href="#">Hướng dẫn hoàn hàng</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h4>Chấp nhận thanh toán</h4>
+          <div class="payment-methods">
+            <img
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5TmYtrb-zQEppk0up4S5LDpCazv20kY7eMQ&s"
+              alt="MasterCard"
+            />
+            <img
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQw7cK1qUl1Vw4nBtRIvPVRV4vQ_pHID4lXOA&s"
+              alt="Visa"
+            />
+            <img 
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/JCB_logo.svg/1280px-JCB_logo.svg.png"
+              alt="JCB"
+            />
+          </div>
+          <div class="social-icons">
+            <a href="#" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+            <a href="#" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

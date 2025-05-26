@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8" />
+    <title>Đăng Nhập</title>
+    <style>
+      /* Reset và import font */
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap");
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        line-height: 1.6;
+        color: #e2e8f0;
+        background: linear-gradient(45deg, #a3bffa, #fed7e2, #b5f5ec, #f9e4b7);
+        background-size: 400%;
+        animation: gradientAnimation 15s ease infinite;
+      }
+
+      /* Gradient animation */
+      @keyframes gradientAnimation {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      /* Container chính */
+      .login-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        padding: 2rem;
+      }
+
+      .login-box {
+        background: linear-gradient(145deg, rgba(45, 55, 72, 0.95), rgba(74, 85, 104, 0.95));
+        border-radius: 1.5rem;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+        padding: 2.5rem;
+        max-width: 480px;
+        width: 100%;
+        position: relative;
+        backdrop-filter: blur(10px);
+      }
+
+      /* Logo */
+      .logo {
+        display: block;
+        margin: 0 auto 2rem;
+        max-width: 200px;
+        height: auto;
+      }
+
+      /* Tiêu đề */
+      .login-title {
+        font-size: 2rem;
+        font-weight: 700;
+        text-align: center;
+        color: #f7fafc;
+        margin-bottom: 1.5rem;
+      }
+
+      /* Form đăng nhập */
+      .sign-in-form {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+
+      .form-group {
+        position: relative;
+      }
+
+      .form-group label {
+        position: absolute;
+        top: 0.75rem;
+        left: 1rem;
+        font-size: 0.9rem;
+        color: #a0aec0;
+        transition: all 0.2s ease;
+        pointer-events: none;
+      }
+
+      .form-group input {
+        width: 100%;
+        padding: 1rem;
+        border: 1px solid #4a5568;
+        border-radius: 0.5rem;
+        font-size: 1rem;
+        color: #f7fafc;
+        background-color: #2d3748;
+        transition: border-color 0.2s ease;
+      }
+
+      .form-group input:focus {
+        outline: none;
+        border-color: #63b3ed;
+        box-shadow: 0 0 0 3px rgba(99, 179, 237, 0.2);
+      }
+
+      .form-group input:not(:placeholder-shown) + label,
+      .form-group input:focus + label {
+        top: -0.75rem;
+        left: 0.75rem;
+        font-size: 0.75rem;
+        background: #2d3748;
+        padding: 0 0.25rem;
+        color: #63b3ed;
+      }
+
+      .form-group input::placeholder {
+        color: #a0aec0;
+      }
+
+      /* Nút đăng nhập */
+      .submit-btn {
+        background: #3182ce;
+        color: #fff;
+        padding: 1rem;
+        border: none;
+        border-radius: 0.5rem;
+        font-size: 1.1rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background 0.3s ease;
+      }
+
+      .submit-btn:hover {
+        background: #2b6cb0;
+      }
+
+      /* Quên mật khẩu */
+      .forgot-password {
+        text-align: center;
+        margin-top: 1rem;
+      }
+
+      .forgot-password a {
+        color: #63b3ed;
+        font-size: 0.9rem;
+        text-decoration: none;
+        transition: color 0.2s ease;
+      }
+
+      .forgot-password a:hover {
+        color: #4299e1;
+        text-decoration: underline;
+      }
+
+      /* Đăng nhập bằng mạng xã hội */
+      .social-login {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        margin-top: 2rem;
+      }
+
+      .social-btn {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.75rem;
+        border: 1px solid #4a5568;
+        border-radius: 0.5rem;
+        background: #2d3748;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .social-btn img {
+        width: 24px;
+        height: 24px;
+      }
+
+      .social-btn span {
+        font-size: 0.9rem;
+        color: #f7fafc;
+        font-weight: 500;
+      }
+
+      .social-btn:hover {
+        background: #4a5568;
+        border-color: #718096;
+      }
+
+      /* Divider */
+      .divider {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin: 1.5rem 0;
+        color: #a0aec0;
+        font-size: 0.9rem;
+      }
+
+      .divider hr {
+        flex: 1;
+        border: none;
+        border-top: 1px solid #4a5568;
+      }
+
+      /* Đăng ký */
+      .register-link {
+        text-align: center;
+        margin-top: 1.5rem;
+      }
+
+      .register-link p {
+        font-size: 0.9rem;
+        color: #a0aec0;
+      }
+
+      .register-link a {
+        color: #63b3ed;
+        font-weight: 500;
+        text-decoration: none;
+        transition: color 0.2s ease;
+      }
+
+      .register-link a:hover {
+        color: #4299e1;
+        text-decoration: underline;
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .login-box {
+          padding: 1.5rem;
+        }
+
+        .login-title {
+          font-size: 1.5rem;
+        }
+
+        .logo {
+          max-width: 150px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="login-container">
+      <div class="login-box">
+        <img
+          class="logo"
+          src="https://bizweb.dktcdn.net/100/479/080/themes/897121/assets/logo.png?1739930514069"
+          alt="Logo"
+        />
+        <h1 class="login-title">Đăng Nhập</h1>
+        <form class="sign-in-form">
+          <div class="form-group">
+            <input type="tel" id="phone" placeholder=" " required />
+            <label for="phone">Số điện thoại</label>
+          </div>
+          <div class="form-group">
+            <input type="password" id="password" placeholder=" " required />
+            <label for="password">Mật khẩu</label>
+          </div>
+          <button type="submit" class="submit-btn">Đăng Nhập</button>
+        </form>
+        <div class="forgot-password">
+          <a href="forgotpass.html">Quên Mật Khẩu?</a>
+        </div>
+        <div class="divider">
+          <hr />
+          <span>Hoặc</span>
+          <hr />
+        </div>
+        <div class="social-login">
+          <button class="social-btn">
+            <img
+              src="https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-512.png"
+              alt="Google logo"
+            />
+            <span>Đăng nhập với Google</span>
+          </button>
+          <button class="social-btn">
+            <img
+              src="https://static-00.iconduck.com/assets.00/apple-logo-icon-416x512-8ho6gnb7.png"
+              alt="Apple logo"
+            />
+            <span>Đăng nhập với Apple ID</span>
+          </button>
+          <button class="social-btn">
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Facebook_Logo_%282019%29.png/500px-Facebook_Logo_%282019%29.png"
+              alt="Facebook logo"
+            />
+            <span>Đăng nhập với Facebook</span>
+          </button>
+        </div>
+        <div class="register-link">
+          <p>Chưa có tài khoản? <a href="register.html">Đăng ký ngay!</a></p>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
