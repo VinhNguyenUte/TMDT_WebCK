@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Đăng tin chi tiết - H! TMDT</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --primary-accent: #ffffff;
+        --header-bg: #2b6eff;
+        --main-bg: #ebebeb;
+        --card-bg: #ffffff;
+        --text-light: #3f3f3f;
+        --text-lighter: #000000;
+        --text-muted: #6c757d;
+        --text-link-blue: var(--header-bg);
+        --input-border: #ced4da;
+        --input-border-focus: #86b7fe;
+        --required-asterisk-color: red;
+        --white-color: #ffffff;
+        --orange-color: #f39c12;
+        --orange-hover-color: #e67e22;
+        --upload-border-color: #f39c12;
+        --upload-bg-color: #fffdf5;
+        --input-bg: #ffffff;
+        --light-border-color: #e0e0e0;
+      }
+
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      body { font-family: "Inter", sans-serif; line-height: 1.6; color: var(--text-light); background-color: var(--main-bg); }
+      a { text-decoration: none; color: var(--text-link-blue); }
+      a:hover { text-decoration: underline; }
+      .header { background-color: var(--header-bg); padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; }
+      .header-left { display: flex; align-items: center; gap: 1.5rem; }
+      .header-logo img { height: 35px; }
+      .search-bar { display: flex; align-items: center; background-color: var(--input-bg); border-radius: 0.5rem; overflow: hidden; width: 300px; }
+      .search-bar input { border: none; padding: 0.75rem 1rem; background: transparent; color: var(--text-light); width: 100%; }
+      .search-bar button { background-color: transparent; border: none; padding: 0.75rem 1rem; color: var(--text-light); cursor: pointer; }
+      .header-right { display: flex; align-items: center; gap: 1.5rem; }
+      .header-links a { color: var(--primary-accent); font-size: 0.95rem; white-space: nowrap; }
+      .header-icons { display: flex; gap: 1rem; align-items: center; }
+      .header-icons .icon-wrapper { position: relative; cursor: pointer; }
+      .header-icons a.icon-wrapper { color: var(--white-color); }
+      .header-icons .icon-wrapper i { color: var(--white-color); font-size: 1.3rem; }
+      .header-icons .badge { position: absolute; top: -8px; right: -8px; background-color: #e53e3e; color: var(--white-color); font-size: 0.7rem; padding: 0.2rem 0.4rem; border-radius: 50%; }
+      .header-buttons .btn { padding: 0.75rem 1.25rem; border-radius: 0.5rem; font-weight: 500; cursor: pointer; border: none; display: inline-flex; align-items: center; gap: 0.5rem; }
+      .header-buttons .btn-post-news { background-color: var(--white-color); color: var(--header-bg); }
+      .header-buttons .btn-outline { background-color: transparent; border: 1px solid var(--primary-accent); color: var(--primary-accent); }
+      .main-content-wrapper { padding: 1rem; max-width: 1200px; margin: 2rem auto; }
+      .back-link { display: inline-block; margin-bottom: 1rem; color: var(--text-link-blue); font-weight: 500; text-decoration: none; font-size: 0.95rem; }
+      .back-link i { margin-right: 0.5rem; }
+      .back-link:hover { text-decoration: underline; }
+      .post-details-container { display: flex; flex-wrap: wrap; gap: 2rem; background-color: white; padding: 2rem; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.05); }
+      .post-details-left, .post-details-right { flex: 1; min-width: 300px; }
+      .post-details-left { flex-basis: 35%; max-width: 35%; display: flex; flex-direction: column; gap: 1.5rem; }
+      .post-details-right { flex-basis: 60%; max-width: 60%; }
+      .upload-slot { border: 2px dashed var(--upload-border-color); border-radius: 8px; min-height: 180px; display: flex; justify-content: center; align-items: center; color: var(--upload-border-color); font-size: 1rem; background-color: var(--upload-bg-color); text-align: center; padding: 1rem; cursor: pointer; flex-direction: column; }
+      .upload-slot i { font-size: 2.5rem; margin-bottom: 0.5rem; color: var(--upload-border-color); }
+      .upload-slot input[type="file"] { display: none; }
+      .preview-area { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 10px; margin-top: 15px; padding: 10px; border: 1px solid var(--light-border-color); border-radius: 6px; min-height: 50px; background-color: #f9f9f9; }
+      .preview-item { position: relative; }
+      .preview-item img, .preview-item video { width: 100%; height: 100px; object-fit: cover; border-radius: 4px; border: 1px solid #ddd; }
+      .preview-item .remove-btn { position: absolute; top: -5px; right: -5px; background-color: red; color: white; border: none; border-radius: 50%; width: 20px; height: 20px; font-size: 12px; line-height: 20px; text-align: center; cursor: pointer; font-weight: bold; }
+      .package-section { margin-top: 1.5rem; border-top: 1px solid var(--light-border-color); padding-top: 1.5rem; }
+      .package-section h4 { font-size: 1.1rem; font-weight: 600; margin-bottom: 1rem; color: var(--text-lighter); }
+      .package-cards-container { display: flex; flex-direction: column; gap: 1rem; }
+      .package-card { border: 2px solid var(--input-border); border-radius: 8px; padding: 1rem; text-align: left; cursor: pointer; transition: border-color 0.2s, box-shadow 0.2s; position: relative; display: flex; justify-content: space-between; align-items: center; }
+      .package-card input[type="radio"] { margin-right: 15px; width: 18px; height: 18px; cursor: pointer; }
+      .package-card .package-info { flex-grow: 1; }
+      .package-card .package-duration { font-weight: 600; }
+      .package-card .package-price { font-weight: 700; color: var(--orange-color); font-size: 1.1rem; }
+      label:has(input[type="radio"]:checked) .package-card { border-color: var(--header-bg); box-shadow: 0 0 8px rgba(43, 110, 255, 0.3); background-color: #f0f6ff; }
+      label:has(input[type="radio"]:checked) .package-card .package-price { color: var(--header-bg); }
+      .form-section { margin-bottom: 2rem; }
+      .form-section h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 1.5rem; color: var(--text-lighter); }
+      .form-group { margin-bottom: 1rem; }
+      .form-group label, .form-section .radio-group > span { display: block; margin-bottom: 0.5rem; font-weight: 500; }
+      .form-group label .required { color: var(--required-asterisk-color); margin-left: 2px; }
+      .form-group input[type="text"], .form-group input[type="number"], .form-group select, .form-group textarea { width: 100%; padding: 0.75rem 1rem; border: 1px solid var(--input-border); border-radius: 6px; background-color: var(--input-bg); /* Ensure selects have background */ }
+      .form-group select { appearance: none; -webkit-appearance: none; -moz-appearance: none; background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23007CB2%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E'); background-repeat: no-repeat; background-position: right 1rem center; background-size: .65em auto; padding-right: 2.5rem; /* Make space for arrow */ }
+      .form-group textarea { min-height: 120px; resize: vertical; }
+      .radio-group { display: flex; gap: 1rem; align-items: center; }
+      .radio-group label { display: flex; align-items: center; gap: 0.5rem; font-weight: 400; cursor: pointer; }
+      .radio-group input[type="radio"] { display: none; }
+      .radio-group input[type="radio"]:checked + span { background-color: var(--header-bg); color: var(--white-color); border-color: var(--header-bg); }
+      .radio-group span { padding: 0.6rem 1.2rem; border: 1px solid var(--input-border); border-radius: 6px; cursor: pointer; }
+      .form-group-inline { display: flex; gap: 1.5rem; }
+      .form-group-inline .form-group { flex: 1; }
+      .post-button { background-color: var(--orange-color); color: var(--white-color); padding: 0.9rem 2rem; border: none; border-radius: 6px; font-size: 1.1rem; font-weight: 600; cursor: pointer; width: 100%; margin-top: 1rem; }
+      .selected-cat-display { padding: 0.75rem 1rem; border: 1px solid var(--input-border); border-radius: 6px; background-color: #f8f9fa; margin-bottom: 1.5rem; font-weight: 500; display: flex; justify-content: space-between; align-items: center;}
+      .selected-cat-display::after { content: '\f078'; font-family: 'Font Awesome 6 Free'; font-weight: 900; color: var(--text-muted); }
+      #km-group { transition: opacity 0.3s, max-height 0.3s; overflow: hidden; }
+      #km-group.hidden { opacity: 0; max-height: 0; margin-bottom: 0; }
+    </style>
+  </head>
+  <body>
+    <header class="header">
+      <div class="header-left">
+            <a href="index.html" class="header-logo">
+            <img src="https://bizweb.dktcdn.net/100/479/080/themes/897121/assets/logo.png?1739930514069" alt="H! TMDT Logo"/>
+            </a>
+            <div class="search-bar"> <input type="text" placeholder="Tìm kiếm sản phẩm" /> <button><i class="fas fa-search"></i></button> </div>
+        </div>
+        <div class="header-right">
+            <div class="header-links"> <a href="#"> Đóng góp ý kiến </a> <a href="#"> Trợ giúp </a> </div>
+            <div class="header-icons"> <a class="icon-wrapper"><i class="fas fa-bell"></i><span class="badge">2</span></a> <a href="#" class="icon-wrapper"><i class="fas fa-shopping-cart"></i><span class="badge">2</span></a> <a href="#" class="icon-wrapper"><i class="fas fa-comment-dots"></i><span class="badge">3</span></a> <a href="#" class="icon-wrapper"><i class="fas fa-user"></i></a> </div>
+            <div class="header-buttons"> <button class="btn btn-outline"><i class="fas fa-user"></i> Quản lý tin</button> <button class="btn btn-post-news"><i class="fas fa-pen"></i> Đăng Tin</button> </div>
+        </div>
+    </header>
+
+    <div class="main-content-wrapper">
+        <a href="index.html" class="back-link"> <i class="fas fa-arrow-left"></i> Quay lại trang chọn danh mục </a>
+        <div id="details-form-container" class="post-details-container" style="display: flex;">
+            <div class="post-details-left">
+                <label for="image-upload-input" class="upload-slot"> <input type="file" id="image-upload-input" accept="image/*" multiple> <i class="fas fa-camera"></i> <span>Đăng từ 01 - 06 hình</span> </label>
+                <div id="image-preview-area" class="preview-area"></div>
+                <label for="video-upload-input" class="upload-slot"> <input type="file" id="video-upload-input" accept="video/*"> <i class="fas fa-video"></i> <span>Đăng video để bán nhanh hơn</span> </label>
+                <div id="video-preview-area" class="preview-area"></div>
+                <div class="package-section"> <h4>Chọn gói đăng tin</h4> <div class="package-cards-container"> <label> <div class="package-card"> <input type="radio" name="posting_package" value="7_days" checked> <div class="package-info"> <div class="package-duration">1 Tuần</div> </div> <div class="package-price">20,000đ</div> </div> </label> <label> <div class="package-card"> <input type="radio" name="posting_package" value="15_days"> <div class="package-info"> <div class="package-duration">15 Ngày</div> </div> <div class="package-price">50,000đ</div> </div> </label> <label> <div class="package-card"> <input type="radio" name="posting_package" value="30_days"> <div class="package-info"> <div class="package-duration">1 Tháng</div> </div> <div class="package-price">100,000đ</div> </div> </label> </div> </div>
+            </div>
+            <div class="post-details-right">
+                <div class="dropdown-section"> <label>Danh mục tin đăng <span class="required">*</span></label> <div id="selected-cat-display" class="selected-cat-display">Xe cộ - Xe máy</div> </div>
+                <div class="form-section">
+                    <h3>Thông tin chi tiết</h3>
+                    <div class="form-group"> <div class="radio-group"> <span>Tình trạng <span class="required">*</span></span> <label><input type="radio" name="tinh_trang" value="used" checked id="radio-used"><span>Đã sử dụng</span></label> <label><input type="radio" name="tinh_trang" value="new" id="radio-new"><span>Mới</span></label> </div> </div>
+                    <div class="form-group"><label for="hang_xe">Hãng xe <span class="required">*</span></label><input type="text" id="hang_xe"></div>
+                    <div class="form-group"><label for="nam_dk">Năm đăng kí <span class="required">*</span></label><input type="number" id="nam_dk"></div>
+                    <div class="form-group"><label for="loai_xe">Loại xe <span class="required">*</span></label><input type="text" id="loai_xe"></div>
+                    <div class="form-group-inline">
+                        <div class="form-group"><label for="dung_tich">Dung tích xe <span class="required">*</span></label><input type="text" id="dung_tich"></div>
+                        <div class="form-group"><label for="bien_so">Biển số xe <span class="required">*</span></label><input type="text" id="bien_so"></div>
+                    </div>
+                    <div id="km-group" class="form-group"> <label for="so_km">Số km đã đi <span class="required">*</span></label> <input type="number" id="so_km"> </div>
+                    <div class="form-group"><label for="gia_ban">Giá bán <span class="required">*</span></label><input type="number" id="gia_ban"></div>
+                </div>
+                <div class="form-section">
+                    <h3>Tiêu đề tin đăng và mô tả chi tiết</h3>
+                    <div class="form-group"><label for="tieu_de">Tiêu đề tin đăng <span class="required">*</span></label><input type="text" id="tieu_de"></div>
+                    <div class="form-group"><label for="mo_ta">Mô tả chi tiết <span class="required">*</span></label><textarea id="mo_ta" placeholder="-Tình trạng giấy tờ&#10;-Thời gian sử dụng xe&#10;-Chính sách bảo hành xe"></textarea></div>
+                </div>
+                <div class="form-section">
+                   <h3>Thông tin người bán</h3>
+                   <div class="form-group"> <label for="tinh_tp_select">Tỉnh/Thành phố <span class="required">*</span></label> <select id="tinh_tp_select"> <option value="">-- Chọn Tỉnh/Thành phố --</option> </select> </div>
+                   <div class="form-group"> <label for="quan_huyen_select">Quận/Huyện <span class="required">*</span></label> <select id="quan_huyen_select"> <option value="">-- Chọn Quận/Huyện --</option> </select> </div>
+                   <div class="form-group"> <label for="phuong_xa_select">Phường/Xã <span class="required">*</span></label> <select id="phuong_xa_select"> <option value="">-- Chọn Phường/Xã --</option> </select> </div>
+                   <div class="form-group"><label for="dia_chi_ct">Địa chỉ chi tiết (Số nhà, tên đường) <span class="required">*</span></label><input type="text" id="dia_chi_ct" placeholder="Ví dụ: 123 Nguyễn Văn Linh"></div>
+               </div>
+               <button class="post-button">Đăng tin</button>
+          </div>
+      </div>
+    </div>
+
+    <script>
+        const radioUsed = document.getElementById('radio-used');
+        const radioNew = document.getElementById('radio-new');
+        const kmGroup = document.getElementById('km-group');
+        const imageInput = document.getElementById('image-upload-input');
+        const imagePreviewArea = document.getElementById('image-preview-area');
+        const videoInput = document.getElementById('video-upload-input');
+        const videoPreviewArea = document.getElementById('video-preview-area');
+
+        // Address Select Elements
+        const provinceSelect = document.getElementById('tinh_tp_select');
+        const districtSelect = document.getElementById('quan_huyen_select');
+        const wardSelect = document.getElementById('phuong_xa_select');
+
+        // Sample Address Data
+        const addressData = {
+            "Hà Nội": {
+                "Ba Đình": ["Phúc Xá", "Trúc Bạch", "Vĩnh Phúc", "Cống Vị", "Điện Biên"],
+                "Hoàn Kiếm": ["Chương Dương", "Cửa Đông", "Cửa Nam", "Đồng Xuân", "Hàng Bạc"],
+                "Tây Hồ": ["Bưởi", "Nhật Tân", "Phú Thượng", "Quảng An", "Xuân La"],
+                "Hai Bà Trưng": ["Bách Khoa", "Bạch Đằng", "Cầu Dền", "Đống Mác"]
+            },
+            "Đà Nẵng": {
+                "Hải Châu": ["Bình Hiên", "Hải Châu I", "Hải Châu II", "Hòa Cường Bắc", "Hòa Cường Nam"],
+                "Sơn Trà": ["An Hải Bắc", "An Hải Đông", "An Hải Tây", "Mân Thái", "Nại Hiên Đông"],
+                "Thanh Khê": ["An Khê", "Chính Gián", "Hòa Khê", "Tam Thuận", "Tân Chính"],
+                "Liên Chiểu": ["Hòa Khánh Bắc", "Hòa Khánh Nam", "Hòa Minh"]
+            },
+            "TP. Hồ Chí Minh": {
+                "Quận 1": ["Bến Nghé", "Bến Thành", "Cầu Kho", "Cầu Ông Lãnh", "Cô Giang"],
+                "Quận 3": ["Phường 1", "Phường 2", "Phường 3", "Phường 4", "Phường 5"],
+                "Quận Bình Thạnh": ["Phường 1", "Phường 2", "Phường 3", "Phường 5", "Phường 6"],
+                "Thành phố Thủ Đức": ["An Khánh", "An Lợi Đông", "Bình Chiểu", "Bình Thọ"]
+            }
+        };
+
+        function populateSelect(selectElement, items) {
+            selectElement.innerHTML = `<option value="">-- Chọn ${selectElement.labels[0].textContent.replace(' *','').replace('Tỉnh/Thành phố','').replace('Quận/Huyện','').replace('Phường/Xã','').trim()} --</option>`; // Reset
+            if (items) {
+                items.forEach(item => {
+                    const option = document.createElement('option');
+                    option.value = item;
+                    option.textContent = item;
+                    selectElement.appendChild(option);
+                });
+            }
+        }
+
+        provinceSelect.addEventListener('change', function() {
+            const selectedProvince = this.value;
+            if (selectedProvince && addressData[selectedProvince]) {
+                populateSelect(districtSelect, Object.keys(addressData[selectedProvince]));
+            } else {
+                populateSelect(districtSelect, []); // Clear districts
+            }
+            populateSelect(wardSelect, []); // Clear wards
+        });
+
+        districtSelect.addEventListener('change', function() {
+            const selectedProvince = provinceSelect.value;
+            const selectedDistrict = this.value;
+            if (selectedProvince && selectedDistrict && addressData[selectedProvince] && addressData[selectedProvince][selectedDistrict]) {
+                populateSelect(wardSelect, addressData[selectedProvince][selectedDistrict]);
+            } else {
+                populateSelect(wardSelect, []); // Clear wards
+            }
+        });
+
+
+        function toggleKmInput() {
+            if (radioUsed.checked) {
+                kmGroup.style.display = 'block';
+                kmGroup.classList.remove('hidden');
+            } else {
+                kmGroup.style.display = 'none';
+                kmGroup.classList.add('hidden');
+            }
+        }
+
+        function handleImageUpload(event) {
+            const files = event.target.files;
+            imagePreviewArea.innerHTML = '';
+            if (files.length > 6) {
+                alert("Bạn chỉ có thể đăng tối đa 6 hình ảnh.");
+                imageInput.value = ""; return;
+            }
+            for (const file of files) {
+                if (file.type.startsWith('image/')) {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        const previewItem = document.createElement('div');
+                        previewItem.classList.add('preview-item');
+                        const img = document.createElement('img');
+                        img.src = e.target.result;
+                        const removeBtn = document.createElement('button');
+                        removeBtn.classList.add('remove-btn');
+                        removeBtn.innerHTML = '&times;';
+                        removeBtn.onclick = () => { previewItem.remove(); };
+                        previewItem.appendChild(img);
+                        previewItem.appendChild(removeBtn);
+                        imagePreviewArea.appendChild(previewItem);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            }
+        }
+
+         function handleVideoUpload(event) {
+            const file = event.target.files[0];
+            videoPreviewArea.innerHTML = '';
+            if (file && file.type.startsWith('video/')) {
+                const videoURL = URL.createObjectURL(file);
+                const previewItem = document.createElement('div');
+                previewItem.classList.add('preview-item');
+                const video = document.createElement('video');
+                video.src = videoURL;
+                video.controls = true;
+                 const removeBtn = document.createElement('button');
+                 removeBtn.classList.add('remove-btn');
+                 removeBtn.innerHTML = '&times;';
+                 removeBtn.onclick = () => { previewItem.remove(); URL.revokeObjectURL(videoURL); videoInput.value = ""; };
+                 previewItem.appendChild(video);
+                 previewItem.appendChild(removeBtn);
+                 videoPreviewArea.appendChild(previewItem);
+            } else if (file) {
+                 alert("Vui lòng chỉ chọn file video."); videoInput.value = "";
+            }
+         }
+        radioUsed.addEventListener('change', toggleKmInput);
+        radioNew.addEventListener('change', toggleKmInput);
+        imageInput.addEventListener('change', handleImageUpload); // Function definition needed or remove if not used
+        videoInput.addEventListener('change', handleVideoUpload); // Function definition needed or remove if not used
+
+        window.onload = function() {
+            const catDisplay = document.getElementById('selected-cat-display');
+            if (catDisplay) { catDisplay.textContent = 'Xe cộ - Xe máy'; }
+            toggleKmInput();
+            populateSelect(provinceSelect, Object.keys(addressData)); // Populate provinces on load
+        };
+    </script>
+  </body>
+</html>

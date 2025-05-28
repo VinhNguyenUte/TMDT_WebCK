@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chat - H! TMDT</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --primary-accent: #ffffff;
+        --header-bg: #2b6eff; 
+        --footer-bg: #20232a;
+        --footer-bottom-bg: #1a1d23;
+        --main-bg: #f4f6f8; /* Nền chính của toàn trang, hơi xám nhạt */
+        --card-bg: #ffffff; 
+        --text-light: #495057; 
+        --text-lighter: #212529; /* Đen đậm hơn cho tiêu đề, tên */
+        --text-muted: #6c757d; 
+        --text-link-blue: var(--header-bg);
+        --border-color: #dee2e6; /* Màu viền chung, nhạt hơn */
+        --light-border-color: #e9ecef;
+        --input-bg: #ffffff;
+        --input-border: #ced4da; 
+        --input-border-focus: #86b7fe; 
+        --input-placeholder-color: #adb5bd;
+        --white-color: #ffffff;
+        
+        /* Chat specific colors */
+        --chat-bg: var(--main-bg); /* Nền cho toàn bộ giao diện chat */
+        --chat-list-bg: var(--white-color);
+        --chat-window-bg: var(--white-color);
+        --chat-header-border: var(--light-border-color);
+        --search-chat-bg: #f8f9fa;
+
+        --avatar-border: #dee2e6;
+        
+        --message-received-bg: #f1f3f5; /* Xám nhạt cho tin nhắn nhận */
+        --message-sent-bg: #ffe0f0;     /* Hồng nhạt cho tin nhắn gửi (như hình) */
+        --message-sent-text: #c92a7a;   /* Chữ đậm hơn cho tin nhắn gửi màu hồng */
+
+        --timestamp-color: #868e96;
+        --product-price-chat: #d0021b;
+        --active-chat-item-bg: #e9f5ff; /* Nền khi chọn 1 conversation */
+        --quick-reply-bg: #f1f3f5;
+        --quick-reply-text: var(--header-bg);
+        --attachment-icon-color: #fd7e14; /* Màu cam cho icon attachment */
+        --send-icon-color: #868e96; /* Màu xám cho icon gửi */
+        --online-indicator: #28a745; /* Màu xanh cho trạng thái online */
+        --btn-create-order-bg: #007bff; /* Màu nút Tạo đơn hàng */
+      }
+
+      * { box-sizing: border-box; margin: 0; padding: 0;
+        -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+      body { font-family: "Inter", sans-serif; line-height: 1.6;
+        color: var(--text-light); background-color: var(--main-bg); }
+      a { text-decoration: none; color: var(--text-link-blue); }
+      a:hover { text-decoration: underline; }
+      img { max-width: 100%; display: block; }
+
+      /* Header Styles (Giữ nguyên) */
+      .header { background-color: var(--header-bg); padding: 1rem 2rem; display: flex;
+        justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; }
+      .header-left { display: flex; align-items: center; gap: 1.5rem; }
+      .header-logo img { height: 35px; }
+      .header-menu-toggle { display: none; background: none; border: none;
+        color: var(--white-color); font-size: 1.5rem; cursor: pointer; }
+      .search-bar { display: flex; align-items: center; background-color: var(--input-bg);
+        border-radius: 0.5rem; overflow: hidden; width: 300px; }
+      .search-bar input { outline: none;border: none; padding: 0.75rem 1rem; background: transparent;
+        color: var(--text-light); width: 100%; font-size: 0.9rem;}
+      .search-bar input::placeholder { color: var(--input-placeholder-color); }
+      .search-bar button { background-color: transparent; border: none; padding: 0.75rem 1rem;
+        color: var(--text-light); cursor: pointer; transition: color 0.2s ease; }
+      .search-bar button:hover { color: var(--header-bg); }
+      .header-right { display: flex; align-items: center; gap: 1.5rem; }
+      .header-links a { color: var(--primary-accent); font-size: 0.95rem;
+        white-space: nowrap; transition: color 0.2s ease; }
+      .header-links a:hover { color: rgba(255, 255, 255, 0.8); text-decoration: none; }
+      .header-icons { display: flex; gap: 1rem; align-items: center; }
+      .header-icons .icon-wrapper { position: relative; cursor: pointer; display: inline-block; vertical-align: middle;}
+      .header-icons a.icon-wrapper { color: var(--white-color); text-decoration: none; }
+      .header-icons .icon-wrapper i { color: var(--white-color); font-size: 1.3rem;
+        transition: color 0.2s ease; vertical-align: middle; }
+      .header-icons .icon-wrapper:hover i,
+      .header-icons a.icon-wrapper:hover i { color: rgba(255, 255, 255, 0.8); }
+      .header-icons .badge { position: absolute; top: -8px; right: -8px; background-color: #e53e3e;
+        color: var(--white-color); font-size: 0.7rem; padding: 0.2rem 0.4rem;
+        border-radius: 50%; min-width: 18px; text-align: center; }
+      .header-buttons .btn { padding: 0.75rem 1.25rem; border-radius: 0.5rem; font-weight: 500;
+        cursor: pointer; border: none; white-space: nowrap; display: inline-flex;
+        align-items: center; gap: 0.5rem; transition: background-color 0.2s ease, color 0.2s ease; font-size:0.9rem;}
+      .header-buttons .btn i { font-size: 1rem; }
+      .header-buttons .btn-post-news { background-color: var(--white-color); color: var(--header-bg); }
+      .header-buttons .btn-post-news:hover { background-color: rgba(255,255,255,0.9); }
+      .header-buttons .btn-outline { background-color: transparent; border: 1px solid var(--primary-accent);
+        color: var(--primary-accent); }
+      .header-buttons .btn-outline:hover { background-color: var(--primary-accent); color: var(--header-bg); }
+
+      /* Main Content Area for Chat Interface */
+      .main-content-wrapper-chat { /* Wrapper mới cho giao diện chat */
+        max-width: 1200px; 
+        margin: 1rem auto; /* Giảm margin top/bottom */
+        background-color: var(--chat-list-bg); /* Nền trắng cho cả khu vực chat */
+        border-radius: 0.5rem;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+        display: flex;
+        height: calc(100vh - 80px - 2rem); /* Header height (approx 80px) - margins */
+        min-height: 600px; /* Chiều cao tối thiểu */
+        overflow: hidden; /* Để các cột không tràn ra ngoài */
+      }
+
+      /* Chat List Column (Left) */
+      .chat-list-column {
+        width: 320px; /* Độ rộng cố định cho cột danh sách chat */
+        border-right: 1px solid var(--border-color);
+        display: flex;
+        flex-direction: column;
+        background-color: var(--chat-list-bg);
+      }
+      .chat-search-bar {
+        padding: 0.75rem;
+        border-bottom: 1px solid var(--border-color);
+      }
+      .chat-search-bar input {
+        width: 100%;
+        padding: 0.6rem 1rem;
+        border: 1px solid var(--input-border);
+        border-radius: 0.375rem;
+        background-color: var(--input-bg); /* Nền trắng cho search bar */
+        font-size: 0.875rem;
+      }
+      .chat-search-bar input::placeholder {
+        color: var(--input-placeholder-color);
+      }
+      .conversation-list {
+        flex-grow: 1;
+        overflow-y: auto;
+      }
+      .conversation-item {
+        display: flex;
+        align-items: center;
+        padding: 0.75rem;
+        cursor: pointer;
+        border-bottom: 1px solid var(--light-border-color);
+        transition: background-color 0.15s ease;
+      }
+      .conversation-item:hover {
+        background-color: var(--search-chat-bg);
+      }
+      .conversation-item.active {
+        background-color: var(--active-chat-item-bg);
+      }
+      .conversation-item .avatar {
+        width: 48px; height: 48px; border-radius: 50%;
+        margin-right: 0.75rem; overflow: hidden; border: 1px solid var(--avatar-border);
+      }
+      .conversation-item .avatar img { width: 100%; height: 100%; object-fit: cover; }
+      .conversation-details { flex-grow: 1; overflow: hidden; }
+      .conversation-details .name { font-weight: 600; color: var(--text-lighter); font-size: 0.9rem;
+        display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
+      .conversation-details .message-snippet { font-size: 0.8rem; color: var(--text-muted);
+        display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
+      .conversation-details .time { font-size: 0.75rem; color: var(--text-muted); margin-top:2px;}
+      .conversation-item .product-thumbnail-small {
+        width: 48px; height: 48px; border-radius: 0.25rem;
+        margin-left: 0.5rem; overflow: hidden; flex-shrink: 0;
+      }
+      .conversation-item .product-thumbnail-small img { width: 100%; height: 100%; object-fit: cover; }
+
+      /* Chat Window Column (Right) */
+      .chat-window-column {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        background-color: var(--chat-window-bg);
+      }
+      /* Placeholder cho khi chưa chọn chat */
+      .chat-placeholder {
+        flex-grow: 1; display: flex; flex-direction: column;
+        align-items: center; justify-content: center; text-align: center; padding: 2rem;
+      }
+      .chat-placeholder img { max-width: 250px; margin-bottom: 1rem; }
+      .chat-placeholder p { font-size: 1.1rem; color: var(--text-muted); font-weight: 500; }
+
+      /* Active Chat Window */
+      .active-chat-window { display: flex; flex-direction: column; height: 100%; }
+      .chat-header {
+        display: flex; align-items: center; padding: 0.75rem 1rem;
+        border-bottom: 1px solid var(--chat-header-border); flex-shrink: 0;
+      }
+      .chat-header .avatar { width: 40px; height: 40px; border-radius: 50%; margin-right: 0.75rem;
+        overflow: hidden; border: 1px solid var(--avatar-border); }
+      .chat-header .avatar img { width: 100%; height: 100%; object-fit: cover; }
+      .chat-header .user-info .name { font-weight: 600; color: var(--text-lighter); font-size: 1rem; }
+      .chat-header .user-info .status { font-size: 0.75rem; color: var(--online-indicator); }
+      .chat-header .options-menu { margin-left: auto; color: var(--text-muted); cursor: pointer; font-size: 1.2rem; }
+      
+      .chat-product-bar {
+        display: flex; align-items: center; padding: 0.75rem 1rem;
+        border-bottom: 1px solid var(--light-border-color); flex-shrink: 0;
+        background-color: var(--search-chat-bg); /* Nền hơi xám */
+      }
+      .chat-product-bar img { width: 40px; height: 40px; border-radius: 0.25rem; margin-right: 0.75rem; object-fit: cover;}
+      .chat-product-bar .product-details-chat .name { font-weight: 500; font-size: 0.9rem; color: var(--text-lighter); }
+      .chat-product-bar .product-details-chat .price { font-weight: 600; font-size: 0.9rem; color: var(--product-price-chat); }
+      .btn-create-order {
+        margin-left: auto; padding: 0.4rem 1rem; font-size: 0.85rem;
+        background-color: var(--btn-create-order-bg); color: var(--white-color);
+        border: none; border-radius: 0.25rem; cursor: pointer; font-weight: 500;
+      }
+      .btn-create-order:hover { background-color: #0069d9; }
+
+      .messages-area {
+        flex-grow: 1; padding: 1rem; overflow-y: auto;
+        display: flex; flex-direction: column;
+      }
+      .timestamp-separator {
+        text-align: center; font-size: 0.75rem; color: var(--timestamp-color);
+        margin: 0.75rem 0;
+      }
+      .message-bubble {
+        max-width: 70%; padding: 0.6rem 0.9rem; border-radius: 1rem;
+        margin-bottom: 0.25rem; line-height: 1.4; font-size:0.9rem;
+      }
+      .message-bubble .message-text { word-wrap: break-word; }
+      .message-bubble .message-timestamp {
+        font-size: 0.7rem; color: var(--timestamp-color);
+        display: block; margin-top: 0.25rem;
+      }
+      .message-bubble.received {
+        background-color: var(--message-received-bg); color: var(--text-lighter);
+        align-self: flex-start; border-bottom-left-radius: 0.25rem;
+      }
+      .message-bubble.received .message-timestamp { text-align: left; }
+      .message-bubble.sent {
+        background-color: var(--message-sent-bg); color: var(--message-sent-text);
+        align-self: flex-end; border-bottom-right-radius: 0.25rem;
+      }
+      .message-bubble.sent .message-timestamp { text-align: right; }
+
+      .message-input-area {
+        border-top: 1px solid var(--border-color); padding: 0.75rem 1rem;
+        flex-shrink: 0; background-color: var(--white-color);
+      }
+      .quick-replies { display: flex; gap: 0.5rem; margin-bottom: 0.75rem; flex-wrap: wrap;}
+      .quick-replies button {
+        padding: 0.35rem 0.75rem; font-size: 0.8rem; border-radius: 1rem;
+        background-color: var(--quick-reply-bg); color: var(--quick-reply-text);
+        border: 1px solid var(--light-border-color); cursor: pointer; font-weight:500;
+      }
+      .quick-replies button:hover { background-color: #e2e6ea;}
+      .input-controls { display: flex; align-items: center; gap: 0.75rem; }
+      .input-controls .btn-attachment, .input-controls .btn-location {
+        background: none; border: none; font-size: 1.3rem;
+        color: var(--attachment-icon-color); cursor: pointer; padding: 0.25rem;
+      }
+      .input-controls textarea { /* Đổi input thành textarea */
+        flex-grow: 1; padding: 0.6rem 1rem; border: 1px solid var(--input-border);
+        border-radius: 1.25rem; /* Bo tròn nhiều hơn cho input chat */
+        resize: none; /* Không cho resize textarea */
+        min-height: 40px; /* Chiều cao tối thiểu */
+        max-height: 100px; /* Chiều cao tối đa trước khi scroll */
+        font-size: 0.9rem;
+        line-height: 1.4;
+        overflow-y: auto; /* Scroll nếu nhiều dòng */
+      }
+      .input-controls textarea::placeholder { color: var(--input-placeholder-color); }
+      .input-controls .btn-send {
+        background: none; border: none; font-size: 1.5rem;
+        color: var(--send-icon-color); cursor: pointer; padding: 0.25rem;
+      }
+      .input-controls .btn-send:hover { color: var(--header-bg); }
+
+      /* Footer (Giữ nguyên) */
+      .main-footer { margin-top:0; /* Bỏ margin top nếu chat interface là full height */ }
+      .footer-top { background-color: var(--footer-bg); padding: 2.5rem 0; display: flex;
+        justify-content: center; align-items: center; gap: 3rem; flex-wrap: wrap;
+        border-top: 1px solid rgba(255, 255, 255, 0.1); }
+      .footer-feature { display: flex; align-items: center; gap: 0.75rem;
+        color: #ffffff; font-size: 0.95rem; }
+      .footer-feature i { font-size: 2rem; color: var(--primary-accent); }
+      .footer-bottom { background-color: var(--footer-bottom-bg); padding: 2.5rem 2rem; display: flex;
+        justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 2rem; }
+      .footer-section { flex: 1; min-width: 200px; max-width: 300px; }
+      .footer-logo img { height: 40px; margin-bottom: 1rem; }
+      .footer-section p { color: #ffffff; font-size: 0.9rem; margin-bottom: 1rem; }
+      .footer-section h4 { color: #ffffff; font-size: 1.1rem; margin-bottom: 1rem; }
+      .footer-section ul { list-style: none; }
+      .footer-section ul li { margin-bottom: 0.5rem; }
+      .footer-section ul a { color: #ffffff; font-size: 0.9rem; transition: color 0.2s ease; }
+      .footer-section ul a:hover { color: var(--input-border-focus); text-decoration: none; }
+      .payment-methods img { height: 30px; margin-right: 0.5rem; background-color: white; 
+        border-radius: 3px; padding: 2px; }
+      .social-icons { display: flex; gap: 1rem; margin-top: 1rem; }
+      .social-icons a { color: #ffffff; font-size: 1.5rem; transition: color 0.2s ease; }
+      .social-icons a:hover { color: var(--input-border-focus); }
+
+      /* Responsive adjustments */
+      @media (max-width: 768px) {
+        .main-content-wrapper-chat {
+            flex-direction: column;
+            height: calc(100vh - 65px - 1rem); /* Điều chỉnh chiều cao cho header mobile */
+            margin: 0.5rem auto;
+        }
+        .chat-list-column {
+            width: 100%;
+            height: 250px; /* Giới hạn chiều cao cho danh sách chat trên mobile */
+            border-right: none;
+            border-bottom: 1px solid var(--border-color);
+        }
+        /* Có thể cần JS để ẩn/hiện danh sách chat và chỉ hiển thị cửa sổ chat đang active trên mobile */
+        .header { padding: 0.75rem 1rem; }
+        .header-logo img { height: 30px; }
+        .search-bar { width: 200px; }
+        .header-links { display: none; } /* Ẩn bớt link trên mobile */
+        .header-menu-toggle {display: block;} /* Hiển thị menu toggle */
+      }
+      
+      @media (max-width: 480px) {
+          .chat-list-column { height: 200px; }
+          .conversation-item .avatar, .conversation-item .product-thumbnail-small { width: 40px; height: 40px; }
+          .conversation-details .name {font-size: 0.85rem;}
+          .conversation-details .message-snippet, .conversation-details .time {font-size: 0.75rem;}
+          .quick-replies button { font-size: 0.75rem; padding: 0.25rem 0.6rem; }
+          .input-controls textarea {padding: 0.5rem 0.8rem; min-height:38px;}
+      }
+
+    </style>
+  </head>
+  <body>
+    <header class="header">
+      <div class="header-left">
+        <a href="#" class="header-logo"><img src="https://bizweb.dktcdn.net/100/479/080/themes/897121/assets/logo.png?1739930514069" alt="H! TMDT Logo"/></a>
+        <button class="header-menu-toggle" aria-label="Toggle menu"><i class="fas fa-bars"></i></button>
+        <div class="search-bar"><input type="text" placeholder="Tìm kiếm sản phẩm" /><button><i class="fas fa-search"></i></button></div>
+      </div>
+      <div class="header-right">
+        <div class="header-links"><a href="#">Đóng góp ý kiến</a><a href="#">Trợ giúp</a></div>
+        <div class="header-icons">
+          <a class="icon-wrapper"><i class="fas fa-bell"></i><span class="badge">2</span></a>
+          <a href="/Saved_Product/saved_products.html" class="icon-wrapper"><i class="fas fa-shopping-cart"></i><span class="badge">2</span></a>
+          <a href="/Chat/chat.html" class="icon-wrapper"><i class="fas fa-comment-dots"></i><span class="badge">3</span></a>
+          <a href="/Profile/profile_edit.html" class="icon-wrapper"><i class="fas fa-user"></i></a>
+        </div>
+        <div class="header-buttons">
+          <button class="btn btn-outline"><i class="fas fa-user"></i> Quản lý tin</button>
+          <button class="btn btn-post-news"><i class="fas fa-pen"></i> Đăng Tin</button>
+        </div>
+      </div>
+    </header>
+
+    <div class="main-content-wrapper-chat">
+        <div class="chat-list-column">
+            <div class="chat-search-bar">
+                <input type="text" placeholder="Nhập ít nhất 3 kí tự để bắt đầu tìm kiếm">
+            </div>
+            <div class="conversation-list">
+                <div class="conversation-item active"> <div class="avatar"><img src="https://i.pravatar.cc/150?u=shop1" alt="Avatar"></div>
+                    <div class="conversation-details">
+                        <span class="name">Di động giá rẻ</span>
+                        <span class="message-snippet">Redmi 12 5G có NFC</span>
+                        <span class="time">4 giờ trước</span>
+                    </div>
+                    <div class="product-thumbnail-small"><img src="https://dienthoaihay.vn/images/products/2024/09/05/large/redmi-12-5g---den_1725531398.jpg.jpg" alt="Product"></div>
+                </div>
+                <div class="conversation-item">
+                    <div class="avatar"><img src="https://i.pravatar.cc/150?u=user2" alt="Avatar"></div>
+                    <div class="conversation-details">
+                        <span class="name">Nguyễn Hải</span>
+                        <span class="message-snippet">Honda ab 160 bs 43 siêu...</span>
+                         <span class="time">1 giờ trước</span>
+                    </div>
+                    <div class="product-thumbnail-small"><img src="https://hondadoanhthu.com.vn/wp-content/uploads/2021/01/db-xanh-den-vang.png" alt="Product"></div>
+                </div>
+                 <div class="conversation-item">
+                    <div class="avatar"><img src="https://i.pravatar.cc/150?u=shop_bahuan" alt="Avatar"></div>
+                    <div class="conversation-details">
+                        <span class="name">Bá Huấn</span>
+                        <span class="message-snippet">Ok bạn, để mình lên đơn...</span>
+                         <span class="time">2 giờ trước</span>
+                    </div>
+                    <div class="product-thumbnail-small"><img src="https://dochoiotogiare.com/wp-content/uploads/2018/09/day-sac-dien-thoai-da-nang-9-600x600.png" alt="Product"></div>
+                </div>
+                </div>
+        </div>
+
+        <div class="chat-window-column">
+            <div class="active-chat-window">
+                <div class="chat-header">
+                    <div class="avatar"><img src="https://i.pravatar.cc/150?u=shop_bahuan" alt="Avatar"></div>
+                    <div class="user-info">
+                        <span class="name">Bá Huấn</span>
+                        <span class="status">Hoạt động 2 giờ trước</span>
+                    </div>
+                    <div class="options-menu"><i class="fas fa-ellipsis-v"></i></div>
+                </div>
+                <div class="chat-product-bar">
+                    <img src="https://dienthoaihay.vn/images/products/2024/09/05/large/redmi-12-5g---den_1725531398.jpg.jpg" alt="Product">
+                    <div class="product-details-chat">
+                        <span class="name">Redmi 12 5G có NFC</span>
+                        <span class="price">3.000.000 đ</span>
+                    </div>
+                    <button class="btn-create-order">Tạo đơn hàng</button>
+                </div>
+                <div class="messages-area">
+                    <div class="timestamp-separator">Chủ nhật, 09/03/2025</div>
+                    <div class="message-bubble sent">
+                        <div class="message-text">Xin chào</div>
+                        <div class="message-timestamp">9:30</div>
+                    </div>
+                    <div class="message-bubble received">
+                        <div class="message-text">Điện thoại này còn hay đã bán rồi ạ?</div>
+                        <div class="message-timestamp">9:31</div>
+                    </div>
+                     <div class="message-bubble sent">
+                        <div class="message-text">Để mình lên đơn cho bạn luôn nhé</div>
+                        <div class="message-timestamp">9:31</div>
+                    </div>
+                    </div>
+                <div class="message-input-area">
+                    <div class="quick-replies">
+                        <button>Hi</button>
+                        <button>Sản phẩm này còn không?</button>
+                        <button>Bạn có ship hàng không?</button>
+                        <button>Sản phẩm này còn</button>
+                    </div>
+                    <div class="input-controls">
+                        <button class="btn-attachment" aria-label="Đính kèm ảnh"><i class="fas fa-image"></i></button>
+                        <button class="btn-location" aria-label="Gửi vị trí"><i class="fas fa-map-marker-alt"></i></button>
+                        <textarea placeholder="Nhập tin nhắn"></textarea>
+                        <button class="btn-send" aria-label="Gửi tin nhắn"><i class="fas fa-paper-plane"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="main-footer">
+      <div class="footer-top">
+        <div class="footer-feature"><i class="fas fa-truck-fast"></i><span>Miễn phí vận chuyển <br />Cho đơn hàng trên 500K</span></div>
+        <div class="footer-feature"><i class="fas fa-shield-alt"></i><span>Thanh toán an toàn <br />100% bảo mật</span></div>
+        <div class="footer-feature"><i class="fas fa-headset"></i><span>Hỗ trợ khách hàng 24/7 <br />Liên hệ với chúng tôi ngay</span></div>
+        <div class="footer-feature"><i class="fas fa-undo-alt"></i><span>Miễn phí hoàn hàng <br />Nếu sản phẩm có lỗi</span></div>
+      </div>
+      <div class="footer-bottom">
+        <div class="footer-section">
+          <div class="footer-logo"><img src="https://bizweb.dktcdn.net/100/479/080/themes/897121/assets/logo.png?1739930514069" alt="H! TMDT Logo"/></div>
+          <p>H!TMDT là sàn thương mại điện tử hàng đầu Việt Nam, mang đến trải nghiệm mua sắm tiện lợi và an toàn.</p>
+        </div>
+        <div class="footer-section"><h4>Hỗ trợ khách hàng</h4><ul><li><a href="#">Trung tâm trợ giúp</a></li><li><a href="#">An toàn mua bán</a></li><li><a href="#">Hỗ trợ khách hàng</a></li></ul></div>
+        <div class="footer-section"><h4>Hướng dẫn</h4><ul><li><a href="#">Hướng dẫn mua hàng</a></li><li><a href="#">Hướng dẫn trả góp</a></li><li><a href="#">Hướng dẫn chuyển khoản</a></li><li><a href="#">Hướng dẫn hoàn hàng</a></li></ul></div>
+        <div class="footer-section"><h4>Chấp nhận thanh toán</h4>
+          <div class="payment-methods">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5TmYtrb-zQEppk0up4S5LDpCazv20kY7eMQ&s" alt="MasterCard"/>
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQw7cK1qUl1Vw4nBtRIvPVRV4vQ_pHID4lXOA&s" alt="Visa"/>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/JCB_logo.svg/1280px-JCB_logo.svg.png" alt="JCB"/>
+          </div>
+          <div class="social-icons">
+            <a href="#" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+            <a href="#" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

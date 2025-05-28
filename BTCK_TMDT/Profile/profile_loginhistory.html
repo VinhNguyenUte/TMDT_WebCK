@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quản lý lịch sử đăng nhập - H! TMDT</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --primary-accent: #ffffff;
+        --header-bg: #2b6eff; /* Màu xanh dương chính của theme */
+        --footer-bg: #20232a;
+        --footer-bottom-bg: #1a1d23;
+        --main-bg: #ebebeb; 
+        --card-bg: #ffffff; 
+        --text-light: #3f3f3f; 
+        --text-lighter: #000000; 
+        --text-muted: #6c757d; 
+        --border-color: #5c5c5c; 
+        --light-border-color: #e0e0e0; 
+        --input-bg: #ffffff;
+        --input-border: #ced4da; 
+        --input-border-focus: #86b7fe; 
+        --button-hover: #268cbd;
+        --white-color: #ffffff;
+        
+        --warning-bg: #fff3cd; 
+        --warning-border: #ffeeba; 
+        --warning-text: #856404; 
+        --btn-grey-bg: #e9ecef; 
+        --btn-grey-text: #212529; 
+        --btn-grey-border: #ced4da; 
+        --toggle-bg-inactive: #ccc; 
+
+        /* Màu mới cho trang này */
+        --btn-logout-small-border: #adb5bd; /* Viền cho nút đăng xuất nhỏ */
+        --btn-logout-small-text: #495057;  /* Chữ cho nút đăng xuất nhỏ */
+        --device-icon-color: #495057; /* Màu cho icon thiết bị */
+        /* Màu cho nút Đăng xuất */
+        --logout-btn-bg: #dc3545; /* Màu đỏ cho sự chú ý (Bootstrap danger) */
+        --logout-btn-text: var(--white-color);
+        --logout-btn-hover-bg: #c82333; /* Màu đỏ đậm hơn khi hover */
+        --logout-btn-border: #dc3545;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        line-height: 1.6;
+        color: var(--text-light);
+        background-color: var(--main-bg);
+      }
+
+      a {
+        text-decoration: none;
+        color: var(--header-bg); 
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      input,
+      button,
+      textarea,
+      select {
+        font-family: "Inter", sans-serif;
+        font-size: 1rem;
+      }
+
+      /* Header */
+      .header {
+        background-color: var(--header-bg);
+        padding: 1rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+
+      .header-left {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+      }
+
+      .header-logo img {
+        height: 35px;
+      }
+
+      .header-menu-toggle {
+        display: none;
+        background: none;
+        border: none;
+        color: var(--white-color);
+        font-size: 1.5rem;
+        cursor: pointer;
+      }
+
+      .search-bar {
+        display: flex;
+        align-items: center;
+        background-color: var(--input-bg);
+        border-radius: 0.5rem;
+        overflow: hidden;
+        width: 300px;
+      }
+
+      .search-bar input {
+        outline: none;
+        border: none;
+        padding: 0.75rem 1rem;
+        background: transparent;
+        color: var(--text-light);
+        width: 100%;
+      }
+
+      .search-bar input::placeholder {
+        color: #757575; 
+      }
+
+      .search-bar button {
+        background-color: transparent;
+        border: none;
+        padding: 0.75rem 1rem;
+        color: var(--text-light); 
+        cursor: pointer;
+        transition: color 0.2s ease;
+      }
+
+      .search-bar button:hover {
+        color: var(--header-bg); 
+      }
+
+      .header-right {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+      }
+
+      .header-links a {
+        color: var(--primary-accent); 
+        font-size: 0.95rem;
+        white-space: nowrap;
+        transition: color 0.2s ease;
+      }
+
+      .header-links a:hover {
+        color: rgba(255, 255, 255, 0.8); 
+        text-decoration: none;
+      }
+
+      .header-icons {
+        display: flex;
+        gap: 1rem;
+      }
+
+      .header-icons .icon-wrapper {
+        position: relative;
+        cursor: pointer;
+      }
+
+      .header-icons .icon-wrapper i {
+        color: #ffffff;
+        font-size: 1.3rem;
+        transition: color 0.2s ease;
+      }
+
+      .header-icons .icon-wrapper i:hover {
+        color: rgba(255, 255, 255, 0.8); 
+      }
+
+      .header-icons .badge {
+        position: absolute;
+        top: -8px;
+        right: -8px;
+        background-color: #e53e3e;
+        color: var(--white-color);
+        font-size: 0.7rem;
+        padding: 0.2rem 0.4rem;
+        border-radius: 50%;
+        min-width: 18px;
+        text-align: center;
+      }
+
+      .header-buttons .btn {
+        padding: 0.75rem 1.25rem;
+        border-radius: 0.5rem;
+        font-weight: 500;
+        cursor: pointer;
+        border: none;
+        white-space: nowrap;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: background-color 0.2s ease, color 0.2s ease; 
+      }
+
+      .header-buttons .btn i {
+        font-size: 1rem;
+      }
+
+      .header-buttons .btn-primary { /* Nút Đăng Tin / Nút Đăng xuất tất cả */
+        background-color: var(--header-bg); 
+        color: var(--white-color);
+        /* Nếu nút Đăng Tin trong header có style khác, cần class riêng */
+      }
+      /* Style riêng cho nút Đăng Tin ở header nếu cần */
+      .header-buttons .btn-post-news {
+          background-color: var(--white-color); /* Nền trắng */
+          color: var(--header-bg); /* Chữ xanh */
+      }
+      .header-buttons .btn-post-news:hover {
+          background-color: rgba(255,255,255,0.9);
+      }
+
+
+      .header-buttons .btn-outline {
+        background-color: transparent;
+        border: 1px solid var(--primary-accent);
+        color: var(--primary-accent);
+      }
+
+      .header-buttons .btn-outline:hover {
+        background-color: var(--primary-accent);
+        color: var(--header-bg); 
+      }
+
+      /* Nút Đăng xuất trong Sidebar */
+      .sidebar-logout {
+        margin-top: 1.5rem; /* Khoảng cách với danh sách nav ở trên */
+        padding-top: 1rem; /* Thêm padding nếu có border top */
+        border-top: 1px solid var(--light-border-color); /* Đường kẻ phân cách nhẹ nhàng */
+      }
+      .btn-logout {
+        display: flex; 
+        align-items: center;
+        justify-content: center; 
+        gap: 0.6rem; /* Khoảng cách giữa icon và chữ */
+        width: 100%;
+        padding: 0.75rem 1rem; /* Padding giống các nút khác */
+        border-radius: 0.5rem;
+        font-weight: 500;
+        text-decoration: none;
+        transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+        background-color: var(--logout-btn-bg);
+        color: var(--logout-btn-text);
+        border: 1px solid var(--logout-btn-border);
+        text-align: center;
+      }
+      .btn-logout i {
+        font-size: 0.9em; /* Kích thước icon tương đối với chữ */
+      }
+      .btn-logout:hover {
+        background-color: var(--logout-btn-hover-bg);
+        border-color: var(--logout-btn-hover-bg);
+        color: var(--logout-btn-text);
+        text-decoration: none;
+      }
+
+      /* Main Content Layout */
+      .main-content-wrapper {
+        display: flex;
+        max-width: 1200px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+        gap: 2rem;
+        min-height: 60vh;
+      }
+
+      /* Sidebar */
+      .sidebar {
+        flex: 0 0 250px;
+        background-color: var(--card-bg);
+        border-radius: 0.75rem;
+        padding: 1.5rem;
+        height: fit-content;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05); 
+      }
+
+      .sidebar-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: var(--text-lighter); 
+        margin-bottom: 1rem;
+        padding-bottom: 0.75rem;
+        border-bottom: 1px solid var(--light-border-color); 
+      }
+
+      .sidebar-nav ul {
+        list-style: none;
+      }
+
+      .sidebar-nav li {
+        margin-bottom: 0.25rem; 
+      }
+
+      .sidebar-nav a {
+        display: block;
+        padding: 0.85rem 1rem;
+        color: var(--text-light); 
+        font-weight: 500;
+        border-radius: 0.5rem;
+        transition: background-color 0.2s ease, color 0.2s ease;
+      }
+
+      .sidebar-nav a:hover {
+        background-color: rgba(43, 110, 255, 0.1); 
+        color: var(--header-bg); 
+        text-decoration: none;
+      }
+
+      .sidebar-nav a.active {
+        background-color: var(--primary-accent); 
+        color: var(--header-bg); 
+        font-weight: 600; 
+        box-shadow: 0 1px 3px rgba(43,110,255,0.2); 
+      }
+
+      /* Main Profile Content */
+      .profile-content {
+        flex-grow: 1;
+        background-color: var(--card-bg);
+        border-radius: 0.75rem;
+        padding: 2rem;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05); 
+      }
+      
+      .profile-section-title {
+        font-size: 1.5rem; 
+        font-weight: 600;
+        color: var(--text-lighter); 
+        margin-bottom: 1.5rem; 
+      }
+            
+      /* CSS MỚI CHO TRANG QUẢN LÝ LỊCH SỬ ĐĂNG NHẬP */
+      .login-history-section {
+        margin-bottom: 2rem;
+      }
+      .login-history-section .section-subtitle {
+        font-size: 1.15rem;
+        font-weight: 600;
+        color: var(--text-lighter);
+        margin-bottom: 1rem;
+        padding-bottom: 0.75rem;
+        border-bottom: 1px solid var(--light-border-color);
+      }
+
+      .login-history-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 0;
+        border-bottom: 1px solid var(--light-border-color);
+      }
+      .login-history-item:last-child {
+        border-bottom: none; /* Bỏ viền cho item cuối cùng trong một danh sách */
+      }
+      #loginHistoryList .login-history-item:last-child { /* Cụ thể cho danh sách lịch sử */
+           border-bottom: none; 
+      }
+
+
+      .device-info {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+      .device-icon {
+        font-size: 1.8rem; /* Kích thước icon thiết bị */
+        color: var(--device-icon-color);
+        width: 30px; /* Đảm bảo icon chiếm không gian cố định */
+        text-align: center;
+      }
+      .info-text .device-name {
+        display: block;
+        font-weight: 500;
+        color: var(--text-lighter);
+        font-size: 0.95rem;
+      }
+      .info-text .login-details {
+        display: block;
+        font-size: 0.85rem;
+        color: var(--text-muted);
+      }
+
+      .btn-logout-small {
+        padding: 0.3rem 0.8rem;
+        font-size: 0.8rem;
+        font-weight: 500;
+        color: var(--btn-logout-small-text);
+        background-color: transparent;
+        border: 1px solid var(--btn-logout-small-border);
+        border-radius: 0.25rem;
+        cursor: pointer;
+        transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
+      }
+      .btn-logout-small:hover {
+        background-color: #f8f9fa; /* Nền xám rất nhạt khi hover */
+        border-color: #6c757d;
+        color: #212529;
+      }
+
+      .security-note {
+        font-size: 0.875rem;
+        color: var(--text-muted);
+        margin-top: 2rem; /* Khoảng cách với phần trên */
+        margin-bottom: 1.5rem;
+        text-align: center; /* Căn giữa như trong hình */
+      }
+      .security-note strong {
+        color: var(--header-bg); /* Màu xanh cho chữ "đổi mật khẩu" */
+        cursor: pointer; /* Cho cảm giác có thể click */
+      }
+      .security-note strong:hover {
+        text-decoration: underline;
+      }
+
+      .btn-logout-all { /* Nút "Đăng xuất tất cả" */
+        display: block; /* Để chiếm toàn bộ chiều rộng nếu cần, hoặc inline-block */
+        width: 100%; /* Chiếm toàn bộ chiều rộng */
+        padding: 0.85rem 1.5rem;
+        font-size: 0.95rem;
+        font-weight: 600;
+        text-align: center;
+        /* Sử dụng lại style của .header-buttons .btn-primary */
+        background-color: var(--header-bg); 
+        color: var(--white-color);
+        border: none;
+        border-radius: 0.375rem; /* Bo góc */
+        cursor: pointer;
+        transition: background-color 0.15s ease-in-out;
+      }
+      .btn-logout-all:hover {
+        background-color: #225fdc; /* Màu xanh đậm hơn một chút khi hover */
+      }
+      /* KẾT THÚC CSS MỚI */
+
+
+      /* Footer Styles */
+      .footer-top {
+        background-color: var(--footer-bg);
+        padding: 2.5rem 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 3rem;
+        flex-wrap: wrap;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .footer-feature {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        color: #ffffff;
+        font-size: 0.95rem;
+      }
+
+      .footer-feature i {
+        font-size: 2rem;
+        color: var(--primary-accent); 
+      }
+
+      .footer-bottom {
+        background-color: var(--footer-bottom-bg);
+        padding: 2.5rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        flex-wrap: wrap;
+        gap: 2rem;
+      }
+
+      .footer-section {
+        flex: 1;
+        min-width: 200px;
+        max-width: 300px;
+      }
+
+      .footer-logo img {
+        height: 40px;
+        margin-bottom: 1rem;
+      }
+
+      .footer-section p {
+        color: #ffffff;
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+      }
+
+      .footer-section h4 {
+        color: #ffffff;
+        font-size: 1.1rem;
+        margin-bottom: 1rem;
+      }
+
+      .footer-section ul {
+        list-style: none;
+      }
+
+      .footer-section ul li {
+        margin-bottom: 0.5rem;
+      }
+
+      .footer-section ul a {
+        color: #ffffff;
+        font-size: 0.9rem;
+        transition: color 0.2s ease;
+      }
+
+      .footer-section ul a:hover {
+        color: var(--input-border-focus); 
+        text-decoration: none;
+      }
+
+      .payment-methods img {
+        height: 30px;
+        margin-right: 0.5rem;
+        background-color: white; 
+        border-radius: 3px;
+        padding: 2px; 
+      }
+
+      .social-icons {
+        display: flex;
+        gap: 1rem;
+        margin-top: 1rem;
+      }
+
+      .social-icons a {
+        color: #ffffff; 
+        font-size: 1.5rem;
+        transition: color 0.2s ease;
+      }
+
+      .social-icons a:hover {
+        color: var(--input-border-focus); 
+      }
+
+      /* Responsive adjustments */
+      @media (max-width: 1024px) {
+        .main-content-wrapper { flex-direction: column; gap: 1.5rem; }
+        .sidebar { width: 100%; flex: none; }
+        .header { padding: 1rem; }
+        .header-left { order: 1; width: auto; }
+        .search-bar { order: 3; width: 100%; margin-top: 0.75rem; }
+        .header-right { order: 2; width: auto; }
+        .header-menu-toggle { display: block; }
+      }
+
+      @media (max-width: 768px) {
+        .header { padding: 1rem; }
+        .header-left { flex-grow: 1; }
+        .header-logo img { height: 30px; }
+        .search-bar { width: 100%; }
+        .header-right { gap: 1rem; width: 100%; justify-content: space-between; margin-top: 0.5rem; }
+        .header-links, .header-icons, .header-buttons { display: flex; justify-content: center; gap: 0.75rem; }
+        .header-links { order: 1; } .header-icons { order: 2; }
+        .header-buttons { order: 3; width: 100%; flex-direction: column; }
+        .header-buttons .btn { width: 100%; justify-content: center; }
+        .header-links a { font-size: 0.85rem; }
+        .profile-content { padding: 1.5rem; }
+        .profile-section-title { font-size: 1.3rem; margin-bottom: 1.5rem; }
+        .footer-top { flex-direction: column; gap: 1.5rem; padding: 1.5rem 1rem; text-align: center; }
+        .footer-feature { flex-direction: column; }
+        .footer-bottom { flex-direction: column; align-items: center; text-align: center; padding: 1.5rem 1rem; }
+        .footer-section { max-width: 100%; } .footer-section ul { padding-left: 0; }
+        .payment-methods, .social-icons { justify-content: center; margin-top: 0.5rem; }
+        
+        .login-history-item { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+        .btn-logout-small { margin-top: 0.5rem; }
+      }
+
+      @media (max-width: 480px) {
+        .header { flex-direction: column; align-items: stretch; }
+        .header-left, .header-right { width: 100%; justify-content: space-between; }
+        .header-right { flex-direction: column; align-items: stretch; margin-top: 1rem; }
+        .search-bar { margin-top: 0.5rem; order: 0; }
+        .header-links, .header-icons, .header-buttons { flex-direction: row; flex-wrap: wrap; justify-content: center; width: 100%; }
+        .header-buttons { flex-direction: column; align-items: stretch; }
+        .header-links a, .header-buttons .btn { width: 100%; text-align: center; }
+        .header-icons { justify-content: space-around; margin-bottom: 0.5rem; }
+        .device-icon { font-size: 1.5rem; }
+        .info-text .device-name { font-size: 0.9rem; }
+        .info-text .login-details { font-size: 0.8rem; }
+        .btn-logout-all { padding: 0.75rem 1rem; font-size: 0.9rem;}
+      }
+    </style>
+  </head>
+  <body>
+    <header class="header">
+      <div class="header-left">
+        <a href="#" class="header-logo">
+          <img
+            src="https://bizweb.dktcdn.net/100/479/080/themes/897121/assets/logo.png?1739930514069"
+            alt="H! TMDT Logo"
+          />
+        </a>
+        <button class="header-menu-toggle" aria-label="Toggle menu">
+          <i class="fas fa-bars"></i>
+        </button>
+        <div class="search-bar">
+          <input type="text" placeholder="Tìm kiếm sản phẩm" />
+          <button><i class="fas fa-search"></i></button>
+        </div>
+      </div>
+      <div class="header-right">
+        <div class="header-links">
+          <a href="#"> Đóng góp ý kiến </a>
+          <a href="#"> Trợ giúp </a>
+        </div>
+        <div class="header-icons">
+          <a class="icon-wrapper"><i class="fas fa-bell"></i><span class="badge">2</span></a>
+          <a href="/Saved_Product/saved_products.html" class="icon-wrapper"><i class="fas fa-shopping-cart"></i><span class="badge">2</span></a>
+          <a href="/Chat/chat.html" class="icon-wrapper"><i class="fas fa-comment-dots"></i><span class="badge">3</span></a>
+          <a href="/Profile/profile_edit.html" class="icon-wrapper"><i class="fas fa-user"></i></a>
+        </div>
+        <div class="header-buttons">
+          <button class="btn btn-outline"><i class="fas fa-user"></i> Quản lý tin</button>
+          <button class="btn btn-post-news"><i class="fas fa-pen"></i> Đăng Tin</button>
+        </div>
+      </div>
+    </header>
+
+    <div class="main-content-wrapper">
+      <aside class="sidebar">
+        <h3 class="sidebar-title">Thông tin cá nhân</h3> 
+        <nav class="sidebar-nav">
+          <ul>
+            <li><a href="profile_edit.html">Thông tin cá nhân</a></li>
+            <li><a href="profile_connetion.html">Liên kết mạng xã hội</a></li>
+            <li><a href="profile_setting.html">Cài đặt tài khoản</a></li>
+            <li><a href="profile_loginhistory.html" class="active">Quản lý lịch sử đăng nhập</a></li> </ul>
+        </nav>
+        <div class="sidebar-logout">
+            <a href="login.html" class="btn-logout">
+                <i class="fas fa-sign-out-alt"></i> Đăng xuất
+            </a>
+        </div>
+      </aside>
+
+      <main class="profile-content">
+        <h2 class="profile-section-title">Quản lý lịch sử đăng nhập</h2>
+
+        <div class="login-history-section">
+          <h3 class="section-subtitle">Thiết bị hiện tại</h3>
+          <div class="login-history-item">
+            <div class="device-info">
+              <i class="fas fa-desktop device-icon"></i> 
+              <div class="info-text">
+                <span class="device-name">Windows 10.0 (Edge 133.0.0.0)</span>
+                <span class="login-details">Đăng nhập bằng Google lúc 06/03/2025 - 21:27 Da Nang, Viet Nam</span>
+              </div>
+            </div>
+            </div>
+        </div>
+
+        <div class="login-history-section">
+          <h3 class="section-subtitle">Lịch sử đăng nhập</h3>
+          <div id="loginHistoryList">
+            <div class="login-history-item">
+              <div class="device-info">
+                <i class="fas fa-mobile-alt device-icon"></i>
+                <div class="info-text">
+                  <span class="device-name">Android 11</span>
+                  <span class="login-details">Đăng nhập bằng Google lúc 15/01/2025 - 15:27 Da Nang, Viet Nam</span>
+                </div>
+              </div>
+              <button class="btn-logout-small">Đăng xuất</button>
+            </div>
+            <div class="login-history-item">
+              <div class="device-info">
+                <i class="fas fa-desktop device-icon"></i>
+                <div class="info-text">
+                  <span class="device-name">Windows 10.0 (Edge 130.0.0.0)</span>
+                  <span class="login-details">Đăng nhập bằng Google lúc 03/12/2024 - 08:27 Da Nang, Viet Nam</span>
+                </div>
+              </div>
+              <button class="btn-logout-small">Đăng xuất</button>
+            </div>
+            </div>
+        </div>
+        
+        <p class="security-note">
+          Nếu phát hiện thiết bị lạ, Chợ Tốt khuyên khích bạn <strong>đổi mật khẩu</strong> để tăng cường bảo mật tài khoản.
+        </p>
+
+        <button class="btn-logout-all">Đăng xuất tất cả</button>
+
+      </main>
+    </div>
+
+    <footer class="main-footer">
+      <div class="footer-top">
+        <div class="footer-feature"><i class="fas fa-truck-fast"></i><span>Miễn phí vận chuyển <br />Cho đơn hàng trên 500K</span></div>
+        <div class="footer-feature"><i class="fas fa-shield-alt"></i><span>Thanh toán an toàn <br />100% bảo mật</span></div>
+        <div class="footer-feature"><i class="fas fa-headset"></i><span>Hỗ trợ khách hàng 24/7 <br />Liên hệ với chúng tôi ngay</span></div>
+        <div class="footer-feature"><i class="fas fa-undo-alt"></i><span>Miễn phí hoàn hàng <br />Nếu sản phẩm có lỗi</span></div>
+      </div>
+      <div class="footer-bottom">
+        <div class="footer-section">
+          <div class="footer-logo"><img src="https://bizweb.dktcdn.net/100/479/080/themes/897121/assets/logo.png?1739930514069" alt="H! TMDT Logo"/></div>
+          <p>H!TMDT là sàn thương mại điện tử hàng đầu Việt Nam, mang đến trải nghiệm mua sắm tiện lợi và an toàn.</p>
+        </div>
+        <div class="footer-section">
+          <h4>Hỗ trợ khách hàng</h4>
+          <ul><li><a href="#">Trung tâm trợ giúp</a></li><li><a href="#">An toàn mua bán</a></li><li><a href="#">Hỗ trợ khách hàng</a></li></ul>
+        </div>
+        <div class="footer-section">
+          <h4>Hướng dẫn</h4>
+          <ul><li><a href="#">Hướng dẫn mua hàng</a></li><li><a href="#">Hướng dẫn trả góp</a></li><li><a href="#">Hướng dẫn chuyển khoản</a></li><li><a href="#">Hướng dẫn hoàn hàng</a></li></ul>
+        </div>
+        <div class="footer-section">
+          <h4>Chấp nhận thanh toán</h4>
+          <div class="payment-methods">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5TmYtrb-zQEppk0up4S5LDpCazv20kY7eMQ&s" alt="MasterCard"/>
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQw7cK1qUl1Vw4nBtRIvPVRV4vQ_pHID4lXOA&s" alt="Visa"/>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/JCB_logo.svg/1280px-JCB_logo.svg.png" alt="JCB"/>
+          </div>
+          <div class="social-icons">
+            <a href="#" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+            <a href="#" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
