@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quản lý đơn hàng - HI! TMDT</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* Reset CSS */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      font-family: "Inter", sans-serif;
+      line-height: 1.5;
+      color: #333;
+      background-color: #f5f5f5;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    /* Header Styles from fileMau.html */
+    :root {
+      --primary-accent: #ffffff;
+      --header-bg: #2b6eff; 
+      --footer-bg: #20232a;
+      --footer-bottom-bg: #1a1d23;
+      --main-bg: #ebebeb; 
+      --card-bg: #ffffff; 
+      --text-light: #3f3f3f; 
+      --text-lighter: #000000; 
+      --text-muted: #6c757d; 
+      --text-link-blue: var(--header-bg);
+      --border-color: #ced4da; 
+      --light-border-color: #e0e0e0; 
+      --input-bg: #ffffff;
+      --input-border: #ced4da; 
+      --input-border-focus: #86b7fe; 
+      --input-placeholder-color: #6c757d;
+      --required-asterisk-color: red;
+      --button-hover: #268cbd;
+      --white-color: #ffffff;
+      
+      --btn-grey-bg: #e9ecef; 
+      --btn-grey-text: #212529; 
+      --btn-grey-border: #ced4da; 
+      --btn-grey-hover-bg: #d3d9df;
+
+      --logout-btn-bg: #dc3545;
+      --logout-btn-text: var(--white-color);
+      --logout-btn-hover-bg: #c82333;
+      --logout-btn-border: #dc3545;
+    }
+
+    /* Header */
+    .header {
+      background-color: var(--header-bg); 
+      padding: 1rem 2rem; 
+      display: flex;
+      justify-content: space-between; 
+      align-items: center; 
+      gap: 1rem; 
+      flex-wrap: wrap;
+    }
+    .header-left { 
+      display: flex; 
+      align-items: center; 
+      gap: 1.5rem; 
+    }
+    .header-logo img { 
+      height: 35px; 
+    }
+    .header-menu-toggle { 
+      display: none; 
+      background: none; 
+      border: none;
+      color: var(--white-color); 
+      font-size: 1.5rem; 
+      cursor: pointer; 
+    }
+    .search-bar { 
+      display: flex; 
+      align-items: center; 
+      background-color: var(--input-bg);
+      border-radius: 0.5rem; 
+      overflow: hidden; 
+      width: 300px; 
+    }
+    .search-bar input {
+      outline: none; 
+      border: none; 
+      padding: 0.75rem 1rem; 
+      background: transparent;
+      color: var(--text-light); 
+      width: 100%; 
+    }
+    .search-bar input::placeholder { 
+      color: var(--input-placeholder-color); 
+    }
+    .search-bar button { 
+      background-color: transparent; 
+      border: none; 
+      padding: 0.75rem 1rem;
+      color: var(--text-light); 
+      cursor: pointer; 
+      transition: color 0.2s ease; 
+    }
+    .search-bar button:hover { 
+      color: var(--header-bg); 
+    }
+    .header-right { 
+      display: flex; 
+      align-items: center; 
+      gap: 1.5rem; 
+    }
+    .header-links a { 
+      color: var(--primary-accent); 
+      font-size: 0.95rem;
+      white-space: nowrap; 
+      transition: color 0.2s ease; 
+    }
+    .header-links a:hover { 
+      color: rgba(255, 255, 255, 0.8); 
+      text-decoration: none; 
+    }
+    
+    .header-icons { 
+      display: flex; 
+      gap: 1rem; 
+      align-items: center; 
+    }
+    .header-icons .icon-wrapper { 
+      position: relative; 
+      cursor: pointer; 
+      display: inline-block; 
+      vertical-align: middle;
+    }
+    .header-icons a.icon-wrapper { 
+      color: var(--white-color); 
+      text-decoration: none;
+    }
+    .header-icons .icon-wrapper i { 
+      color: var(--white-color); 
+      font-size: 1.3rem;
+      transition: color 0.2s ease;
+      vertical-align: middle;
+    }
+    .header-icons .icon-wrapper:hover i,
+    .header-icons a.icon-wrapper:hover i { 
+      color: rgba(255, 255, 255, 0.8); 
+    }
+    .header-icons .badge { 
+      position: absolute; 
+      top: -8px; 
+      right: -8px; 
+      background-color: #e53e3e;
+      color: var(--white-color); 
+      font-size: 0.7rem; 
+      padding: 0.2rem 0.4rem;
+      border-radius: 50%; 
+      min-width: 18px; 
+      text-align: center; 
+    }
+    
+    .header-buttons .btn { 
+      padding: 0.75rem 1.25rem; 
+      border-radius: 0.5rem; 
+      font-weight: 500;
+      cursor: pointer; 
+      border: none; 
+      white-space: nowrap; 
+      display: inline-flex;
+      align-items: center; 
+      gap: 0.5rem; 
+      transition: background-color 0.2s ease, color 0.2s ease; 
+    }
+    .header-buttons .btn i { 
+      font-size: 1rem; 
+    }
+    .header-buttons .btn-post-news { 
+      background-color: var(--white-color); 
+      color: var(--header-bg); 
+    }
+    .header-buttons .btn-post-news:hover { 
+      background-color: rgba(255,255,255,0.9); 
+    }
+    .header-buttons .btn-outline { 
+      background-color: transparent; 
+      border: 1px solid var(--primary-accent);
+      color: var(--primary-accent); 
+    }
+    .header-buttons .btn-outline:hover { 
+      background-color: var(--primary-accent); 
+      color: var(--header-bg); 
+    }
+
+    /* Main Content */
+    .main-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px 15px;
+    }
+
+    /* Category Tabs */
+    .category-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .category-tab {
+      padding: 8px 15px;
+      background-color: #f0f0f0;
+      border-radius: 20px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .category-tab.active {
+      background-color: #00c2cb;
+      color: white;
+    }
+
+    .category-tab:hover:not(.active) {
+      background-color: #e0e0e0;
+    }
+
+    .category-label {
+      font-weight: 500;
+      margin-right: 10px;
+    }
+
+    /* Order Status Tabs */
+    .status-tabs {
+      display: flex;
+      border-bottom: 1px solid #e0e0e0;
+      margin-bottom: 20px;
+      overflow-x: auto;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    .status-tabs::-webkit-scrollbar {
+      display: none;
+    }
+
+    .status-tab {
+      padding: 10px 20px;
+      font-size: 14px;
+      cursor: pointer;
+      white-space: nowrap;
+      position: relative;
+    }
+
+    .status-tab.active {
+      color: #00c2cb;
+      font-weight: 500;
+    }
+
+    .status-tab.active::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background-color: #00c2cb;
+    }
+
+    /* Order List */
+    .order-list {
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .order-item {
+      padding: 15px;
+      border-bottom: 1px solid #e0e0e0;
+      display: flex;
+    }
+
+    .order-item:last-child {
+      border-bottom: none;
+    }
+
+    .order-image {
+      width: 100px;
+      height: 100px;
+      border: 1px solid #eee;
+      border-radius: 4px;
+      overflow: hidden;
+      margin-right: 15px;
+      flex-shrink: 0;
+    }
+
+    .order-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .order-details {
+      flex: 1;
+    }
+
+    .order-title {
+      font-weight: 500;
+      margin-bottom: 5px;
+      font-size: 14px;
+    }
+
+    .order-info {
+      font-size: 13px;
+      color: #666;
+      margin-bottom: 3px;
+    }
+
+    .order-price {
+      font-weight: bold;
+      color: #e53e3e;
+      font-size: 16px;
+      text-align: right;
+    }
+
+    .order-badge {
+      display: inline-block;
+      padding: 2px 8px;
+      background-color: #10b981;
+      color: white;
+      font-size: 12px;
+      border-radius: 4px;
+      margin-bottom: 10px;
+    }
+
+    /* Empty State */
+    .empty-state {
+      padding: 40px 20px;
+      text-align: center;
+      color: #666;
+    }
+
+    .empty-state-icon {
+      font-size: 48px;
+      margin-bottom: 15px;
+      color: #ccc;
+    }
+
+    .empty-state-text {
+      font-size: 16px;
+      margin-bottom: 20px;
+    }
+
+    .empty-state-button {
+      background-color: #00c2cb;
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 4px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    /* Footer Styles from fileMau.html */
+    .footer-top { 
+      background-color: var(--footer-bg); 
+      padding: 2.5rem 0; 
+      display: flex;
+      justify-content: center; 
+      align-items: center; 
+      gap: 3rem; 
+      flex-wrap: wrap;
+      border-top: 1px solid rgba(255, 255, 255, 0.1); 
+    }
+    .footer-feature { 
+      display: flex; 
+      align-items: center; 
+      gap: 0.75rem;
+      color: #ffffff; 
+      font-size: 0.95rem; 
+    }
+    .footer-feature i { 
+      font-size: 2rem; 
+      color: var(--primary-accent); 
+    }
+    .footer-bottom { 
+      background-color: var(--footer-bottom-bg); 
+      padding: 2.5rem 2rem; 
+      display: flex;
+      justify-content: space-between; 
+      align-items: flex-start; 
+      flex-wrap: wrap; 
+      gap: 2rem; 
+    }
+    .footer-section { 
+      flex: 1; 
+      min-width: 200px; 
+      max-width: 300px; 
+    }
+    .footer-logo img { 
+      height: 40px; 
+      margin-bottom: 1rem; 
+    }
+    .footer-section p { 
+      color: #ffffff; 
+      font-size: 0.9rem; 
+      margin-bottom: 1rem; 
+    }
+    .footer-section h4 { 
+      color: #ffffff; 
+      font-size: 1.1rem; 
+      margin-bottom: 1rem; 
+    }
+    .footer-section ul { 
+      list-style: none; 
+    }
+    .footer-section ul li { 
+      margin-bottom: 0.5rem; 
+    }
+    .footer-section ul a { 
+      color: #ffffff; 
+      font-size: 0.9rem; 
+      transition: color 0.2s ease; 
+    }
+    .footer-section ul a:hover { 
+      color: var(--input-border-focus); 
+      text-decoration: none; 
+    }
+    .payment-methods img { 
+      height: 30px; 
+      margin-right: 0.5rem; 
+      background-color: white; 
+      border-radius: 3px; 
+      padding: 2px; 
+    }
+    .social-icons { 
+      display: flex; 
+      gap: 1rem; 
+      margin-top: 1rem; 
+    }
+    .social-icons a { 
+      color: #ffffff; 
+      font-size: 1.5rem; 
+      transition: color 0.2s ease; 
+    }
+    .social-icons a:hover { 
+      color: var(--input-border-focus); 
+    }
+
+    /* Responsive Styles */
+    @media (max-width: 768px) {
+      .search-container {
+        display: none;
+      }
+
+      .header-links {
+        display: none;
+      }
+
+      .order-item {
+        flex-direction: column;
+      }
+
+      .order-image {
+        width: 100%;
+        height: 200px;
+        margin-right: 0;
+        margin-bottom: 15px;
+      }
+
+      .order-price {
+        text-align: left;
+        margin-top: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header từ fileMau.html -->
+  <header class="header">
+    <div class="header-left">
+      <a href="#" class="header-logo">
+        <img src="https://bizweb.dktcdn.net/100/479/080/themes/897121/assets/logo.png?1739930514069" alt="H! TMDT Logo"/>
+      </a>
+      <button class="header-menu-toggle" aria-label="Toggle menu"><i class="fas fa-bars"></i></button>
+      <div class="search-bar">
+        <input type="text" placeholder="Tìm kiếm sản phẩm" />
+        <button><i class="fas fa-search"></i></button>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="header-links">
+        <a href="#"> Đóng góp ý kiến </a>
+        <a href="#"> Trợ giúp </a>
+      </div>
+      <div class="header-icons">
+        <a class="icon-wrapper"><i class="fas fa-bell"></i><span class="badge">2</span></a>
+        <a href="/Saved_Product/saved_products.html" class="icon-wrapper"><i class="fas fa-shopping-cart"></i><span class="badge">2</span></a>
+        <a href="/Chat/index.html" class="icon-wrapper"><i class="fas fa-comment-dots"></i><span class="badge">3</span></a>
+        <a href="/Profile/profile_edit.html" class="icon-wrapper"><i class="fas fa-user"></i></a>
+      </div>
+      <div class="header-buttons">
+        <a href="" class="btn btn-outline"><i class="fas fa-user"></i> Quản lý tin</a>
+        <a href="/Create_Post/index.html" class="btn btn-post-news"><i class="fas fa-pen"></i> Đăng Tin</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <!-- Category Tabs -->
+    <div class="category-tabs">
+      <div class="category-label">Danh mục</div>
+      <div class="category-tab">Xe cộ (0)</div>
+      <div class="category-tab active">Điện thoại (3)</div>
+      <div class="category-tab">Loa (0)</div>
+      <div class="category-tab">Mặt hàng khác(0)</div>
+    </div>
+
+    <!-- Order Status Tabs -->
+    <div class="status-tabs">
+      <div class="status-tab">Chờ xác nhận</div>
+      <div class="status-tab active">Đang xử lý</div>
+      <div class="status-tab">Đang giao</div>
+      <div class="status-tab">Đã giao</div>
+      <div class="status-tab">Hoàn tiền/ Đã hủy</div>
+    </div>
+
+    <!-- Order List -->
+    <div class="order-list">
+      <!-- Order Item 1 -->
+      <div class="order-item">
+        <div class="order-image">
+          <img src="https://cdn.chotot.com/Lkh3-XrT-_VWiSmoJ8IyOROIPYi7-Qdn0esCMy29n-0/preset:listing/plain/f1edeca9ac4bb1e36083f835f52e5d03-2862195667833934600.jpg" alt="Ốp điện thoại iPhone">
+        </div>
+        <div class="order-details">
+          <div class="order-badge">Mới nhất</div>
+          <h3 class="order-title">Ốp Điện Thoại iphone độc đáo được cá nhân hóa Logo mặt mèo cho Iphone 15 14 12 13 11 Pro Max 7 8 Plus X Xs XR Xs Max nhám</h3>
+          <div class="order-info"><strong>MÔ TẢ SẢN PHẨM</strong></div>
+          <div class="order-info">Chất liệu: silicon, TPU</div>
+          <div class="order-info">Thương hiệu: điện thoại tương thích Apple</div>
+          <div class="order-info">Gửi từ: Nước ngoài</div>
+        </div>
+        <div class="order-price">12.000₫</div>
+      </div>
+
+      <!-- Order Item 2 -->
+      <div class="order-item">
+        <div class="order-image">
+          <img src="https://cdn.chotot.com/FVOl6d9LSWRG1el5qoAKslxOZDxg3MvMAONxInfCh3I/preset:listing/plain/953a716286948fda2c61db2a3ec25c42-2878591993597181820.jpg" alt="Ốp điện thoại iPhone">
+        </div>
+        <div class="order-details">
+          <h3 class="order-title">Ốp Điện Thoại iphone độc đáo được cá nhân hóa Logo mặt mèo cho Iphone 15 14 12 13 11 Pro Max 7 8 Plus X Xs XR Xs Max nhám</h3>
+          <div class="order-info"><strong>MÔ TẢ SẢN PHẨM</strong></div>
+          <div class="order-info">Chất liệu: silicon, TPU</div>
+          <div class="order-info">Thương hiệu: điện thoại tương thích Apple</div>
+          <div class="order-info">Gửi từ: Nước ngoài</div>
+        </div>
+        <div class="order-price">12.000₫</div>
+      </div>
+
+      <!-- Order Item 3 -->
+      <div class="order-item">
+        <div class="order-image">
+          <img src="https://cdn.chotot.com/RMKNdn5KUKBepgmO7Sy5X7x0G0dczZ3nUE0aDHeSfgg/preset:listing/plain/9b2c621936fc4dfe08782977105a06c9-2933123236910401919.jpg" alt="Ốp điện thoại iPhone">
+        </div>
+        <div class="order-details">
+          <h3 class="order-title">Ốp Điện Thoại iphone độc đáo được cá nhân hóa Logo mặt mèo cho Iphone 15 14 12 13 11 Pro Max 7 8 Plus X Xs XR Xs Max nhám</h3>
+          <div class="order-info"><strong>MÔ TẢ SẢN PHẨM</strong></div>
+          <div class="order-info">Chất liệu: silicon, TPU</div>
+          <div class="order-info">Thương hiệu: điện thoại tương thích Apple</div>
+          <div class="order-info">Gửi từ: Nước ngoài</div>
+        </div>
+        <div class="order-price">12.000₫</div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer từ fileMau.html -->
+  <footer class="main-footer">
+    <div class="footer-top">
+      <div class="footer-feature"><i class="fas fa-truck-fast"></i><span>Miễn phí vận chuyển <br />Cho đơn hàng trên 500K</span></div>
+      <div class="footer-feature"><i class="fas fa-shield-alt"></i><span>Thanh toán an toàn <br />100% bảo mật</span></div>
+      <div class="footer-feature"><i class="fas fa-headset"></i><span>Hỗ trợ khách hàng 24/7 <br />Liên hệ với chúng tôi ngay</span></div>
+      <div class="footer-feature"><i class="fas fa-undo-alt"></i><span>Miễn phí hoàn hàng <br />Nếu sản phẩm có lỗi</span></div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-section">
+        <div class="footer-logo"><img src="https://bizweb.dktcdn.net/100/479/080/themes/897121/assets/logo.png?1739930514069" alt="H! TMDT Logo"/></div>
+        <p>H!TMDT là sàn thương mại điện tử hàng đầu Việt Nam, mang đến trải nghiệm mua sắm tiện lợi và an toàn.</p>
+      </div>
+      <div class="footer-section">
+        <h4>Hỗ trợ khách hàng</h4>
+        <ul><li><a href="#">Trung tâm trợ giúp</a></li><li><a href="#">An toàn mua bán</a></li><li><a href="#">Hỗ trợ khách hàng</a></li></ul>
+      </div>
+      <div class="footer-section">
+        <h4>Hướng dẫn</h4>
+        <ul><li><a href="#">Hướng dẫn mua hàng</a></li><li><a href="#">Hướng dẫn trả góp</a></li><li><a href="#">Hướng dẫn chuyển khoản</a></li><li><a href="#">Hướng dẫn hoàn hàng</a></li></ul>
+      </div>
+      <div class="footer-section">
+        <h4>Chấp nhận thanh toán</h4>
+        <div class="payment-methods">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5TmYtrb-zQEppk0up4S5LDpCazv20kY7eMQ&s" alt="MasterCard"/>
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQw7cK1qUl1Vw4nBtRIvPVRV4vQ_pHID4lXOA&s" alt="Visa"/>
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/JCB_logo.svg/1280px-JCB_logo.svg.png" alt="JCB"/>
+        </div>
+        <div class="social-icons">
+          <a href="#" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+          <a href="#" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Category tabs
+      const categoryTabs = document.querySelectorAll('.category-tab');
+      categoryTabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+          categoryTabs.forEach(t => t.classList.remove('active'));
+          this.classList.add('active');
+        });
+      });
+
+      // Status tabs
+      const statusTabs = document.querySelectorAll('.status-tab');
+      statusTabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+          statusTabs.forEach(t => t.classList.remove('active'));
+          this.classList.add('active');
+        });
+      });
+    });
+  </script>
+</body>
+</html>
