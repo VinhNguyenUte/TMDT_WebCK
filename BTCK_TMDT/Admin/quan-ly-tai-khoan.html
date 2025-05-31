@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Quản lý tài khoản</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="quan-ly-tai-khoan.css">
+</head>
+<body>
+    <div class="admin-container">
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <h3>Admin Panel</h3>
+            </div>
+            <ul>
+                <li><a href="index.html" class="nav-link" data-page="dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="quan-ly-tai-khoan.html" class="nav-link" data-page="accounts"><i class="fas fa-users-cog"></i> Quản lý tài khoản</a></li>
+                <li><a href="quan-ly-bai-dang.html" class="nav-link" data-page="posts"><i class="fas fa-list-alt"></i> Danh sách bài đăng</a></li>
+                <li><a href="thong-ke-doanh-thu.html" class="nav-link" data-page="revenue"><i class="fas fa-chart-line"></i> Thống kê doanh thu</a></li>
+            </ul>
+        </nav>
+
+        <main class="content">
+            <h1>Quản lý tài khoản</h1>
+            <div class="table-container">
+                <div class="pm-search-bar">
+                    <input type="text" placeholder="Tìm kiếm bài đăng...">
+                    <button type="button"><i class="fas fa-search"></i></button>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Username</th>
+                            <th>SĐT</th>
+                            <th>Vai trò</th>
+                            <th>Trạng thái</th>
+                            <th>Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr data-id="1">
+                            <td>1</td>
+                            <td>nguyenvana</td>
+                            <td>0902452123</td>
+                            <td>Admin</td>
+                            <td class="status-cell status-active">Hoạt động</td>
+                            <td class="action-buttons-group"> 
+                                <button class="btn btn-lock">Khóa</button>
+                                <button class="btn btn-edit"><i class="fas fa-edit"></i></button>
+                            </td>
+                        </tr>
+                        <tr data-id="2">
+                            <td>2</td>
+                            <td>tranvanb</td>
+                            <td>0910993456</td>
+                            <td>Editor</td>
+                            <td class="status-cell status-active">Hoạt động</td>
+                            <td class="action-buttons-group">
+                                <button class="btn btn-lock">Khóa</button>
+                                <button class="btn btn-edit"><i class="fas fa-edit"></i></button>
+                            </td>
+                        </tr>
+                        <tr data-id="3">
+                            <td>3</td>
+                            <td>lethic</td>
+                            <td>0988646789</td>
+                            <td>User</td>
+                            <td class="status-cell status-locked">Đã khóa</td>
+                            <td class="action-buttons-group">
+                                <button class="btn btn-unlock">Mở khóa</button>
+                                <button class="btn btn-edit"><i class="fas fa-edit"></i></button>
+                            </td>
+                        </tr>
+                         <tr data-id="4">
+                            <td>4</td>
+                            <td>phamvand</td>
+                            <td>0974316321</td>
+                            <td>User</td>
+                            <td class="status-cell status-active">Hoạt động</td>
+                            <td class="action-buttons-group">
+                                <button class="btn btn-lock">Khóa</button>
+                                <button class="btn btn-edit"><i class="fas fa-edit"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <div id="editAccountModal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Chỉnh sửa tài khoản</h2>
+                <button class="modal-close-btn" id="closeEditModal">&times;</button>
+            </div>
+            <form id="editAccountForm">
+                <input type="hidden" id="editUserId">
+                <div class="form-group">
+                    <label for="editUsername">Username</label>
+                    <input type="text" id="editUsername" name="username" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="editSdt">Số điện thoại</label>
+                    <input type="tel" id="editSdt" name="sdt" required>
+                </div>
+                <div class="form-group">
+                    <label for="editRole">Vai trò</label>
+                    <select id="editRole" name="role">
+                        <option value="User">User</option>
+                        <option value="Editor">Editor</option>
+                        <option value="Admin">Admin</option>
+                    </select>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-cancel" id="cancelEditBtn">Hủy</button>
+                    <button type="submit" class="btn btn-save">Lưu thay đổi</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const currentPage = 'accounts'; 
+            const navLinks = document.querySelectorAll('.sidebar .nav-link');
+            navLinks.forEach(link => {
+                if (link.getAttribute('data-page') === currentPage) {
+                    link.classList.add('active');
+                }
+            });
+
+            let currentRowToEdit = null; 
+            const tableBody = document.querySelector('#account-management table tbody, main table tbody'); // Sửa selector cho tableBody
+            
+            if (tableBody) {
+                 tableBody.addEventListener('click', function(event) {
+                    const targetElement = event.target;
+                    const lockButton = targetElement.closest('.btn-lock');
+                    const unlockButton = targetElement.closest('.btn-unlock');
+                    const editButton = targetElement.closest('.btn-edit');
+
+                    if (lockButton) {
+                        const row = lockButton.closest('tr');
+                        const statusCell = row.querySelector('.status-cell');
+                        statusCell.textContent = 'Đã khóa';
+                        statusCell.className = 'status-cell status-locked';
+                        lockButton.textContent = 'Mở khóa';
+                        lockButton.classList.remove('btn-lock');
+                        lockButton.classList.add('btn-unlock');
+                    } else if (unlockButton) {
+                        const row = unlockButton.closest('tr');
+                        const statusCell = row.querySelector('.status-cell');
+                        statusCell.textContent = 'Hoạt động';
+                        statusCell.className = 'status-cell status-active';
+                        unlockButton.textContent = 'Khóa';
+                        unlockButton.classList.remove('btn-unlock');
+                        unlockButton.classList.add('btn-lock');
+                    } else if (editButton) {
+                        currentRowToEdit = editButton.closest('tr');
+                        const userId = currentRowToEdit.dataset.id;
+                        const username = currentRowToEdit.cells[1].textContent;
+                        const sdt = currentRowToEdit.cells[2].textContent;
+                        const role = currentRowToEdit.cells[3].textContent;
+
+                        document.getElementById('editUserId').value = userId;
+                        document.getElementById('editUsername').value = username;
+                        document.getElementById('editSdt').value = sdt;
+                        document.getElementById('editRole').value = role;
+                        
+                        openEditModal();
+                    }
+                });
+            }
+
+
+            const editModal = document.getElementById('editAccountModal');
+            const closeEditModalBtn = document.getElementById('closeEditModal');
+            const cancelEditBtn = document.getElementById('cancelEditBtn');
+            const editAccountForm = document.getElementById('editAccountForm');
+
+            function openEditModal() {
+                if(editModal) editModal.classList.add('active');
+            }
+
+            function closeEditModal() {
+                if(editModal) editModal.classList.remove('active');
+                currentRowToEdit = null; 
+            }
+
+            if(closeEditModalBtn) closeEditModalBtn.addEventListener('click', closeEditModal);
+            if(cancelEditBtn) cancelEditBtn.addEventListener('click', closeEditModal);
+            
+            if (editModal) {
+                editModal.addEventListener('click', function(event) {
+                    if (event.target === editModal) { 
+                        closeEditModal();
+                    }
+                });
+            }
+
+            if (editAccountForm) {
+                editAccountForm.addEventListener('submit', function(event) {
+                    event.preventDefault(); 
+                    if (!currentRowToEdit) return; 
+
+                    const newSdt = document.getElementById('editSdt').value;
+                    const newRole = document.getElementById('editRole').value;
+                    
+                    currentRowToEdit.cells[2].textContent = newSdt;
+                    currentRowToEdit.cells[3].textContent = newRole;
+
+                    alert(`Đã cập nhật tài khoản: ${currentRowToEdit.cells[1].textContent}`);
+                    closeEditModal(); 
+                });
+            }
+        });
+    </script>
+</body>
+</html>

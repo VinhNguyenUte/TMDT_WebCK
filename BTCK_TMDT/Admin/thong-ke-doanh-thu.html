@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Thống kê doanh thu</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary-color: #007bff;
+            --secondary-color: #1abc9c;
+            --background-color: #f4f7f6;
+            --sidebar-bg: #2c3e50;
+            --sidebar-text-color: #ecf0f1;
+            --sidebar-active-link-bg: #34495e;
+            --card-bg: #ffffff;
+            --text-color: #333;
+            --border-color: #dee2e6;
+            --white-color: #fff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .admin-container {
+            display: flex;
+            width: 100%;
+        }
+
+        /* === Sidebar Styles === */
+        .sidebar {
+            width: 250px;
+            background-color: var(--sidebar-bg);
+            color: var(--sidebar-text-color);
+            padding-top: 20px;
+            transition: width 0.3s ease;
+            z-index: 100;
+            flex-shrink: 0;
+        }
+
+        .sidebar-header {
+            text-align: center;
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--sidebar-active-link-bg);
+        }
+
+        .sidebar-header h3 {
+            color: var(--sidebar-text-color);
+            font-size: 1.5em;
+        }
+
+        .sidebar ul {
+            list-style: none;
+        }
+
+        .sidebar ul li a {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            color: var(--sidebar-text-color);
+            text-decoration: none;
+            transition: background-color 0.3s ease, padding-left 0.3s ease;
+        }
+
+        .sidebar ul li a i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+
+        .sidebar ul li a:hover,
+        .sidebar ul li a.active {
+            background-color: var(--sidebar-active-link-bg);
+            padding-left: 25px;
+        }
+
+        /* === Content Area Styles === */
+        .content {
+            flex-grow: 1;
+            padding: 30px;
+            overflow-y: auto;
+            background-color: var(--background-color);
+        }
+        
+        .content h1 {
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+
+        /* === Revenue Statistics Specific Styles === */
+        .revenue-tabs {
+            display: flex;
+            gap: 0px; /* No gap, border will separate */
+            margin-bottom: 25px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .revenue-tabs .tab-button {
+            padding: 12px 25px;
+            border: none; /* Remove individual borders initially */
+            border-bottom: 2px solid transparent; /* For active state indicator */
+            background-color: transparent;
+            color: var(--text-color);
+            cursor: pointer;
+            font-size: 1.05em;
+            font-weight: 500;
+            transition: color 0.2s, border-bottom-color 0.2s;
+            margin-bottom: -2px; /* Overlap with container's border-bottom */
+        }
+
+        .revenue-tabs .tab-button:hover {
+            color: var(--primary-color);
+        }
+
+        .revenue-tabs .tab-button.active {
+            color: var(--primary-color);
+            border-bottom-color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        .chart-container {
+            background-color: var(--white-color);
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            /* Set a max-width and height or aspect ratio for the chart */
+            /* max-width: 800px; */ /* Optional: if you want to limit chart width */
+            /* height: 400px; */ /* Chart.js will try to maintain aspect ratio by default */
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <h3>Admin Panel</h3>
+            </div>
+            <ul>
+                <li><a href="index.html" class="nav-link" data-page="dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="quan-ly-tai-khoan.html" class="nav-link" data-page="accounts"><i class="fas fa-users-cog"></i> Quản lý tài khoản</a></li>
+                <li><a href="quan-ly-bai-dang.html" class="nav-link" data-page="posts"><i class="fas fa-list-alt"></i> Danh sách bài đăng</a></li>
+                <li><a href="thong-ke-doanh-thu.html" class="nav-link" data-page="revenue"><i class="fas fa-chart-line"></i> Thống kê doanh thu</a></li>
+            </ul>
+        </nav>
+
+        <main class="content">
+            <h1>Thống kê doanh thu</h1>
+
+            <div class="revenue-tabs">
+                <button type="button" class="tab-button active" data-chart="posting_fee">Doanh thu từ phí bài đăng</button>
+                <button type="button" class="tab-button" data-chart="boost_fee">Doanh thu từ phí đẩy tin</button>
+            </div>
+
+            <div class="chart-container">
+                <canvas id="revenueChart"></canvas>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const currentPage = 'revenue'; 
+            const navLinks = document.querySelectorAll('.sidebar .nav-link');
+            navLinks.forEach(link => {
+                if (link.getAttribute('data-page') === currentPage) {
+                    link.classList.add('active');
+                }
+            });
+
+            const months = ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'];
+            
+            const postingFeeData = {
+                label: 'Doanh thu phí bài đăng (Triệu VNĐ)',
+                data: [120, 150, 100, 130, 170, 200, 180, 210, 190, 220, 250, 230],
+                backgroundColor: 'rgba(54, 162, 235, 0.6)', // Blue
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            };
+
+            const boostFeeData = {
+                label: 'Doanh thu phí đẩy tin (Triệu VNĐ)',
+                data: [80, 90, 70, 100, 110, 130, 120, 140, 110, 150, 170, 160],
+                backgroundColor: 'rgba(75, 192, 192, 0.6)', // Green/Teal
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            };
+
+            const chartCanvas = document.getElementById('revenueChart');
+            let revenueChartInstance = null;
+
+            function createOrUpdateChart(chartData) {
+                if (revenueChartInstance) {
+                    revenueChartInstance.destroy(); 
+                }
+                revenueChartInstance = new Chart(chartCanvas, {
+                    type: 'bar', // Biểu đồ cột
+                    data: {
+                        labels: months,
+                        datasets: [chartData]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true, 
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                title: {
+                                    display: true,
+                                    text: 'Doanh thu (Triệu VNĐ)'
+                                }
+                            },
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: 'Tháng'
+                                }
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                display: true,
+                                position: 'top',
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        let label = context.dataset.label || '';
+                                        if (label) {
+                                            label += ': ';
+                                        }
+                                        if (context.parsed.y !== null) {
+                                            label += new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND', minimumFractionDigits: 0 }).format(context.parsed.y * 1000000);
+                                        }
+                                        return label;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            const revenueTabs = document.querySelectorAll('.revenue-tabs .tab-button');
+            revenueTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    revenueTabs.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const chartType = this.getAttribute('data-chart');
+                    if (chartType === 'posting_fee') {
+                        createOrUpdateChart(postingFeeData);
+                    } else if (chartType === 'boost_fee') {
+                        createOrUpdateChart(boostFeeData);
+                    }
+                });
+            });
+
+            // Khởi tạo biểu đồ với tab mặc định (phí bài đăng)
+            createOrUpdateChart(postingFeeData);
+        });
+    </script>
+</body>
+</html>

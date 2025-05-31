@@ -1,0 +1,376 @@
+ :root {
+            --primary-color: #007bff; 
+            --secondary-color: #1abc9c;
+            --background-color: #f4f7f6;
+            --sidebar-bg: #2c3e50;
+            --sidebar-text-color: #ecf0f1;
+            --sidebar-active-link-bg: #34495e;
+            --card-bg: #ffffff;
+            --text-color: #333;
+            --border-color: #dee2e6; 
+            --price-color: #dc3545;
+            --white-color: #fff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .admin-container {
+            display: flex;
+            width: 100%;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: var(--sidebar-bg);
+            color: var(--sidebar-text-color);
+            padding-top: 20px;
+            transition: width 0.3s ease;
+            z-index: 100;
+            flex-shrink: 0; 
+        }
+
+        .sidebar-header {
+            text-align: center;
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--sidebar-active-link-bg);
+        }
+
+        .sidebar-header h3 {
+            color: var(--sidebar-text-color);
+            font-size: 1.5em;
+        }
+
+        .sidebar ul {
+            list-style: none;
+        }
+
+        .sidebar ul li a {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            color: var(--sidebar-text-color);
+            text-decoration: none;
+            transition: background-color 0.3s ease, padding-left 0.3s ease;
+        }
+
+        .sidebar ul li a i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+
+        .sidebar ul li a:hover,
+        .sidebar ul li a.active {
+            background-color: var(--sidebar-active-link-bg);
+            padding-left: 25px;
+        }
+
+        /* === Content Area Styles === */
+        .content {
+            flex-grow: 1;
+            padding: 30px;
+            overflow-y: auto;
+            background-color: var(--background-color); 
+        }
+        
+        .content h1 { 
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+
+        .pm-search-bar {
+            display: flex;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            overflow: hidden;
+            width: 100%;
+            max-width: 400px;
+            margin-bottom: 20px; 
+        }
+
+        .pm-search-bar input[type="text"] {
+            flex-grow: 1;
+            padding: 10px 15px;
+            border: none;
+            outline: none;
+            font-size: 1em;
+        }
+
+        .pm-search-bar button {
+            background-color: var(--primary-color);
+            color: var(--white-color);
+            border: none;
+            padding: 0 15px;
+            cursor: pointer;
+            font-size: 1em;
+        }
+        .pm-search-bar button:hover {
+            background-color: #0056b3; 
+        }
+
+        .pm-filter-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .pm-filter-tabs .tab-button {
+            padding: 10px 20px;
+            border: 1px solid var(--border-color);
+            background-color: var(--white-color);
+            color: var(--text-color);
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 0.95em;
+            transition: background-color 0.2s, color 0.2s;
+        }
+
+        .pm-filter-tabs .tab-button:hover {
+            background-color: #e9ecef;
+        }
+
+        .pm-filter-tabs .tab-button.active {
+            background-color: var(--primary-color);
+            color: var(--white-color);
+            border-color: var(--primary-color);
+        }
+
+        .pm-post-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .pm-post-item {
+            background-color: var(--white-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            display: flex;
+            gap: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            align-items: flex-start;
+        }
+
+        .pm-post-thumbnail {
+            flex-shrink: 0;
+            width: 100px;  
+            height: 100px; 
+            position: relative;
+        }
+        
+        .pm-post-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; 
+            border-radius: 5px;
+            border: 1px solid var(--border-color);
+        }
+        .pm-post-thumbnail .thumbnail-overlay-icon {
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            background-color: rgba(0,0,0,0.5);
+            color: white;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-size: 0.7em;
+        }
+        
+        .pm-post-details {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 5px; 
+        }
+
+        .pm-post-details .title {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: var(--text-color);
+            margin: 0 0 5px 0;
+            line-height: 1.4;
+        }
+
+        .pm-post-details .price {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: var(--price-color);
+            margin: 0 0 8px 0;
+        }
+
+        .pm-post-details .date-info {
+            font-size: 0.85em;
+            color: #666;
+            line-height: 1.5;
+        }
+        .pm-post-details .date-info strong {
+            color: #444;
+        }
+
+        .pm-post-actions {
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 120px; 
+        }
+
+        .pm-post-actions .btn {
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            font-size: 0.95em;
+            font-weight: bold;
+            transition: opacity 0.2s;
+        }
+        .pm-post-actions .btn:hover {
+            opacity: 0.85;
+        }
+
+        .pm-post-actions .btn-approve {
+            background-color: var(--primary-color);
+            color: var(--white-color);
+            border: none;
+        }
+
+        .pm-post-actions .btn-reject {
+            background-color: var(--white-color);
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+        }
+        /* Custom Alert Modal Styles */
+        .custom-alert-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0s linear 0.3s;
+        }
+
+        .custom-alert-overlay.show {
+            opacity: 1;
+            visibility: visible;
+            transition-delay: 0s;
+        }
+
+        .custom-alert-content {
+            background-color: var(--card-bg);
+            padding: 2rem;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 380px;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        .custom-alert-overlay.show .custom-alert-content {
+            transform: scale(1);
+        }
+
+        .custom-alert-content .alert-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .custom-alert-content .alert-icon .fa-check-circle {
+            color: #28a745;
+        }
+        .custom-alert-content .alert-icon .fa-exclamation-triangle {
+            color: #dc3545;
+        }
+        .custom-alert-content .alert-icon .fa-info-circle {
+            color: #17a2b8;
+        }
+        .custom-alert-content .alert-icon .fa-question-circle {
+            color: var(--header-bg);
+        }
+
+
+        .custom-alert-content h4 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-lighter);
+            margin-bottom: 0.75rem;
+        }
+
+        .custom-alert-content p {
+            font-size: 1rem;
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+        }
+
+        .custom-alert-content .btn-alert-close { /* For single "Close" button style */
+            background-color: var(--button-confirm-bg);
+            color: var(--primary-accent);
+            padding: 0.6rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        .custom-alert-content .btn-alert-close:hover {
+            background-color: var(--button-confirm-hover-bg);
+        }
+
+        /* Styles for Yes/No buttons in confirm dialog */
+        .custom-alert-actions {
+            margin-top: 1.5rem;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .custom-alert-actions .btn-alert-action {
+            padding: 0.6rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s ease, box-shadow 0.2s ease;
+            min-width: 80px;
+        }
+
+        .custom-alert-actions .btn-confirm-yes {
+            background-color: var(--button-confirm-bg);
+            color: var(--primary-accent);
+        }
+        .custom-alert-actions .btn-confirm-yes:hover {
+            background-color: var(--button-confirm-hover-bg);
+        }
+
+        .custom-alert-actions .btn-confirm-no {
+            background-color: #6c757d;
+            color: var(--primary-accent);
+        }
+        .custom-alert-actions .btn-confirm-no:hover {
+            background-color: #5a6268;
+        }

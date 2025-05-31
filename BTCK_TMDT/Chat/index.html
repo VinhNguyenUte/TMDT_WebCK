@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chat - H! TMDT</title>
+    <link rel="stylesheet" href="index.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+   
+  </head>
+  <body>
+    <header class="header">
+      <div class="header-left">
+        <a href="#" class="header-logo"><img src="https://bizweb.dktcdn.net/100/479/080/themes/897121/assets/logo.png?1739930514069" alt="H! TMDT Logo"/></a>
+        <button class="header-menu-toggle" aria-label="Toggle menu"><i class="fas fa-bars"></i></button>
+        <div class="search-bar"><input type="text" placeholder="Tìm kiếm sản phẩm" /><button><i class="fas fa-search"></i></button></div>
+      </div>
+      <div class="header-right">
+        <div class="header-links"><a href="#">Đóng góp ý kiến</a><a href="#">Trợ giúp</a></div>
+        <div class="header-icons">
+          <a class="icon-wrapper"><i class="fas fa-bell"></i><span class="badge">2</span></a>
+          <a href="/Saved_Product/saved_products.html" class="icon-wrapper"><i class="fas fa-shopping-cart"></i><span class="badge">2</span></a>
+          <a href="/Chat/index.html" class="icon-wrapper"><i class="fas fa-comment-dots"></i><span class="badge">3</span></a>
+          <a href="/Profile/profile_edit.html" class="icon-wrapper"><i class="fas fa-user"></i></a>
+        </div>
+        <div class="header-buttons">
+          <a href="" class="btn btn-outline"><i class="fas fa-user"></i> Quản lý tin</a>
+          <a href="/Create_Post/index.html" class="btn btn-post-news"><i class="fas fa-pen"></i> Đăng Tin</a>
+        </div>
+      </div>
+    </header>
+
+    <div class="main-content-wrapper-chat">
+        <div class="chat-list-column">
+            <div class="chat-search-bar">
+                <input type="text" placeholder="Nhập ít nhất 3 kí tự để bắt đầu tìm kiếm">
+            </div>
+            <div class="conversation-list">
+                <div class="conversation-item"> <div class="avatar"><img src="https://i.pravatar.cc/150?u=shop1" alt="Avatar"></div>
+                    <div class="conversation-details">
+                        <span class="name">Di động giá rẻ</span>
+                        <span class="message-snippet">Redmi 12 5G có NFC</span>
+                        <span class="time">4 giờ trước</span>
+                    </div>
+                    <div class="product-thumbnail-small"><img src="https://dienthoaihay.vn/images/products/2024/09/05/large/redmi-12-5g---den_1725531398.jpg.jpg" alt="Product"></div>
+                </div>
+                <div class="conversation-item">
+                    <div class="avatar"><img src="https://i.pravatar.cc/150?u=user2" alt="Avatar"></div>
+                    <div class="conversation-details">
+                        <span class="name">Nguyễn Hải</span>
+                        <span class="message-snippet">Honda ab 160 bs 43 siêu...</span>
+                         <span class="time">1 giờ trước</span>
+                    </div>
+                    <div class="product-thumbnail-small"><img src="https://hondadoanhthu.com.vn/wp-content/uploads/2021/01/db-xanh-den-vang.png" alt="Product"></div>
+                </div>
+                 <div class="conversation-item">
+                    <div class="avatar"><img src="https://i.pravatar.cc/150?u=shop_bahuan" alt="Avatar"></div>
+                    <div class="conversation-details">
+                        <span class="name">Bá Huấn</span>
+                        <span class="message-snippet">Ok bạn, để mình lên đơn...</span>
+                         <span class="time">2 giờ trước</span>
+                    </div>
+                    <div class="product-thumbnail-small"><img src="https://dochoiotogiare.com/wp-content/uploads/2018/09/day-sac-dien-thoai-da-nang-9-600x600.png" alt="Product"></div>
+                </div>
+                </div>
+        </div>
+
+        <div class="chat-window-column">
+            <div class="active-chat-window hidden">
+                <div class="chat-header">
+                    <div class="avatar"><img src="https://i.pravatar.cc/150?u=shop_bahuan" alt="Avatar"></div>
+                    <div class="user-info">
+                        <span class="name">Bá Huân</span>
+                        <span class="status">Hoạt động 2 giờ trước</span>
+                    </div>
+                    <div class="options-menu"><i class="fas fa-ellipsis-v"></i></div>
+                </div>
+                <div class="chat-product-bar">
+                    <img src="https://dienthoaihay.vn/images/products/2024/09/05/large/redmi-12-5g---den_1725531398.jpg.jpg" alt="Product">
+                    <div class="product-details-chat">
+                        <span class="name">Redmi 12 5G có NFC</span>
+                        <span class="price">3.000.000 đ</span>
+                    </div>
+                    <a href="/Chat/create_order.html" class="btn-create-order">Tạo đơn hàng</a>
+                </div>
+                <div class="messages-area">
+                    <div class="timestamp-separator">Chủ nhật, 09/03/2025</div>
+                    <div class="message-bubble sent">
+                        <div class="message-text">Xin chào</div>
+                        <div class="message-timestamp">9:30</div>
+                    </div>
+                    <div class="message-bubble received">
+                        <div class="message-text">Điện thoại này còn hay đã bán rồi ạ?</div>
+                        <div class="message-timestamp">9:31</div>
+                    </div>
+                     <div class="message-bubble sent">
+                        <div class="message-text">Để mình lên đơn cho bạn luôn nhé</div>
+                        <div class="message-timestamp">9:31</div>
+                    </div>
+                  </div>
+                <div class="message-input-area">
+                    <div class="quick-replies">
+                        <button>Hi</button>
+                        <button>Sản phẩm này còn không?</button>
+                        <button>Bạn có ship hàng không?</button>
+                        <button>Sản phẩm này còn</button>
+                    </div>
+                    <div class="input-controls">
+                        <button class="btn-attachment" aria-label="Đính kèm ảnh"><i class="fas fa-image"></i></button>
+                        <button class="btn-location" aria-label="Gửi vị trí"><i class="fas fa-map-marker-alt"></i></button>
+                        <textarea placeholder="Nhập tin nhắn" class="input-text"></textarea>
+                        <button class="btn-send" aria-label="Gửi tin nhắn"><i class="fas fa-paper-plane"></i></button>
+                    </div>
+                </div>
+            </div>
+            <div class="emptyRoom">
+              <img class="emptyRoomImg" src="https://chat.chotot.com/emptyRoom.png" alt="emptyRoom">
+              <span>Tích cực chat, chốc lát chốt đơn</span>
+            </div>
+        </div>
+    </div>
+
+    <footer class="main-footer">
+      <div class="footer-top">
+        <div class="footer-feature"><i class="fas fa-truck-fast"></i><span>Miễn phí vận chuyển <br />Cho đơn hàng trên 500K</span></div>
+        <div class="footer-feature"><i class="fas fa-shield-alt"></i><span>Thanh toán an toàn <br />100% bảo mật</span></div>
+        <div class="footer-feature"><i class="fas fa-headset"></i><span>Hỗ trợ khách hàng 24/7 <br />Liên hệ với chúng tôi ngay</span></div>
+        <div class="footer-feature"><i class="fas fa-undo-alt"></i><span>Miễn phí hoàn hàng <br />Nếu sản phẩm có lỗi</span></div>
+      </div>
+      <div class="footer-bottom">
+        <div class="footer-section">
+          <div class="footer-logo"><img src="https://bizweb.dktcdn.net/100/479/080/themes/897121/assets/logo.png?1739930514069" alt="H! TMDT Logo"/></div>
+          <p>H!TMDT là sàn thương mại điện tử hàng đầu Việt Nam, mang đến trải nghiệm mua sắm tiện lợi và an toàn.</p>
+        </div>
+        <div class="footer-section"><h4>Hỗ trợ khách hàng</h4><ul><li><a href="#">Trung tâm trợ giúp</a></li><li><a href="#">An toàn mua bán</a></li><li><a href="#">Hỗ trợ khách hàng</a></li></ul></div>
+        <div class="footer-section"><h4>Hướng dẫn</h4><ul><li><a href="#">Hướng dẫn mua hàng</a></li><li><a href="#">Hướng dẫn trả góp</a></li><li><a href="#">Hướng dẫn chuyển khoản</a></li><li><a href="#">Hướng dẫn hoàn hàng</a></li></ul></div>
+        <div class="footer-section"><h4>Chấp nhận thanh toán</h4>
+          <div class="payment-methods">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5TmYtrb-zQEppk0up4S5LDpCazv20kY7eMQ&s" alt="MasterCard"/>
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQw7cK1qUl1Vw4nBtRIvPVRV4vQ_pHID4lXOA&s" alt="Visa"/>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/JCB_logo.svg/1280px-JCB_logo.svg.png" alt="JCB"/>
+          </div>
+          <div class="social-icons">
+            <a href="#" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+            <a href="#" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+        const btnSend = document.querySelector(".btn-send")
+        const value = document.querySelector(".input-text")
+        const messageArea = document.querySelector(".messages-area")
+        const now = new Date()
+        btnSend.addEventListener("click",()=>{
+          if(value.value.trim() !== ""){
+              createMessage(value)
+          }
+        })
+        value.addEventListener("keydown",(e)=>{
+          if(e.key=="Enter" && value.value.trim()!==""){
+            e.preventDefault();
+            createMessage(value)
+          }
+        })
+        const quickReplies  = document.querySelectorAll(".quick-replies button")
+        quickReplies.forEach(item=>{
+          item.addEventListener("click",()=>{
+            createMessage(item)
+          })
+        }) 
+
+        
+        function createMessage(value){
+            const messageBubble = document.createElement("div")
+            messageBubble.classList.add("message-bubble", "sent")
+
+            const messageText = document.createElement("div")
+            messageText.classList.add("message-text")
+            const messageContent = value.tagName==="TEXTAREA"?value.value:value.textContent.trim()
+            messageText.textContent = messageContent
+
+            const messageTimetamp = document.createElement("div")
+            messageTimetamp.classList.add("message-timestamp")
+            messageTimetamp.textContent = `${now.getHours()}:${now.getMinutes()}`
+            
+            messageBubble.append(messageText,messageTimetamp)
+            messageArea.appendChild(messageBubble)
+
+            if(value.tagName==="TEXTAREA"){
+
+              value.value=''
+            }
+        }
+        
+
+        const conversationItems = document.querySelectorAll(".conversation-item");
+        const activeChatWindow = document.querySelector(".active-chat-window");
+        const emptyRoom = document.querySelector(".emptyRoom");
+        const emptyRoomImg = document.querySelector(".emptyRoomImg")
+        const span = document.querySelector(".emptyRoom span")
+        conversationItems.forEach(item => {
+          item.addEventListener("click", () => {
+            conversationItems.forEach(i => i.classList.remove("active"));
+
+            item.classList.add("active");
+
+            activeChatWindow.classList.remove("hidden");
+
+            emptyRoom.classList.add("hidden");
+            emptyRoomImg.classList.add("hidden")
+            span.classList.add("hidden")
+          });
+        });
+
+        
+
+    </script>
+  
+  </body>
+</html>
