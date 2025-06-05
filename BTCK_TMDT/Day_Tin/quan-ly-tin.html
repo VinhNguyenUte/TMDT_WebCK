@@ -404,22 +404,61 @@
       background-color: #00a5ad;
     }
 
-    .listing-menu {
-      position: absolute;
-      top: 20px;
-      right: 0;
-      cursor: pointer;
-      padding: 5px;
-    }
+    /* Styles for the individual listing item menu */
+.listing-item {
+    position: relative; /* Cần thiết để .listing-menu và .listing-dropdown-menu có thể định vị tương đối với item này */
+    /* ... các style khác của listing-item nếu có ... */
+}
 
-    .listing-menu i {
-      font-size: 20px;
-      color: #666;
-    }
+.listing-menu {
+    position: absolute; 
+    top: 20px;
+    right: 0; 
+    cursor: pointer;
+    padding: 5px;
+    z-index: 10; 
+}
 
-    .listing-menu:hover i {
-      color: #333;
-    }
+.listing-menu i {
+    font-size: 20px;
+    color: #666;
+}
+
+.listing-menu:hover i {
+    color: #333;
+}
+
+.listing-dropdown-menu {
+    position: absolute;
+    top: 100%; 
+    right: 0; 
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    min-width: 150px;
+    z-index: 1000; 
+    display: none; 
+    flex-direction: column; 
+    overflow: hidden; 
+}
+
+.listing-dropdown-menu.show {
+    display: flex; 
+}
+
+.listing-dropdown-item {
+    padding: 10px 15px;
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+    white-space: nowrap; 
+}
+
+.listing-dropdown-item:hover {
+    background-color: #f0f0f0;
+}
 
     .listing-badge {
       position: absolute;
@@ -557,16 +596,243 @@
         right: 10px;
       }
     }
+
+    
+    .category-dropdown {
+      position: absolute;
+      background-color: white;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      margin-top: 0.5rem;
+      border-radius: 8px;
+      width: 300px;
+    
+      display: none;
+      z-index: 1000;
+      padding: 0;
+      list-style: none;
+    }
+
+    .category-item {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid #e0e0e0;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      color: #333;
+      position: relative;
+    }
+
+    .category-item:last-child {
+      border-bottom: none;
+    }
+
+    .category-item:hover {
+      background-color: #f8f9fa;
+    }
+
+    .category-item:first-child:hover {
+      border-radius: 8px 8px 0 0;
+    }
+
+    .category-item:last-child:hover {
+border-radius: 0 0 8px 8px;
+    }
+
+    .category-item i {
+      font-size: 1.2rem;
+      color: #2b6eff;
+      margin-right: 0.75rem;
+    }
+
+    .category-item .arrow {
+      font-size: 0.8rem;
+      color: #6c757d;
+      margin-left: auto;
+      padding-left: 10px;
+    }
+
+    .subcategory-list {
+      position: absolute;
+      top: -1px;
+      left: 100%;
+      background-color: white;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      border-radius: 0 8px 8px 0;
+      border-left: 1px solid #e0e0e0;
+      width: 250px;
+      display: none;
+      padding: 0;
+      list-style: none;
+      z-index: 1001;
+      margin-top: 0;
+    }
+
+    .subcategory-item {
+      padding: 0.75rem 1rem;
+      color: #555;
+      border-radius: 0 8px 8px 0;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid #e0e0e0;
+      cursor: pointer;
+    }
+
+    .subcategory-item:last-child {
+      border-bottom: none;
+    }
+
+    .subcategory-item:hover {
+      color: #2b6eff;
+      background-color: #f8f9fa;
+      border-radius: 0 8px 8px 0;
+    }
+    .CategorySelected {
+      width: 2rem;
+      background-color: transparent;
+      border: none;
+    }
+
+    /* Styles for the bag dropdown menu */
+.bag-icon-wrapper {
+    position: relative; /* Essential for positioning the dropdown */
+    display: flex; /* Aligns the icon and badge */
+    align-items: center;
+    cursor: pointer;
+    padding: 0 10px; /* Adjust padding as needed */
+    height: 100%; /* Ensure it fills the header height */
+}
+
+.bag-dropdown-menu {
+    position: absolute;
+    top: calc(100% + 5px); /* Position it below the icon, with a small gap */
+    right: 0; /* Align to the right of the icon wrapper */
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    min-width: 150px;
+    z-index: 1000; /* Ensure it's above other content */
+    display: none; /* Hidden by default */
+    flex-direction: column; /* Stack items vertically */
+    overflow: hidden; /* Ensures rounded corners apply to children */
+}
+
+.bag-dropdown-menu.show {
+    display: flex; /* Show when 'show' class is added */
+}
+
+.bag-dropdown-item {
+    padding: 10px 15px;
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+    white-space: nowrap; /* Prevent text wrapping */
+}
+
+.bag-dropdown-item:hover {
+    background-color: #f0f0f0;
+}
+
+/* Optional: Adjust badge position if necessary */
+.header-icons .icon-wrapper .badge {
+    position: absolute;
+    top: 5px; /* Adjust as needed */
+    right: 5px; /* Adjust as needed */
+    background-color: #ff4d4f; /* Example: red for notifications */
+    color: white;
+    font-size: 0.7em;
+    padding: 2px 6px;
+    border-radius: 50%;
+    transform: translate(50%, -50%); /* Center badge relative to its top-right corner */
+}
   </style>
 </head>
 <body>
   <!-- Header từ fileMau.html -->
   <header class="header">
     <div class="header-left">
-      <a href="#" class="header-logo">
+      <a href="/Home_ProductDetails/Home.html" class="header-logo">
         <img src="https://bizweb.dktcdn.net/100/479/080/themes/897121/assets/logo.png?1739930514069" alt="H! TMDT Logo"/>
       </a>
-      <button class="header-menu-toggle" aria-label="Toggle menu"><i class="fas fa-bars"></i></button>
+      <div style="position: relative;">
+        <button class="CategorySelected">
+          <svg class="iconCategory" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+            <g id="SVGRepo_iconCarrier">
+              <path d="M4 6H20M4 12H20M4 18H20" stroke="white" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round"></path>
+            </g>
+          </svg>
+          <ul class="category-dropdown" id="categoryDropdown">
+            <li class="category-item">
+              <i class="fas fa-building"></i> Bất động sản <span class="arrow">></span>
+              <ul class="subcategory-list">
+                <li class="subcategory-item">Chung cư</li>
+                <li class="subcategory-item">Nhà riêng</li>
+                <li class="subcategory-item">Văn phòng</li>
+                <li class="subcategory-item">Đất nền</li>
+              </ul>
+            </li>
+            <li class="category-item">
+              <i class="fas fa-motorcycle"></i> Xe cộ <span class="arrow">></span>
+              <ul class="subcategory-list">
+                <li class="subcategory-item">Ô tô</li>
+                <li class="subcategory-item">Xe máy</li>
+                <li class="subcategory-item">Xe điện</li>
+                <li class="subcategory-item">Xe đạp</li>
+              </ul>
+            </li>
+            <li class="category-item">
+              <i class="fas fa-laptop"></i> Đồ điện tử <span class="arrow">></span>
+              <ul class="subcategory-list">
+                <li class="subcategory-item">Điện thoại</li>
+                <li class="subcategory-item">Máy tính bảng</li>
+                <li class="subcategory-item">Laptop</li>
+                <li class="subcategory-item">Phụ kiện điện tử</li>
+              </ul>
+            </li>
+            <li class="category-item">
+              <i class="fas fa-snowflake"></i> Tủ lạnh, máy lạnh, máy giặt <span class="arrow">></span>
+              <ul class="subcategory-list">
+                <li class="subcategory-item">Tủ lạnh</li>
+                <li class="subcategory-item">Máy lạnh</li>
+                <li class="subcategory-item">Máy giặt</li>
+              </ul>
+            </li>
+            <li class="category-item">
+              <i class="fas fa-couch"></i> Đồ gia dụng, nội thất <span class="arrow">></span>
+              <ul class="subcategory-list">
+                <li class="subcategory-item">Giường</li>
+                <li class="subcategory-item">Tủ</li>
+                <li class="subcategory-item">Bàn ghế</li>
+                <li class="subcategory-item">Thiết bị nhà bếp</li>
+              </ul>
+            </li>
+            <li class="category-item">
+              <i class="fas fa-tshirt"></i> Thời trang, đồ dùng cá nhân <span class="arrow">></span>
+              <ul class="subcategory-list">
+                <li class="subcategory-item">Quần áo</li>
+                <li class="subcategory-item">Giày dép</li>
+                <li class="subcategory-item">Phụ kiện</li>
+                <li class="subcategory-item">Mỹ phẩm</li>
+              </ul>
+            </li>
+            <li class="category-item">
+              <i class="fas fa-paw"></i> Thú cưng <span class="arrow">></span>
+              <ul class="subcategory-list">
+                <li class="subcategory-item">Chó</li>
+                <li class="subcategory-item">Mèo</li>
+                <li class="subcategory-item">Phụ kiện thú cưng</li>
+                <li class="subcategory-item">Thức ăn thú cưng</li>
+              </ul>
+            </li>
+          </ul>
+
+        </button>
+      </div>
       <div class="search-bar">
         <input type="text" placeholder="Tìm kiếm sản phẩm" />
         <button><i class="fas fa-search"></i></button>
@@ -579,12 +845,20 @@
       </div>
       <div class="header-icons">
         <a class="icon-wrapper"><i class="fas fa-bell"></i><span class="badge">2</span></a>
-        <a href="/Saved_Product/saved_products.html" class="icon-wrapper"><i class="fas fa-shopping-cart"></i><span class="badge">2</span></a>
+        <a href="/Saved_Product/saved_products.html" class="icon-wrapper"><i class="fa-solid fa-heart"></i></a>
         <a href="/Chat/index.html" class="icon-wrapper"><i class="fas fa-comment-dots"></i><span class="badge">3</span></a>
+        <div class="icon-wrapper bag-icon-wrapper">
+            <i class="fa-solid fa-bag-shopping"></i><span class="badge">3</span>
+            <div class="bag-dropdown-menu">
+                <a href="/Order_History/don-mua-ban.html?type=buy" class="bag-dropdown-item">Đơn mua</a>
+                <a href="/Order_History/don-mua-ban.html?type=sell" class="bag-dropdown-item">Đơn bán</a>
+            </div>
+        </div>
+        
         <a href="/Profile/profile_edit.html" class="icon-wrapper"><i class="fas fa-user"></i></a>
       </div>
       <div class="header-buttons">
-        <a href="" class="btn btn-outline"><i class="fas fa-user"></i> Quản lý tin</a>
+        <a href="/Day_Tin/quan-ly-tin.html" class="btn btn-outline"><i class="fas fa-user"></i> Quản lý tin</a>
         <a href="/Create_Post/index.html" class="btn btn-post-news"><i class="fas fa-pen"></i> Đăng Tin</a>
       </div>
     </div>
@@ -637,11 +911,17 @@
               <div class="listing-date">Ngày hết hạn: 12:06 04/03/2025</div>
             </div>
             <div class="listing-actions">
-              <button class="promote-button">Bán nhanh hơn</button>
+              <a href="/Day_Tin/ban-nhanh-hon.html" class="promote-button">Bán nhanh hơn</a>
             </div>
           </div>
           <div class="listing-menu">
             <i class="fas fa-ellipsis-v"></i>
+            <div class="listing-dropdown-menu">
+              <a href="#" class="listing-dropdown-item" data-action="edit">Chỉnh sửa</a>
+              <a href="#" class="listing-dropdown-item" data-action="delete">Xóa</a>
+              <a href="#" class="listing-dropdown-item" data-action="hide">Ẩn tin</a>
+              <a href="/Day_Tin/ban-nhanh-hon.html" class="listing-dropdown-item" data-action="promote">Đẩy tin</a>
+            </div>
           </div>
         </div>
 
@@ -659,11 +939,17 @@
               <div class="listing-date">Ngày hết hạn: 12:06 04/03/2025</div>
             </div>
             <div class="listing-actions">
-              <button class="promote-button">Bán nhanh hơn</button>
+              <a href="/Day_Tin/ban-nhanh-hon.html" class="promote-button">Bán nhanh hơn</a>
             </div>
           </div>
           <div class="listing-menu">
             <i class="fas fa-ellipsis-v"></i>
+            <div class="listing-dropdown-menu">
+              <a href="#" class="listing-dropdown-item" data-action="edit">Chỉnh sửa</a>
+              <a href="#" class="listing-dropdown-item" data-action="delete">Xóa</a>
+              <a href="#" class="listing-dropdown-item" data-action="hide">Ẩn tin</a>
+              <a href="/Day_Tin/ban-nhanh-hon.html" class="listing-dropdown-item" data-action="promote">Đẩy tin</a>
+            </div>
           </div>
         </div>
 
@@ -681,11 +967,17 @@
               <div class="listing-date">Ngày hết hạn: 12:06 04/03/2025</div>
             </div>
             <div class="listing-actions">
-              <button class="promote-button">Bán nhanh hơn</button>
+              <a href="/Day_Tin/ban-nhanh-hon.html" class="promote-button">Bán nhanh hơn</a>
             </div>
           </div>
           <div class="listing-menu">
             <i class="fas fa-ellipsis-v"></i>
+            <div class="listing-dropdown-menu">
+              <a href="#" class="listing-dropdown-item" data-action="edit">Chỉnh sửa</a>
+              <a href="#" class="listing-dropdown-item" data-action="delete">Xóa</a>
+              <a href="#" class="listing-dropdown-item" data-action="hide">Ẩn tin</a>
+              <a href="/Day_Tin/ban-nhanh-hon.html" class="listing-dropdown-item" data-action="promote">Đẩy tin</a>
+            </div>
           </div>
         </div>
       </div>
@@ -731,31 +1023,181 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      // Tab switching
-      const tabs = document.querySelectorAll('.tab');
-      tabs.forEach(tab => {
+
+    // --- Tab Switching Logic ---
+    const tabs = document.querySelectorAll('.tab');
+    tabs.forEach(tab => {
         tab.addEventListener('click', function() {
-          tabs.forEach(t => t.classList.remove('active'));
-          this.classList.add('active');
+            tabs.forEach(t => t.classList.remove('active'));
+            this.classList.add('active');
         });
-      });
-
-      // Listing menu toggle
-      const menuButtons = document.querySelectorAll('.listing-menu');
-      menuButtons.forEach(button => {
-        button.addEventListener('click', function() {
-          alert('Menu options: Chỉnh sửa, Xóa, Ẩn tin, Đẩy tin');
-        });
-      });
-
-      // Promote button
-      const promoteButtons = document.querySelectorAll('.promote-button');
-      promoteButtons.forEach(button => {
-        button.addEventListener('click', function() {
-          alert('Các gói đẩy tin: Tin Ưu Tiên, Tin Nổi Bật, Tin VIP');
-        });
-      });
     });
+
+    // --- Listing Item Menu Logic ---
+    const listingMenus = document.querySelectorAll('.listing-menu');
+
+    listingMenus.forEach(menuButton => {
+        const dropdownMenu = menuButton.querySelector('.listing-dropdown-menu');
+
+        menuButton.addEventListener('click', function(event) {
+            event.stopPropagation();
+
+            document.querySelectorAll('.listing-dropdown-menu.show').forEach(openMenu => {
+                if (openMenu !== dropdownMenu) {
+                    openMenu.classList.remove('show');
+                }
+            });
+
+            if (dropdownMenu) {
+                dropdownMenu.classList.toggle('show');
+            }
+        });
+
+        if (dropdownMenu) {
+            dropdownMenu.addEventListener('click', function(event) {
+                event.stopPropagation();
+                const clickedItem = event.target.closest('.listing-dropdown-item');
+                if (clickedItem) {
+                    const action = clickedItem.dataset.action;
+                    // Handle specific actions or let the href handle navigation
+                    if (action === 'edit') {
+                        alert('Bạn đã chọn chỉnh sửa tin đăng này.');
+                    } else if (action === 'delete') {
+                        if (confirm('Bạn có chắc chắn muốn xóa tin đăng này không?')) {
+                            alert('Tin đăng đã được xóa.');
+                        }
+                    } else if (action === 'hide') {
+                        alert('Tin đăng đã được ẩn.');
+                    }
+                    dropdownMenu.classList.remove('show');
+                }
+            });
+        }
+    });
+
+    document.addEventListener('click', function(event) {
+        document.querySelectorAll('.listing-dropdown-menu.show').forEach(openMenu => {
+            openMenu.classList.remove('show');
+        });
+    });
+
+    // --- Header Category Dropdown Logic ---
+    const toggleButton = document.querySelector('.CategorySelected');
+    const dropdown = document.getElementById('categoryDropdown');
+    const categoryItems = document.querySelectorAll('.category-item');
+
+    toggleButton.addEventListener('click', function(e) {
+        e.preventDefault();
+        dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+        document.querySelectorAll('.subcategory-list').forEach(subList => {
+            subList.style.display = 'none';
+        });
+    });
+
+    document.addEventListener('click', function(e) {
+        if (!toggleButton.contains(e.target) && !dropdown.contains(e.target)) {
+            dropdown.style.display = 'none';
+            document.querySelectorAll('.subcategory-list').forEach(subList => {
+                subList.style.display = 'none';
+            });
+        }
+    });
+
+    categoryItems.forEach(item => {
+        item.addEventListener('click', function(e) {
+            e.stopPropagation();
+
+            document.querySelectorAll('.subcategory-list').forEach(subList => {
+                subList.style.display = 'none';
+            });
+            const subcategoryList = this.querySelector('.subcategory-list');
+
+            if (subcategoryList) {
+                subcategoryList.style.top = '0%';
+                subcategoryList.style.left = '100%';
+                subcategoryList.style.display = subcategoryList.style.display === 'block' ? 'none' : 'block';
+            }
+        });
+    });
+
+    // --- Header Bag Icon Dropdown Logic ---
+    const bagIconWrapper = document.querySelector('.bag-icon-wrapper');
+    const bagDropdownMenu = document.querySelector('.bag-dropdown-menu');
+
+    if (bagIconWrapper && bagDropdownMenu) {
+        bagIconWrapper.addEventListener('click', function(e) {
+            e.stopPropagation();
+            bagDropdownMenu.classList.toggle('show');
+        });
+
+        document.addEventListener('click', function(e) {
+            if (!bagIconWrapper.contains(e.target)) {
+                bagDropdownMenu.classList.remove('show');
+            }
+        });
+
+        bagDropdownMenu.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+    }
+
+    // --- Notification Modal Logic ---
+    const notificationIconTrigger = document.querySelector('.header-icons .icon-wrapper i.fa-bell').closest('.icon-wrapper');
+    const notificationModal = document.getElementById('notification-modal');
+    const notificationModalCloseBtn = document.getElementById('notification-modal-close-btn');
+    const notificationTabButtons = document.querySelectorAll('.notification-modal-tabs .tab-button');
+    const notificationTabContents = document.querySelectorAll('.notification-modal-body .tab-content');
+    const activityTabContent = document.getElementById('activity-tab-content');
+
+    function showNotificationModal() {
+        notificationModal.classList.add('show');
+    }
+
+    function closeNotificationModal() {
+        notificationModal.classList.remove('show');
+    }
+
+    if (notificationIconTrigger) {
+        notificationIconTrigger.addEventListener('click', (event) => {
+            event.stopPropagation();
+            showNotificationModal();
+        });
+    }
+
+    if (notificationModalCloseBtn) {
+        notificationModalCloseBtn.addEventListener('click', closeNotificationModal);
+    }
+
+    if (notificationModal) {
+        notificationModal.addEventListener('click', function(event) {
+            if (event.target === notificationModal) {
+                closeNotificationModal();
+            }
+        });
+    }
+
+    notificationTabButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            notificationTabButtons.forEach(btn => btn.classList.remove('active'));
+            notificationTabContents.forEach(content => content.classList.remove('active'));
+
+            button.classList.add('active');
+            const tabId = button.dataset.tab;
+            document.getElementById(tabId + '-tab-content').classList.add('active');
+        });
+    });
+
+    if (activityTabContent) {
+        activityTabContent.addEventListener('click', function(event) {
+            if (event.target.classList.contains('btn-view-details')) {
+                event.preventDefault();
+                const notificationItem = event.target.closest('.notification-item');
+                const orderId = notificationItem.dataset.orderId;
+                window.location.href = `order_review.html?orderId=${orderId}`;
+            }
+        });
+    }
+});
   </script>
 </body>
 </html>
