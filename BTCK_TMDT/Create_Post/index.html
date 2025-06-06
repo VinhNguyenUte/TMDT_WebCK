@@ -110,6 +110,65 @@
       </div>
     <div id="xe-co-sub-modal" class="modal-overlay"> <div class="modal-content"> <div class="modal-header"> <button class="modal-back-btn" data-target="xe-co-sub-modal" data-return="category-modal"><i class="fas fa-arrow-left"></i></button> <h3 class="modal-title">Đăng Tin</h3> </div> <div class="modal-body"> <h4>CHỌN DANH MỤC</h4> <ul class="category-list subcategory-list"> <li data-category="Ô tô"> <span class="cat-name">Ô tô</span> <i class="fas fa-chevron-right cat-arrow"></i> </li> <li data-category="Xe máy"> <span class="cat-name">Xe máy</span> <i class="fas fa-chevron-right cat-arrow"></i> </li> <li data-category="Xe tải, xe ben"> <span class="cat-name">Xe tải, xe ben</span> <i class="fas fa-chevron-right cat-arrow"></i> </li> <li data-category="Xe điện"> <span class="cat-name">Xe điện</span> <i class="fas fa-chevron-right cat-arrow"></i> </li> <li data-category="Xe đạp"> <span class="cat-name">Xe đạp</span> <i class="fas fa-chevron-right cat-arrow"></i> </li> <li data-category="Phương tiện khác"> <span class="cat-name">Phương tiện khác</span> <i class="fas fa-chevron-right cat-arrow"></i> </li> <li data-category="Phụ tùng xe"> <span class="cat-name">Phụ tùng xe</span> <i class="fas fa-chevron-right cat-arrow"></i> </li> </ul> </div> </div> </div>
 
+    <!-- Notification modal -->
+      <div id="notification-modal" class="notification-modal-overlay">
+        <div class="notification-modal-content">
+            <div class="notification-modal-header">
+                <h4>Thông báo</h4>
+                <button id="notification-modal-close-btn" class="notification-modal-close">&times;</button>
+            </div>
+            <div class="notification-modal-tabs">
+                <button class="tab-button active" data-tab="activity">Hoạt động</button>
+                <button class="tab-button" data-tab="news">Tin tức</button>
+            </div>
+            <div class="notification-modal-body">
+                <div id="activity-tab-content" class="tab-content active">
+                    <div class="notification-item" data-order-id="order123">
+                        <div class="notification-icon activity">
+                            <i class="fas fa-file-invoice-dollar"></i>
+                        </div>
+                        <div class="notification-text">
+                            <p><strong>Shop ABC</strong> đã gửi yêu cầu tạo đơn hàng cho sản phẩm "Áo thun nam cao cấp".</p>
+                            <span class="notification-time">2 phút trước</span>
+                        </div>
+                        <a href="#" class="btn btn-view-details">Xem chi tiết</a>
+                    </div>
+                    <!-- <div class="notification-item">
+                        <div class="notification-icon activity">
+                             <i class="fas fa-handshake"></i>
+                        </div>
+                        <div class="notification-text">
+                            <p>Đơn hàng #XYZ789 của bạn đã được <strong>Người mua XYZ</strong> xác nhận. Chuẩn bị hàng nhé!</p>
+                             <span class="notification-time">1 giờ trước</span>
+                        </div>
+                         <a href="#" class="btn btn-view-details">Xem đơn hàng</a>
+                    </div> -->
+                    
+                </div>
+                <div id="news-tab-content" class="tab-content">
+                    <div class="notification-item">
+                        <div class="notification-icon news">
+                            <i class="fas fa-bullhorn"></i>
+                        </div>
+                        <div class="notification-text">
+                            <p>🔥 Flash Sale cuối tháng! Giảm giá đến 50% cho hàng ngàn sản phẩm.</p>
+                            <span class="notification-time">Hôm qua</span>
+                        </div>
+                    </div>
+                    <div class="notification-item">
+                         <div class="notification-icon news">
+                            <i class="fas fa-gift"></i>
+                        </div>
+                        <div class="notification-text">
+                            <p>🎉 Chúc mừng bạn đã nhận được voucher giảm 10% cho đơn hàng tiếp theo.</p>
+                             <span class="notification-time">2 ngày trước</span>
+                        </div>
+                    </div>
+                     
+                </div>
+            </div>
+        </div>
+    </div>
     <script>
         const categoryTrigger = document.getElementById('danh-muc-trigger');
         const mainModal = document.getElementById('category-modal');
@@ -187,6 +246,70 @@ if (bagIconWrapper && bagDropdownMenu) {
     // Prevent dropdown from closing when clicking inside it
     bagDropdownMenu.addEventListener('click', function(e) {
         e.stopPropagation();
+    });
+}
+
+  // notification
+        const notificationIconTrigger = document.querySelector('.header-icons .icon-wrapper i.fa-bell').closest('.icon-wrapper');
+        const notificationModal = document.getElementById('notification-modal');
+        const notificationModalCloseBtn = document.getElementById('notification-modal-close-btn');
+        const notificationTabButtons = document.querySelectorAll('.notification-modal-tabs .tab-button');
+        const notificationTabContents = document.querySelectorAll('.notification-modal-body .tab-content');
+
+        function showNotificationModal() {
+            notificationModal.classList.add('show');
+        }
+
+        function closeNotificationModal() {
+            notificationModal.classList.remove('show');
+        }
+
+        if (notificationIconTrigger) {
+            notificationIconTrigger.addEventListener('click', (event) => {
+                event.stopPropagation(); 
+               
+                showNotificationModal();
+                
+            });
+        }
+
+        if (notificationModalCloseBtn) {
+            notificationModalCloseBtn.addEventListener('click', closeNotificationModal);
+        }
+
+      
+        if (notificationModal) {
+            notificationModal.addEventListener('click', function(event) {
+                if (event.target === notificationModal) {
+                    closeNotificationModal();
+                }
+            });
+        }
+
+       
+        notificationTabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+              
+                notificationTabButtons.forEach(btn => btn.classList.remove('active'));
+                notificationTabContents.forEach(content => content.classList.remove('active'));
+
+               
+                button.classList.add('active');
+                const tabId = button.dataset.tab;
+                document.getElementById(tabId + '-tab-content').classList.add('active');
+            });
+        });
+
+    const activityTabContent = document.getElementById('activity-tab-content'); 
+    if (activityTabContent) {
+        activityTabContent.addEventListener('click', function(event) {
+        if (event.target.classList.contains('btn-view-details')) {
+            event.preventDefault(); 
+            const notificationItem = event.target.closest('.notification-item');
+            const orderId = notificationItem.dataset.orderId;
+
+            window.location.href = `order_review.html?orderId=${orderId}`;
+        }
     });
 }
     </script>

@@ -747,6 +747,168 @@ border-radius: 0 0 8px 8px;
     border-radius: 50%;
     transform: translate(50%, -50%); /* Center badge relative to its top-right corner */
 }
+/* notification */
+.notification-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    /* justify-content: flex-end; */
+    align-items: flex-start;   
+    z-index: 1900; 
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0s linear 0.3s;
+    padding-top: 65px; 
+    padding-right: 20px;
+}
+
+.notification-modal-overlay.show {
+    opacity: 1;
+    visibility: visible;
+    transition-delay: 0s;
+}
+
+.notification-modal-content {
+    position: absolute;
+    top:70px;
+    right: 400px;
+    background-color: var(--card-bg);
+    border-radius: 8px;
+    width: 100%;
+    max-width: 380px;
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.15);
+    transform: translateX(20px); 
+    transition: transform 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    max-height: calc(100vh - 85px); 
+}
+
+.notification-modal-overlay.show .notification-modal-content {
+    transform: translateX(0);
+}
+
+.notification-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--light-border-color);
+}
+
+.notification-modal-header h4 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-lighter);
+}
+
+.notification-modal-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--text-muted);
+    padding: 0.25rem;
+    line-height: 1;
+}
+.notification-modal-close:hover {
+    color: var(--text-lighter);
+}
+
+.notification-modal-tabs {
+    display: flex;
+    border-bottom: 1px solid var(--light-border-color);
+}
+
+.notification-modal-tabs .tab-button {
+    flex: 1;
+    padding: 0.85rem 1rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    border-bottom: 3px solid transparent;
+    transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.notification-modal-tabs .tab-button:hover {
+    color: var(--text-link-blue);
+}
+
+.notification-modal-tabs .tab-button.active {
+    color: var(--text-link-blue);
+    border-bottom-color: var(--text-link-blue);
+    font-weight: 600;
+}
+
+.notification-modal-body {
+    padding: 0;
+    overflow-y: auto;
+    flex-grow: 1;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.notification-item {
+    display: flex;
+    align-items: flex-start; 
+    padding: 1rem;
+    border-bottom: 1px solid var(--light-border-color);
+    gap: 0.75rem;
+}
+.notification-item:last-child {
+    border-bottom: none;
+}
+
+.notification-icon {
+    font-size: 1.2rem;
+    width: 32px; 
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary-accent);
+}
+.notification-icon.activity {
+    background-color: var(--header-bg); 
+}
+.notification-icon.news {
+    background-color: var(--orange-color); 
+}
+
+
+.notification-text {
+    flex-grow: 1;
+}
+
+.notification-text p {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    margin: 0;
+    line-height: 1.4;
+}
+.notification-text p strong {
+    color: var(--text-lighter);
+}
+
+.notification-time {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    display: block;
+    margin-top: 0.25rem;
+}
   </style>
 </head>
 <body>
@@ -887,12 +1049,12 @@ border-radius: 0 0 8px 8px;
       <!-- Tabs -->
       <div class="tabs">
         <div class="tab active">Đang hiển thị(3)</div>
-        <div class="tab">Hết hàng(2)</div>
+        <!-- <div class="tab">Hết hàng(2)</div> -->
         <div class="tab">Bị từ chối(1)</div>
         <div class="tab">Cần thanh toán(4)</div>
         <div class="tab">Chờ duyệt(0)</div>
-        <div class="tab">Tin nhập(0)</div>
-        <div class="tab">Đã đổi(0)</div>
+        <!-- <div class="tab">Tin nhập(0)</div> -->
+        <!-- <div class="tab">Đã đổi(0)</div> -->
       </div>
 
       <!-- Listings -->
@@ -1020,6 +1182,53 @@ border-radius: 0 0 8px 8px;
       </div>
     </div>
   </footer>
+  <div id="notification-modal" class="notification-modal-overlay">
+        <div class="notification-modal-content">
+            <div class="notification-modal-header">
+                <h4>Thông báo</h4>
+                <button id="notification-modal-close-btn" class="notification-modal-close">&times;</button>
+            </div>
+            <div class="notification-modal-tabs">
+                <button class="tab-button active" data-tab="activity">Hoạt động</button>
+                <button class="tab-button" data-tab="news">Tin tức</button>
+            </div>
+            <div class="notification-modal-body">
+                <div id="activity-tab-content" class="tab-content active">
+                    <div class="notification-item" data-order-id="order123">
+                        <div class="notification-icon activity">
+                            <i class="fas fa-file-invoice-dollar"></i>
+                        </div>
+                        <div class="notification-text">
+                            <p><strong>Shop ABC</strong> đã gửi yêu cầu tạo đơn hàng cho sản phẩm "Áo thun nam cao cấp".</p>
+                            <span class="notification-time">2 phút trước</span>
+                        </div>
+                        <a href="#" class="btn btn-view-details">Xem chi tiết</a>
+                    </div>
+                    </div>
+                <div id="news-tab-content" class="tab-content">
+                    <div class="notification-item">
+                        <div class="notification-icon news">
+                            <i class="fas fa-bullhorn"></i>
+                        </div>
+                        <div class="notification-text">
+                            <p>🔥 Flash Sale cuối tháng! Giảm giá đến 50% cho hàng ngàn sản phẩm.</p>
+                            <span class="notification-time">Hôm qua</span>
+                        </div>
+                    </div>
+                    <div class="notification-item">
+                         <div class="notification-icon news">
+                            <i class="fas fa-gift"></i>
+                        </div>
+                        <div class="notification-text">
+                            <p>🎉 Chúc mừng bạn đã nhận được voucher giảm 10% cho đơn hàng tiếp theo.</p>
+                             <span class="notification-time">2 ngày trước</span>
+                        </div>
+                    </div>
+                     
+                </div>
+            </div>
+        </div>
+    </div>
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {

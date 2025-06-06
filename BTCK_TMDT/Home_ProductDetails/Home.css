@@ -294,7 +294,7 @@
     }
 
     /* Category Icons */
-    .category-icons {
+    /* .category-icons {
       padding: 10px 0;
     }
 
@@ -302,7 +302,7 @@
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 15px;
-    }
+    } */
 
     .category-icon {
       display: flex;
@@ -586,9 +586,9 @@
         font-size: 24px;
       }
 
-      .category-icons-grid {
+      /* .category-icons-grid {
         grid-template-columns: repeat(7, 1fr);
-      }
+      } */
 
       .categories-grid {
         grid-template-columns: repeat(3, 1fr);
