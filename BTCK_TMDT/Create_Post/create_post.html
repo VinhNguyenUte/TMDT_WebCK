@@ -15,10 +15,87 @@
 <body>
     <header class="header">
         <div class="header-left">
-            <a href="index.html" class="header-logo">
+            <a href="/Home_ProductDetails/Home.html" class="header-logo">
                 <img src="https://bizweb.dktcdn.net/100/479/080/themes/897121/assets/logo.png?1739930514069"
                     alt="H! TMDT Logo" />
             </a>
+            <div style="position: relative;">
+        <button class="CategorySelected">
+          <svg class="iconCategory" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+            <g id="SVGRepo_iconCarrier">
+              <path d="M4 6H20M4 12H20M4 18H20" stroke="white" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round"></path>
+            </g>
+          </svg>
+          <ul class="category-dropdown" id="categoryDropdown">
+            <li class="category-item">
+              <i class="fas fa-building"></i> Bất động sản <span class="arrow">></span>
+              <ul class="subcategory-list">
+                <li class="subcategory-item">Chung cư</li>
+                <li class="subcategory-item">Nhà riêng</li>
+                <li class="subcategory-item">Văn phòng</li>
+                <li class="subcategory-item">Đất nền</li>
+              </ul>
+            </li>
+            <li class="category-item">
+              <i class="fas fa-motorcycle"></i> Xe cộ <span class="arrow">></span>
+              <ul class="subcategory-list">
+                <li class="subcategory-item">Ô tô</li>
+                <li class="subcategory-item">Xe máy</li>
+                <li class="subcategory-item">Xe điện</li>
+                <li class="subcategory-item">Xe đạp</li>
+              </ul>
+            </li>
+            <li class="category-item">
+              <i class="fas fa-laptop"></i> Đồ điện tử <span class="arrow">></span>
+              <ul class="subcategory-list">
+                <li class="subcategory-item">Điện thoại</li>
+                <li class="subcategory-item">Máy tính bảng</li>
+                <li class="subcategory-item">Laptop</li>
+                <li class="subcategory-item">Phụ kiện điện tử</li>
+              </ul>
+            </li>
+            <li class="category-item">
+              <i class="fas fa-snowflake"></i> Tủ lạnh, máy lạnh, máy giặt <span class="arrow">></span>
+              <ul class="subcategory-list">
+                <li class="subcategory-item">Tủ lạnh</li>
+                <li class="subcategory-item">Máy lạnh</li>
+                <li class="subcategory-item">Máy giặt</li>
+              </ul>
+            </li>
+            <li class="category-item">
+              <i class="fas fa-couch"></i> Đồ gia dụng, nội thất <span class="arrow">></span>
+              <ul class="subcategory-list">
+                <li class="subcategory-item">Giường</li>
+                <li class="subcategory-item">Tủ</li>
+                <li class="subcategory-item">Bàn ghế</li>
+                <li class="subcategory-item">Thiết bị nhà bếp</li>
+              </ul>
+            </li>
+            <li class="category-item">
+              <i class="fas fa-tshirt"></i> Thời trang, đồ dùng cá nhân <span class="arrow">></span>
+              <ul class="subcategory-list">
+                <li class="subcategory-item">Quần áo</li>
+                <li class="subcategory-item">Giày dép</li>
+                <li class="subcategory-item">Phụ kiện</li>
+                <li class="subcategory-item">Mỹ phẩm</li>
+              </ul>
+            </li>
+            <li class="category-item">
+              <i class="fas fa-paw"></i> Thú cưng <span class="arrow">></span>
+              <ul class="subcategory-list">
+                <li class="subcategory-item">Chó</li>
+                <li class="subcategory-item">Mèo</li>
+                <li class="subcategory-item">Phụ kiện thú cưng</li>
+                <li class="subcategory-item">Thức ăn thú cưng</li>
+              </ul>
+            </li>
+          </ul>
+
+        </button>
+      </div>
             <div class="search-bar">
                 <input type="text" placeholder="Tìm kiếm sản phẩm" />
                 <button><i class="fas fa-search"></i></button>
@@ -30,12 +107,20 @@
                 <a href="#"> Trợ giúp </a></div>
             <div class="header-icons">
                 <a class="icon-wrapper"><i class="fas fa-bell"></i><span class="badge">2</span></a>
-                <a href="/Saved_Product/saved_products.html" class="icon-wrapper"><i class="fas fa-shopping-cart"></i><span class="badge">2</span></a>
+                <a href="/Saved_Product/saved_products.html" class="icon-wrapper"><i class="fa-solid fa-heart"></i></a>
                 <a href="/Chat/index.html" class="icon-wrapper"><i class="fas fa-comment-dots"></i><span class="badge">3</span></a>
+                <div class="icon-wrapper bag-icon-wrapper">
+                    <i class="fa-solid fa-bag-shopping"></i><span class="badge">3</span>
+                    <div class="bag-dropdown-menu">
+                        <a href="/Order_History/don-mua-ban.html?type=buy" class="bag-dropdown-item">Đơn mua</a>
+                        <a href="/Order_History/don-mua-ban.html?type=sell" class="bag-dropdown-item">Đơn bán</a>
+                    </div>
+                </div>
+                
                 <a href="/Profile/profile_edit.html" class="icon-wrapper"><i class="fas fa-user"></i></a>
             </div>
             <div class="header-buttons">
-                <a href="" class="btn btn-outline"><i class="fas fa-user"></i> Quản lý tin</a>
+                <a href="/Day_Tin/quan-ly-tin.html" class="btn btn-outline"><i class="fas fa-user"></i> Quản lý tin</a>
                 <a href="/Create_Post/index.html" class="btn btn-post-news"><i class="fas fa-pen"></i> Đăng Tin</a>
             </div>
       </div>
@@ -185,12 +270,136 @@
                         <input type="text" id="dia_chi_ct" placeholder="Ví dụ: 123 Nguyễn Văn Linh">
                     </div>
                 </div>
-                <button class="post-button">Đăng tin</button>
+                <a href="/Payment/PaymentIndex.html" class="post-button">Đăng tin</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification modal -->
+      <div id="notification-modal" class="notification-modal-overlay">
+        <div class="notification-modal-content">
+            <div class="notification-modal-header">
+                <h4>Thông báo</h4>
+                <button id="notification-modal-close-btn" class="notification-modal-close">&times;</button>
+            </div>
+            <div class="notification-modal-tabs">
+                <button class="tab-button active" data-tab="activity">Hoạt động</button>
+                <button class="tab-button" data-tab="news">Tin tức</button>
+            </div>
+            <div class="notification-modal-body">
+                <div id="activity-tab-content" class="tab-content active">
+                    <div class="notification-item" data-order-id="order123">
+                        <div class="notification-icon activity">
+                            <i class="fas fa-file-invoice-dollar"></i>
+                        </div>
+                        <div class="notification-text">
+                            <p><strong>Shop ABC</strong> đã gửi yêu cầu tạo đơn hàng cho sản phẩm "Áo thun nam cao cấp".</p>
+                            <span class="notification-time">2 phút trước</span>
+                        </div>
+                        <a href="#" class="btn btn-view-details">Xem chi tiết</a>
+                    </div>
+                    <!-- <div class="notification-item">
+                        <div class="notification-icon activity">
+                             <i class="fas fa-handshake"></i>
+                        </div>
+                        <div class="notification-text">
+                            <p>Đơn hàng #XYZ789 của bạn đã được <strong>Người mua XYZ</strong> xác nhận. Chuẩn bị hàng nhé!</p>
+                             <span class="notification-time">1 giờ trước</span>
+                        </div>
+                         <a href="#" class="btn btn-view-details">Xem đơn hàng</a>
+                    </div> -->
+                    
+                </div>
+                <div id="news-tab-content" class="tab-content">
+                    <div class="notification-item">
+                        <div class="notification-icon news">
+                            <i class="fas fa-bullhorn"></i>
+                        </div>
+                        <div class="notification-text">
+                            <p>🔥 Flash Sale cuối tháng! Giảm giá đến 50% cho hàng ngàn sản phẩm.</p>
+                            <span class="notification-time">Hôm qua</span>
+                        </div>
+                    </div>
+                    <div class="notification-item">
+                         <div class="notification-icon news">
+                            <i class="fas fa-gift"></i>
+                        </div>
+                        <div class="notification-text">
+                            <p>🎉 Chúc mừng bạn đã nhận được voucher giảm 10% cho đơn hàng tiếp theo.</p>
+                             <span class="notification-time">2 ngày trước</span>
+                        </div>
+                    </div>
+                     
+                </div>
             </div>
         </div>
     </div>
 
     <script>
+
+        // notification
+        const notificationIconTrigger = document.querySelector('.header-icons .icon-wrapper i.fa-bell').closest('.icon-wrapper');
+        const notificationModal = document.getElementById('notification-modal');
+        const notificationModalCloseBtn = document.getElementById('notification-modal-close-btn');
+        const notificationTabButtons = document.querySelectorAll('.notification-modal-tabs .tab-button');
+        const notificationTabContents = document.querySelectorAll('.notification-modal-body .tab-content');
+
+        function showNotificationModal() {
+            notificationModal.classList.add('show');
+        }
+
+        function closeNotificationModal() {
+            notificationModal.classList.remove('show');
+        }
+
+        if (notificationIconTrigger) {
+            notificationIconTrigger.addEventListener('click', (event) => {
+                event.stopPropagation(); 
+               
+                showNotificationModal();
+                
+            });
+        }
+
+        if (notificationModalCloseBtn) {
+            notificationModalCloseBtn.addEventListener('click', closeNotificationModal);
+        }
+
+      
+        if (notificationModal) {
+            notificationModal.addEventListener('click', function(event) {
+                if (event.target === notificationModal) {
+                    closeNotificationModal();
+                }
+            });
+        }
+
+       
+        notificationTabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+              
+                notificationTabButtons.forEach(btn => btn.classList.remove('active'));
+                notificationTabContents.forEach(content => content.classList.remove('active'));
+
+               
+                button.classList.add('active');
+                const tabId = button.dataset.tab;
+                document.getElementById(tabId + '-tab-content').classList.add('active');
+            });
+        });
+
+    const activityTabContent = document.getElementById('activity-tab-content'); 
+    if (activityTabContent) {
+        activityTabContent.addEventListener('click', function(event) {
+        if (event.target.classList.contains('btn-view-details')) {
+            event.preventDefault(); 
+            const notificationItem = event.target.closest('.notification-item');
+            const orderId = notificationItem.dataset.orderId;
+
+            window.location.href = `order_review.html?orderId=${orderId}`;
+        }
+    });
+}
         const radioUsed = document.getElementById('radio-used');
         const radioNew = document.getElementById('radio-new');
         const kmGroup = document.getElementById('km-group');
@@ -329,6 +538,66 @@
             toggleKmInput();
             populateSelect(provinceSelect, Object.keys(addressData));
         };
+
+
+        const toggleButton = document.querySelector('.CategorySelected');
+    const dropdown = document.getElementById('categoryDropdown');
+    const categoryItems = document.querySelectorAll('.category-item');
+
+    toggleButton.addEventListener('click', function (e) {
+      e.preventDefault();
+      dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+      document.querySelectorAll('.subcategory-list').forEach(subList => {
+        subList.style.display = 'none';
+      });
+    });
+
+    document.addEventListener('click', function (e) {
+      if (!toggleButton.contains(e.target) && !dropdown.contains(e.target)) {
+        dropdown.style.display = 'none';
+        document.querySelectorAll('.subcategory-list').forEach(subList => {
+          subList.style.display = 'none';
+        });
+      }
+    });
+
+    categoryItems.forEach(item => {
+      item.addEventListener('click', function (e) {
+        e.stopPropagation();
+        // Ẩn tất cả subcategory-list trước khi hiển thị cái được click
+        document.querySelectorAll('.subcategory-list').forEach(subList => {
+          subList.style.display = 'none';
+        });
+        const subcategoryList = this.querySelector('.subcategory-list');
+        // Di chuyển dropdown phụ xuống dưới danh mục chính
+        subcategoryList.style.top = '0%';
+        subcategoryList.style.left = '100%';
+        subcategoryList.style.display = subcategoryList.style.display === 'block' ? 'none' : 'block';
+      });
+    });
+    // Thêm vào cuối script hiện có
+const bagIconWrapper = document.querySelector('.bag-icon-wrapper');
+const bagDropdownMenu = document.querySelector('.bag-dropdown-menu');
+
+if (bagIconWrapper && bagDropdownMenu) {
+    // Toggle dropdown on bag icon click
+    bagIconWrapper.addEventListener('click', function(e) {
+        e.stopPropagation(); // Prevent document click from immediately closing
+        bagDropdownMenu.classList.toggle('show');
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!bagIconWrapper.contains(e.target)) {
+            bagDropdownMenu.classList.remove('show');
+        }
+    });
+
+    // Prevent dropdown from closing when clicking inside it
+    bagDropdownMenu.addEventListener('click', function(e) {
+        e.stopPropagation();
+    });
+}
     </script>
 </body>
 </html>

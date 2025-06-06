@@ -6,636 +6,91 @@
   <title>HI! TMDT - Trang chủ</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    /* Reset CSS */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
-
-    body {
-      font-family: "Inter", sans-serif;
-      line-height: 1.5;
-      color: #333;
-      background-color: #f5f5f5;
-    }
-
-    a {
-      text-decoration: none;
-      color: inherit;
-    }
-
-    img {
-      max-width: 100%;
-      height: auto;
-    }
-
-    .container {
-      width: 100%;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 15px;
-    }
-
-    /* Top Info Bar */
-    .top-info-bar {
-      background-color: #1a2433;
-      color: white;
-      padding: 8px 0;
-    }
-
-    .top-info-container {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-    }
-
-    .info-item {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 14px;
-      margin-bottom: 4px;
-    }
-
-    .info-icon {
-      color: #00c2cb;
-      font-size: 18px;
-    }
-
-    /* Header Styles from fileMau.html */
-    :root {
-      --primary-accent: #ffffff;
-      --header-bg: #2b6eff; 
-      --footer-bg: #20232a;
-      --footer-bottom-bg: #1a1d23;
-      --main-bg: #ebebeb; 
-      --card-bg: #ffffff; 
-      --text-light: #3f3f3f; 
-      --text-lighter: #000000; 
-      --text-muted: #6c757d; 
-      --text-link-blue: var(--header-bg);
-      --border-color: #ced4da; 
-      --light-border-color: #e0e0e0; 
-      --input-bg: #ffffff;
-      --input-border: #ced4da; 
-      --input-border-focus: #86b7fe; 
-      --input-placeholder-color: #6c757d;
-      --required-asterisk-color: red;
-      --button-hover: #268cbd;
-      --white-color: #ffffff;
-      
-      --btn-grey-bg: #e9ecef; 
-      --btn-grey-text: #212529; 
-      --btn-grey-border: #ced4da; 
-      --btn-grey-hover-bg: #d3d9df;
-
-      --logout-btn-bg: #dc3545;
-      --logout-btn-text: var(--white-color);
-      --logout-btn-hover-bg: #c82333;
-      --logout-btn-border: #dc3545;
-    }
-
-    /* Header */
-    .header {
-      background-color: var(--header-bg); 
-      padding: 1rem 2rem; 
-      display: flex;
-      justify-content: space-between; 
-      align-items: center; 
-      gap: 1rem; 
-      flex-wrap: wrap;
-    }
-    .header-left { 
-      display: flex; 
-      align-items: center; 
-      gap: 1.5rem; 
-    }
-    .header-logo img { 
-      height: 35px; 
-    }
-    .header-menu-toggle { 
-      display: none; 
-      background: none; 
-      border: none;
-      color: var(--white-color); 
-      font-size: 1.5rem; 
-      cursor: pointer; 
-    }
-    .search-bar { 
-      display: flex; 
-      align-items: center; 
-      background-color: var(--input-bg);
-      border-radius: 0.5rem; 
-      overflow: hidden; 
-      width: 300px; 
-    }
-    .search-bar input {
-      outline: none; 
-      border: none; 
-      padding: 0.75rem 1rem; 
-      background: transparent;
-      color: var(--text-light); 
-      width: 100%; 
-    }
-    .search-bar input::placeholder { 
-      color: var(--input-placeholder-color); 
-    }
-    .search-bar button { 
-      background-color: transparent; 
-      border: none; 
-      padding: 0.75rem 1rem;
-      color: var(--text-light); 
-      cursor: pointer; 
-      transition: color 0.2s ease; 
-    }
-    .search-bar button:hover { 
-      color: var(--header-bg); 
-    }
-    .header-right { 
-      display: flex; 
-      align-items: center; 
-      gap: 1.5rem; 
-    }
-    .header-links a { 
-      color: var(--primary-accent); 
-      font-size: 0.95rem;
-      white-space: nowrap; 
-      transition: color 0.2s ease; 
-    }
-    .header-links a:hover { 
-      color: rgba(255, 255, 255, 0.8); 
-      text-decoration: none; 
-    }
-    
-    .header-icons { 
-      display: flex; 
-      gap: 1rem; 
-      align-items: center; 
-    }
-    .header-icons .icon-wrapper { 
-      position: relative; 
-      cursor: pointer; 
-      display: inline-block; 
-      vertical-align: middle;
-    }
-    .header-icons a.icon-wrapper { 
-      color: var(--white-color); 
-      text-decoration: none;
-    }
-    .header-icons .icon-wrapper i { 
-      color: var(--white-color); 
-      font-size: 1.3rem;
-      transition: color 0.2s ease;
-      vertical-align: middle;
-    }
-    .header-icons .icon-wrapper:hover i,
-    .header-icons a.icon-wrapper:hover i { 
-      color: rgba(255, 255, 255, 0.8); 
-    }
-    .header-icons .badge { 
-      position: absolute; 
-      top: -8px; 
-      right: -8px; 
-      background-color: #e53e3e;
-      color: var(--white-color); 
-      font-size: 0.7rem; 
-      padding: 0.2rem 0.4rem;
-      border-radius: 50%; 
-      min-width: 18px; 
-      text-align: center; 
-    }
-    
-    .header-buttons .btn { 
-      padding: 0.75rem 1.25rem; 
-      border-radius: 0.5rem; 
-      font-weight: 500;
-      cursor: pointer; 
-      border: none; 
-      white-space: nowrap; 
-      display: inline-flex;
-      align-items: center; 
-      gap: 0.5rem; 
-      transition: background-color 0.2s ease, color 0.2s ease; 
-    }
-    .header-buttons .btn i { 
-      font-size: 1rem; 
-    }
-    .header-buttons .btn-post-news { 
-      background-color: var(--white-color); 
-      color: var(--header-bg); 
-    }
-    .header-buttons .btn-post-news:hover { 
-      background-color: rgba(255,255,255,0.9); 
-    }
-    .header-buttons .btn-outline { 
-      background-color: transparent; 
-      border: 1px solid var(--primary-accent);
-      color: var(--primary-accent); 
-    }
-    .header-buttons .btn-outline:hover { 
-      background-color: var(--primary-accent); 
-      color: var(--header-bg); 
-    }
-
-    /* Mobile Search */
-    .mobile-search {
-      padding: 10px 15px;
-      background-color: #f0f0f0;
-    }
-
-    /* Main Content */
-    .main-content {
-      min-height: 100vh;
-    }
-
-    /* Banner */
-    .banner-container {
-      padding: 15px 0;
-    }
-
-    .banner {
-      position: relative;
-      width: 100%;
-      height: 250px;
-      border-radius: 8px;
-      overflow: hidden;
-      background-color: #ddd;
-    }
-
-    .banner-content {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(to right, rgba(220, 38, 38, 0.8), transparent);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 20px 40px;
-      color: white;
-    }
-
-    .banner-title {
-      font-size: 28px;
-      font-weight: bold;
-      margin-bottom: 5px;
-    }
-
-    .banner-subtitle {
-      font-size: 20px;
-      font-weight: 500;
-      margin-bottom: 15px;
-    }
-
-    .banner-cta {
-      color: #fde047;
-      font-weight: bold;
-    }
-
-    .banner-phone {
-      font-weight: bold;
-      margin-top: 8px;
-    }
-
-    /* Category Icons */
-    .category-icons {
-      padding: 10px 0;
-    }
-
-    .category-icons-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 15px;
-    }
-
-    .category-icon {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-    }
-
-    .icon-circle {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      background-color: white;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 5px;
-    }
-
-    .heart-icon {
-      color: #ef4444;
-    }
-
-    .clock-icon {
-      color: #3b82f6;
-    }
-
-    .laptop-icon {
-      color: #22c55e;
-    }
-
-    .category-icon-label {
-      font-size: 12px;
-    }
-
-    /* Categories Section */
-    .categories-section {
-      padding: 20px 0;
-    }
-
-    .section-title {
-      font-size: 18px;
-      font-weight: 600;
-      margin-bottom: 15px;
-    }
-
-    .categories-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 15px;
-    }
-
-    .category-card {
-      background-color: white;
-      border-radius: 8px;
-      overflow: hidden;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-      transition: box-shadow 0.2s;
-    }
-
-    .category-card:hover {
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-
-    .category-card-content {
-      padding: 15px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .category-image {
-      width: 80px;
-      height: 80px;
-      object-fit: cover;
-      margin-bottom: 8px;
-    }
-
-    .category-title {
-      font-size: 12px;
-      text-align: center;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
-
-    /* Products Section */
-    .products-section {
-      padding: 20px 0;
-    }
-
-    .products-container {
-      background-color: white;
-      padding: 15px;
-      border-radius: 8px;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    }
-
-    .products-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 15px;
-    }
-
-    .product-card {
-      border: 1px solid #e5e7eb;
-      border-radius: 6px;
-      overflow: hidden;
-      transition: box-shadow 0.2s;
-    }
-
-    .product-card:hover {
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-
-    .product-image-container {
-      position: relative;
-      width: 100%;
-      height: 160px;
-    }
-
-    .product-image {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .product-details {
-      padding: 10px;
-    }
-
-    .product-title {
-      font-size: 14px;
-      font-weight: 500;
-      margin-bottom: 5px;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
-
-    .product-price {
-      color: #dc2626;
-      font-weight: bold;
-      font-size: 14px;
-    }
-
-    .product-meta {
-      display: flex;
-      gap: 10px;
-      margin-top: 8px;
-      font-size: 12px;
-      color: #6b7280;
-    }
-
-    .meta-item {
-      display: flex;
-      align-items: center;
-    }
-
-    .meta-icon {
-      margin-right: 4px;
-      font-size: 10px;
-    }
-
-    /* Footer Styles from fileMau.html */
-    .footer-top { 
-      background-color: var(--footer-bg); 
-      padding: 2.5rem 0; 
-      display: flex;
-      justify-content: center; 
-      align-items: center; 
-      gap: 3rem; 
-      flex-wrap: wrap;
-      border-top: 1px solid rgba(255, 255, 255, 0.1); 
-    }
-    .footer-feature { 
-      display: flex; 
-      align-items: center; 
-      gap: 0.75rem;
-      color: #ffffff; 
-      font-size: 0.95rem; 
-    }
-    .footer-feature i { 
-      font-size: 2rem; 
-      color: var(--primary-accent); 
-    }
-    .footer-bottom { 
-      background-color: var(--footer-bottom-bg); 
-      padding: 2.5rem 2rem; 
-      display: flex;
-      justify-content: space-between; 
-      align-items: flex-start; 
-      flex-wrap: wrap; 
-      gap: 2rem; 
-    }
-    .footer-section { 
-      flex: 1; 
-      min-width: 200px; 
-      max-width: 300px; 
-    }
-    .footer-logo img { 
-      height: 40px; 
-      margin-bottom: 1rem; 
-    }
-    .footer-section p { 
-      color: #ffffff; 
-      font-size: 0.9rem; 
-      margin-bottom: 1rem; 
-    }
-    .footer-section h4 { 
-      color: #ffffff; 
-      font-size: 1.1rem; 
-      margin-bottom: 1rem; 
-    }
-    .footer-section ul { 
-      list-style: none; 
-    }
-    .footer-section ul li { 
-      margin-bottom: 0.5rem; 
-    }
-    .footer-section ul a { 
-      color: #ffffff; 
-      font-size: 0.9rem; 
-      transition: color 0.2s ease; 
-    }
-    .footer-section ul a:hover { 
-      color: var(--input-border-focus); 
-      text-decoration: none; 
-    }
-    .payment-methods img { 
-      height: 30px; 
-      margin-right: 0.5rem; 
-      background-color: white; 
-      border-radius: 3px; 
-      padding: 2px; 
-    }
-    .social-icons { 
-      display: flex; 
-      gap: 1rem; 
-      margin-top: 1rem; 
-    }
-    .social-icons a { 
-      color: #ffffff; 
-      font-size: 1.5rem; 
-      transition: color 0.2s ease; 
-    }
-    .social-icons a:hover { 
-      color: var(--input-border-focus); 
-    }
-
-    /* Responsive Styles */
-    @media (min-width: 768px) {
-      .search-container {
-        display: block;
-      }
-
-      .mobile-search {
-        display: none;
-      }
-
-      .mobile-menu-button {
-        display: none;
-      }
-
-      .action-button {
-        display: block;
-      }
-
-      .banner {
-        height: 300px;
-      }
-
-      .banner-title {
-        font-size: 36px;
-      }
-
-      .banner-subtitle {
-        font-size: 24px;
-      }
-
-      .category-icons-grid {
-        grid-template-columns: repeat(7, 1fr);
-      }
-
-      .categories-grid {
-        grid-template-columns: repeat(3, 1fr);
-      }
-
-      .products-grid {
-        grid-template-columns: repeat(3, 1fr);
-      }
-
-      .footer-container {
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: space-between;
-      }
-    }
-
-    @media (min-width: 1024px) {
-      .categories-grid {
-        grid-template-columns: repeat(6, 1fr);
-      }
-
-      .products-grid {
-        grid-template-columns: repeat(5, 1fr);
-      }
-
-      .footer-content {
-        flex-wrap: nowrap;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="Home.css">
 </head>
 <body>
-  <!-- Header từ fileMau.html -->
   <header class="header">
     <div class="header-left">
-      <a href="#" class="header-logo">
+      <a href="/Home_ProductDetails/Home.html" class="header-logo">
         <img src="https://bizweb.dktcdn.net/100/479/080/themes/897121/assets/logo.png?1739930514069" alt="H! TMDT Logo"/>
       </a>
+      <div style="position: relative;">
+        <button class="CategorySelected">
+          <svg class="iconCategory" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+            <g id="SVGRepo_iconCarrier">
+              <path d="M4 6H20M4 12H20M4 18H20" stroke="white" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round"></path>
+            </g>
+          </svg>
+          <ul class="category-dropdown" id="categoryDropdown">
+            <li class="category-item">
+              <i class="fas fa-building"></i> Bất động sản <span class="arrow">></span>
+              <ul class="subcategory-list">
+                <li class="subcategory-item"><a href="/Home_ProductDetails/product-list.html">Chung cư</a></li>
+                <li class="subcategory-item"><a href="/Home_ProductDetails/product-list.html">Nhà riêng</a></li>
+                <li class="subcategory-item"><a href="/Home_ProductDetails/product-list.html">Văn phòng</a></li>
+                <li class="subcategory-item"><a href="/Home_ProductDetails/product-list.html">Đất nền</a></li>
+              </ul>
+            </li>
+            <li class="category-item">
+              <i class="fas fa-motorcycle"></i> Xe cộ <span class="arrow">></span>
+              <ul class="subcategory-list">
+                <li class="subcategory-item"><a href="/Home_ProductDetails/product-list.html">Ô tô</a></li>
+                <li class="subcategory-item"><a href="/Home_ProductDetails/product-list.html">Xe máy</a></li>
+                <li class="subcategory-item"><a href="/Home_ProductDetails/product-list.html">Xe điện</a></li>
+                <li class="subcategory-item"><a href="/Home_ProductDetails/product-list.html">Xe đạp</a></li>
+              </ul>
+            </li>
+            <li class="category-item">
+              <i class="fas fa-laptop"></i> Đồ điện tử <span class="arrow">></span>
+              <ul class="subcategory-list">
+                <li class="subcategory-item"><a href="/Home_ProductDetails/product-list.html">Điện thoại</a></li>
+                <li class="subcategory-item"><a href="/Home_ProductDetails/product-list.html">Máy tính bảng</a></li>
+                <li class="subcategory-item"><a href="/Home_ProductDetails/product-list.html">Laptop</a></li>
+                <li class="subcategory-item"><a href="/Home_ProductDetails/product-list.html">Phụ kiện điện tử</a></li>
+              </ul>
+            </li>
+            <li class="category-item">
+              <i class="fas fa-snowflake"></i> Tủ lạnh, máy lạnh, máy giặt <span class="arrow">></span>
+              <ul class="subcategory-list">
+                <li class="subcategory-item"><a href="/Home_ProductDetails/product-list.html">Tủ lạnh</a></li>
+                <li class="subcategory-item"><a href="/Home_ProductDetails/product-list.html">Máy lạnh</a></li>
+                <li class="subcategory-item"><a href="/Home_ProductDetails/product-list.html">Máy giặt</a></li>
+              </ul>
+            </li>
+            <li class="category-item">
+              <i class="fas fa-couch"></i> Đồ gia dụng, nội thất <span class="arrow">></span>
+              <ul class="subcategory-list">
+                <li class="subcategory-item"><a href="/Home_ProductDetails/product-list.html">Giường</a></li>
+                <li class="subcategory-item"><a href="/Home_ProductDetails/product-list.html">Tủ</a></li>
+                <li class="subcategory-item"><a href="/Home_ProductDetails/product-list.html">Bàn ghế</a></li>
+                <li class="subcategory-item"><a href="/Home_ProductDetails/product-list.html">Thiết bị nhà bếp</a></li>
+              </ul>
+            </li>
+            <li class="category-item">
+              <i class="fas fa-tshirt"></i> Thời trang, đồ dùng cá nhân <span class="arrow">></span>
+              <ul class="subcategory-list">
+                <li class="subcategory-item"><a href="/Home_ProductDetails/product-list.html">Quần áo</a></li>
+                <li class="subcategory-item"><a href="/Home_ProductDetails/product-list.html">Giày dép</a></li>
+                <li class="subcategory-item"><a href="/Home_ProductDetails/product-list.html">Phụ kiện</a></li>
+                <li class="subcategory-item"><a href="/Home_ProductDetails/product-list.html">Mỹ phẩm</a></li>
+              </ul>
+            </li>
+            <li class="category-item">
+              <i class="fas fa-paw"></i> Thú cưng <span class="arrow">></span>
+              <ul class="subcategory-list">
+                <li class="subcategory-item"><a href="/Home_ProductDetails/product-list.html">Chó</a></li>
+                <li class="subcategory-item"><a href="/Home_ProductDetails/product-list.html">Mèo</a></li>
+                <li class="subcategory-item"><a href="/Home_ProductDetails/product-list.html">Phụ kiện thú cưng</a></li>
+                <li class="subcategory-item"><a href="/Home_ProductDetails/product-list.html">Thức ăn thú cưng</a></li>
+              </ul>
+            </li>
+          </ul>
+
+        </button>
+      </div>
       <button class="header-menu-toggle" aria-label="Toggle menu"><i class="fas fa-bars"></i></button>
       <div class="search-bar">
         <input type="text" placeholder="Tìm kiếm sản phẩm" />
@@ -649,20 +104,27 @@
       </div>
       <div class="header-icons">
         <a class="icon-wrapper"><i class="fas fa-bell"></i><span class="badge">2</span></a>
-        <a href="/Saved_Product/saved_products.html" class="icon-wrapper"><i class="fas fa-shopping-cart"></i><span class="badge">2</span></a>
+        <a href="/Saved_Product/saved_products.html" class="icon-wrapper"><i class="fa-solid fa-heart"></i></a>
         <a href="/Chat/index.html" class="icon-wrapper"><i class="fas fa-comment-dots"></i><span class="badge">3</span></a>
+        <div class="icon-wrapper bag-icon-wrapper">
+            <i class="fa-solid fa-bag-shopping"></i><span class="badge">3</span>
+            <div class="bag-dropdown-menu">
+                <a href="/Order_History/don-mua-ban.html?type=buy" class="bag-dropdown-item">Đơn mua</a>
+                <a href="/Order_History/don-mua-ban.html?type=sell" class="bag-dropdown-item">Đơn bán</a>
+            </div>
+        </div>
+        
         <a href="/Profile/profile_edit.html" class="icon-wrapper"><i class="fas fa-user"></i></a>
       </div>
+
       <div class="header-buttons">
-        <a href="" class="btn btn-outline"><i class="fas fa-user"></i> Quản lý tin</a>
+        <a href="/Day_Tin/quan-ly-tin.html" class="btn btn-outline"><i class="fas fa-user"></i> Quản lý tin</a>
         <a href="/Create_Post/index.html" class="btn btn-post-news"><i class="fas fa-pen"></i> Đăng Tin</a>
       </div>
     </div>
   </header>
 
-  <!-- Main Content -->
   <main class="main-content">
-    <!-- Banner -->
     <div class="container banner-container">
       <div class="banner">
         <img src="https://img.freepik.com/free-photo/luxury-car-parked-highway-with-sunset-background_181624-60607.jpg" alt="Banner xe sang" style="width:100%; height:100%; object-fit:cover;">
@@ -675,8 +137,7 @@
       </div>
     </div>
 
-    <!-- Category Icons -->
-    <div class="container category-icons">
+    <!-- <div class="container category-icons">
       <div class="category-icons-grid">
         <a href="#" class="category-icon">
           <div class="icon-circle">
@@ -696,34 +157,10 @@
           </div>
           <span class="category-icon-label">Thiết bị điện tử</span>
         </a>
-        <a href="#" class="category-icon">
-          <div class="icon-circle">
-            <i class="fas fa-heart heart-icon"></i>
-          </div>
-          <span class="category-icon-label">Tin đăng đã lưu</span>
-        </a>
-        <a href="#" class="category-icon">
-          <div class="icon-circle">
-            <i class="fas fa-clock clock-icon"></i>
-          </div>
-          <span class="category-icon-label">Thời trang nam</span>
-        </a>
-        <a href="#" class="category-icon">
-          <div class="icon-circle">
-            <i class="fas fa-laptop laptop-icon"></i>
-          </div>
-          <span class="category-icon-label">Thiết bị điện tử</span>
-        </a>
-        <a href="#" class="category-icon">
-          <div class="icon-circle">
-            <i class="fas fa-clock clock-icon"></i>
-          </div>
-          <span class="category-icon-label">Thời trang nam</span>
-        </a>
+        
       </div>
-    </div>
+    </div> -->
 
-    <!-- Categories Section -->
     <div class="container categories-section">
       <h2 class="section-title">Khám phá danh mục</h2>
       <div class="categories-grid">
@@ -766,13 +203,11 @@
       </div>
     </div>
 
-    <!-- Products Section -->
     <div class="container products-section">
       <div class="products-container">
         <h2 class="section-title">Tin đăng mới</h2>
         <div class="products-grid">
-          <!-- Product 1 -->
-          <a href="#" class="product-card">
+          <a href="/Home_ProductDetails/product-detail.html" class="product-card">
             <div class="product-image-container">
               <img src="https://img.freepik.com/free-photo/smartphone-balancing-with-blue-background_23-2150271748.jpg" alt="iPhone 11" class="product-image">
             </div>
@@ -792,8 +227,7 @@
             </div>
           </a>
 
-          <!-- Product 2 -->
-          <a href="#" class="product-card">
+          <a href="/Home_ProductDetails/product-detail.html" class="product-card">
             <div class="product-image-container">
               <img src="https://img.freepik.com/free-photo/smartphone-balancing-with-blue-background_23-2150271748.jpg" alt="iPhone 11" class="product-image">
             </div>
@@ -813,8 +247,7 @@
             </div>
           </a>
 
-          <!-- Product 3 -->
-          <a href="#" class="product-card">
+          <a href="/Home_ProductDetails/product-detail.html" class="product-card">
             <div class="product-image-container">
               <img src="https://img.freepik.com/free-photo/laptop-with-blank-black-screen-wooden-table_53876-97915.jpg" alt="Macbook M1" class="product-image">
             </div>
@@ -834,8 +267,7 @@
             </div>
           </a>
 
-          <!-- Product 4 -->
-          <a href="#" class="product-card">
+          <a href="/Home_ProductDetails/product-detail.html" class="product-card">
             <div class="product-image-container">
               <img src="https://img.freepik.com/free-photo/laptop-with-blank-black-screen-wooden-table_53876-97915.jpg" alt="Macbook M2" class="product-image">
             </div>
@@ -855,8 +287,7 @@
             </div>
           </a>
 
-          <!-- Product 5 -->
-          <a href="#" class="product-card">
+          <a href="/Home_ProductDetails/product-detail.html" class="product-card">
             <div class="product-image-container">
               <img src="https://img.freepik.com/free-photo/smartphone-balancing-with-blue-background_23-2150271748.jpg" alt="iPhone 11" class="product-image">
             </div>
@@ -876,8 +307,7 @@
             </div>
           </a>
 
-          <!-- Product 6 -->
-          <a href="#" class="product-card">
+          <a href="/Home_ProductDetails/product-detail.html" class="product-card">
             <div class="product-image-container">
               <img src="https://img.freepik.com/free-photo/acoustic-guitar-brown-wooden-table_144627-8469.jpg" alt="Guitar" class="product-image">
             </div>
@@ -897,8 +327,7 @@
             </div>
           </a>
 
-          <!-- Product 7 -->
-          <a href="#" class="product-card">
+          <a href="/Home_ProductDetails/product-detail.html" class="product-card">
             <div class="product-image-container">
               <img src="https://img.freepik.com/free-photo/electric-guitar-isolated-white-background_1308-133300.jpg" alt="Guitar điện" class="product-image">
             </div>
@@ -918,8 +347,7 @@
             </div>
           </a>
 
-          <!-- Product 8 -->
-          <a href="#" class="product-card">
+          <a href="/Home_ProductDetails/product-detail.html" class="product-card">
             <div class="product-image-container">
               <img src="https://img.freepik.com/free-photo/pair-trainers_144627-3799.jpg" alt="Giày Converse" class="product-image">
             </div>
@@ -939,8 +367,7 @@
             </div>
           </a>
 
-          <!-- Product 9 -->
-          <a href="#" class="product-card">
+          <a href="/Home_ProductDetails/product-detail.html" class="product-card">
             <div class="product-image-container">
               <img src="https://img.freepik.com/free-photo/men-shoes_1203-8652.jpg" alt="Giày da" class="product-image">
             </div>
@@ -960,8 +387,7 @@
             </div>
           </a>
 
-          <!-- Product 10 -->
-          <a href="#" class="product-card">
+          <a href="/Home_ProductDetails/product-detail.html" class="product-card">
             <div class="product-image-container">
               <img src="https://img.freepik.com/free-photo/hat-isolated-white-background_1203-8623.jpg" alt="Mũ đội ngoài trời" class="product-image">
             </div>
@@ -985,7 +411,6 @@
     </div>
   </main>
 
-  <!-- Footer từ fileMau.html -->
   <footer class="main-footer">
     <div class="footer-top">
       <div class="footer-feature"><i class="fas fa-truck-fast"></i><span>Miễn phí vận chuyển <br />Cho đơn hàng trên 500K</span></div>
@@ -1021,5 +446,179 @@
       </div>
     </div>
   </footer>
+  <div id="notification-modal" class="notification-modal-overlay">
+        <div class="notification-modal-content">
+            <div class="notification-modal-header">
+                <h4>Thông báo</h4>
+                <button id="notification-modal-close-btn" class="notification-modal-close">&times;</button>
+            </div>
+            <div class="notification-modal-tabs">
+                <button class="tab-button active" data-tab="activity">Hoạt động</button>
+                <button class="tab-button" data-tab="news">Tin tức</button>
+            </div>
+            <div class="notification-modal-body">
+                <div id="activity-tab-content" class="tab-content active">
+                    <div class="notification-item" data-order-id="order123">
+                        <div class="notification-icon activity">
+                            <i class="fas fa-file-invoice-dollar"></i>
+                        </div>
+                        <div class="notification-text">
+                            <p><strong>Shop ABC</strong> đã gửi yêu cầu tạo đơn hàng cho sản phẩm "Áo thun nam cao cấp".</p>
+                            <span class="notification-time">2 phút trước</span>
+                        </div>
+                        <a href="#" class="btn btn-view-details">Xem chi tiết</a>
+                    </div>
+                    </div>
+                <div id="news-tab-content" class="tab-content">
+                    <div class="notification-item">
+                        <div class="notification-icon news">
+                            <i class="fas fa-bullhorn"></i>
+                        </div>
+                        <div class="notification-text">
+                            <p>🔥 Flash Sale cuối tháng! Giảm giá đến 50% cho hàng ngàn sản phẩm.</p>
+                            <span class="notification-time">Hôm qua</span>
+                        </div>
+                    </div>
+                    <div class="notification-item">
+                         <div class="notification-icon news">
+                            <i class="fas fa-gift"></i>
+                        </div>
+                        <div class="notification-text">
+                            <p>🎉 Chúc mừng bạn đã nhận được voucher giảm 10% cho đơn hàng tiếp theo.</p>
+                             <span class="notification-time">2 ngày trước</span>
+                        </div>
+                    </div>
+                     
+                </div>
+            </div>
+        </div>
+    </div>
+
+  <script>
+    const toggleButton = document.querySelector('.CategorySelected');
+    const dropdown = document.getElementById('categoryDropdown');
+    const categoryItems = document.querySelectorAll('.category-item');
+
+    toggleButton.addEventListener('click', function (e) {
+      e.preventDefault();
+      dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+      document.querySelectorAll('.subcategory-list').forEach(subList => {
+        subList.style.display = 'none';
+      });
+    });
+
+    document.addEventListener('click', function (e) {
+      if (!toggleButton.contains(e.target) && !dropdown.contains(e.target)) {
+        dropdown.style.display = 'none';
+        document.querySelectorAll('.subcategory-list').forEach(subList => {
+          subList.style.display = 'none';
+        });
+      }
+    });
+
+    categoryItems.forEach(item => {
+      item.addEventListener('click', function (e) {
+        e.stopPropagation();
+        // Ẩn tất cả subcategory-list trước khi hiển thị cái được click
+        document.querySelectorAll('.subcategory-list').forEach(subList => {
+          subList.style.display = 'none';
+        });
+        const subcategoryList = this.querySelector('.subcategory-list');
+        // Di chuyển dropdown phụ xuống dưới danh mục chính
+        subcategoryList.style.top = '0%';
+        subcategoryList.style.left = '100%';
+        subcategoryList.style.display = subcategoryList.style.display === 'block' ? 'none' : 'block';
+      });
+    });
+
+    
+     // notification
+        const notificationIconTrigger = document.querySelector('.header-icons .icon-wrapper i.fa-bell').closest('.icon-wrapper');
+        const notificationModal = document.getElementById('notification-modal');
+        const notificationModalCloseBtn = document.getElementById('notification-modal-close-btn');
+        const notificationTabButtons = document.querySelectorAll('.notification-modal-tabs .tab-button');
+        const notificationTabContents = document.querySelectorAll('.notification-modal-body .tab-content');
+
+        function showNotificationModal() {
+            notificationModal.classList.add('show');
+        }
+
+        function closeNotificationModal() {
+            notificationModal.classList.remove('show');
+        }
+
+        if (notificationIconTrigger) {
+            notificationIconTrigger.addEventListener('click', (event) => {
+                event.stopPropagation(); 
+               
+                showNotificationModal();
+                
+            });
+        }
+
+        if (notificationModalCloseBtn) {
+            notificationModalCloseBtn.addEventListener('click', closeNotificationModal);
+        }
+
+      
+        if (notificationModal) {
+            notificationModal.addEventListener('click', function(event) {
+                if (event.target === notificationModal) {
+                    closeNotificationModal();
+                }
+            });
+        }
+
+       
+        notificationTabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+              
+                notificationTabButtons.forEach(btn => btn.classList.remove('active'));
+                notificationTabContents.forEach(content => content.classList.remove('active'));
+
+               
+                button.classList.add('active');
+                const tabId = button.dataset.tab;
+                document.getElementById(tabId + '-tab-content').classList.add('active');
+            });
+        });
+
+    const activityTabContent = document.getElementById('activity-tab-content'); 
+    if (activityTabContent) {
+        activityTabContent.addEventListener('click', function(event) {
+        if (event.target.classList.contains('btn-view-details')) {
+            event.preventDefault(); 
+            const notificationItem = event.target.closest('.notification-item');
+            const orderId = notificationItem.dataset.orderId;
+
+            window.location.href = `order_review.html?orderId=${orderId}`;
+        }
+    });
+}
+// Thêm vào cuối script hiện có
+const bagIconWrapper = document.querySelector('.bag-icon-wrapper');
+const bagDropdownMenu = document.querySelector('.bag-dropdown-menu');
+
+if (bagIconWrapper && bagDropdownMenu) {
+    // Toggle dropdown on bag icon click
+    bagIconWrapper.addEventListener('click', function(e) {
+        e.stopPropagation(); // Prevent document click from immediately closing
+        bagDropdownMenu.classList.toggle('show');
+    });
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!bagIconWrapper.contains(e.target)) {
+            bagDropdownMenu.classList.remove('show');
+        }
+    });
+
+    // Prevent dropdown from closing when clicking inside it
+    bagDropdownMenu.addEventListener('click', function(e) {
+        e.stopPropagation();
+    });
+}
+
+  </script>
 </body>
 </html>

@@ -1,0 +1,1354 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>H! TMDT - Mua bán xe máy</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
+    <style>
+            :root {
+      --primary-accent: #ffffff;
+      --header-bg: #2b6eff;
+      --footer-bg: #20232a;
+      --footer-bottom-bg: #1a1d23;
+      --main-bg: #ebebeb;
+      --card-bg: #ffffff;
+      --text-light: #3f3f3f;
+      --text-lighter: #000000;
+      --text-muted: #6c757d;
+      --text-link-blue: var(--header-bg);
+      --border-color: #ced4da;
+      --light-border-color: #e0e0e0;
+      --input-bg: #ffffff;
+      --input-border: #ced4da;
+      --input-border-focus: #86b7fe;
+      --input-placeholder-color: #6c757d;
+      --required-asterisk-color: red;
+      --button-hover: #268cbd;
+      --white-color: #ffffff;
+
+      --btn-grey-bg: #e9ecef;
+      --btn-grey-text: #212529;
+      --btn-grey-border: #ced4da;
+      --btn-grey-hover-bg: #d3d9df;
+
+      --logout-btn-bg: #dc3545;
+      --logout-btn-text: var(--white-color);
+      --logout-btn-hover-bg: #c82333;
+      --logout-btn-border: #dc3545;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      font-family: "Inter", sans-serif;
+      line-height: 1.6;
+      color: var(--text-light);
+      background-color: var(--main-bg);
+    }
+
+    a {
+      text-decoration: none;
+      color: var(--text-link-blue);
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    input,
+    button,
+    textarea,
+    select {
+      font-family: "Inter", sans-serif;
+      font-size: 0.95rem;
+    }
+
+    .header {
+      background-color: var(--header-bg);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .header-logo img {
+      height: 35px;
+    }
+
+    .header-menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--white-color);
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .search-bar {
+      display: flex;
+      align-items: center;
+      background-color: var(--input-bg);
+      border-radius: 0.5rem;
+      overflow: hidden;
+      width: 300px;
+    }
+
+    .search-bar input {
+      outline: none;
+      border: none;
+      padding: 0.75rem 1rem;
+      background: transparent;
+      color: var(--text-light);
+      width: 100%;
+    }
+
+    .search-bar input::placeholder {
+      color: var(--input-placeholder-color);
+    }
+
+    .search-bar button {
+      background-color: transparent;
+      border: none;
+      padding: 0.75rem 1rem;
+      color: var(--text-light);
+      cursor: pointer;
+      transition: color 0.2s ease;
+    }
+
+    .search-bar button:hover {
+      color: var(--header-bg);
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .header-links a {
+      color: var(--primary-accent);
+      font-size: 0.95rem;
+      white-space: nowrap;
+      transition: color 0.2s ease;
+    }
+
+    .header-links a:hover {
+      color: rgba(255, 255, 255, 0.8);
+      text-decoration: none;
+    }
+
+    .header-icons {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .header-icons .icon-wrapper {
+      position: relative;
+      cursor: pointer;
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    .header-icons a.icon-wrapper {
+      color: var(--white-color);
+      text-decoration: none;
+    }
+
+    .header-icons .icon-wrapper i {
+      color: var(--white-color);
+      font-size: 1.3rem;
+      transition: color 0.2s ease;
+      vertical-align: middle;
+    }
+
+    .header-icons .icon-wrapper:hover i,
+    .header-icons a.icon-wrapper:hover i {
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .header-icons .badge {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      background-color: #e53e3e;
+      color: var(--white-color);
+      font-size: 0.7rem;
+      padding: 0.2rem 0.4rem;
+      border-radius: 50%;
+      min-width: 18px;
+      text-align: center;
+    }
+
+    .header-buttons .btn {
+      padding: 0.75rem 1.25rem;
+      border-radius: 0.5rem;
+      font-weight: 500;
+      cursor: pointer;
+      border: none;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+    .header-buttons .btn i {
+      font-size: 1rem;
+    }
+
+    .header-buttons .btn-post-news {
+      background-color: var(--white-color);
+      color: var(--header-bg);
+    }
+
+    .header-buttons .btn-post-news:hover {
+      background-color: rgba(255, 255, 255, 0.9);
+    }
+
+    .header-buttons .btn-outline {
+      background-color: transparent;
+      border: 1px solid var(--primary-accent);
+      color: var(--primary-accent);
+    }
+
+    .header-buttons .btn-outline:hover {
+      background-color: var(--primary-accent);
+      color: var(--header-bg);
+    }
+
+        /* Banner */
+    .banner-container {
+      padding: 15px 0;
+    }
+
+    .banner {
+      position: relative;
+      width: 100%;
+      height: 250px;
+      border-radius: 8px;
+      overflow: hidden;
+      background-color: #ddd;
+    }
+
+    .banner-content {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to right, rgba(220, 38, 38, 0.8), transparent);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 20px 40px;
+      color: white;
+    }
+
+    .banner-title {
+      font-size: 28px;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .banner-subtitle {
+      font-size: 20px;
+      font-weight: 500;
+      margin-bottom: 15px;
+    }
+
+    .banner-cta {
+      color: #fde047;
+      font-weight: bold;
+    }
+
+    .banner-phone {
+      font-weight: bold;
+      margin-top: 8px;
+    }
+
+
+    .footer-top {
+      background-color: var(--footer-bg);
+      padding: 2.5rem 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 3rem;
+      flex-wrap: wrap;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .footer-feature {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      color: #ffffff;
+      font-size: 0.95rem;
+    }
+
+    .footer-feature i {
+      font-size: 2rem;
+      color: var(--primary-accent);
+    }
+
+    .footer-bottom {
+      background-color: var(--footer-bottom-bg);
+      padding: 2.5rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 2rem;
+    }
+
+    .footer-section {
+      flex: 1;
+      min-width: 200px;
+      max-width: 300px;
+    }
+
+    .footer-logo img {
+      height: 40px;
+      margin-bottom: 1rem;
+    }
+
+    .footer-section p {
+      color: #ffffff;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+
+    .footer-section h4 {
+      color: #ffffff;
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+    }
+
+    .footer-section ul {
+      list-style: none;
+    }
+
+    .footer-section ul li {
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-section ul a {
+      color: #ffffff;
+      font-size: 0.9rem;
+      transition: color 0.2s ease;
+    }
+
+    .footer-section ul a:hover {
+      color: var(--input-border-focus);
+      text-decoration: none;
+    }
+
+    .payment-methods img {
+      height: 30px;
+      margin-right: 0.5rem;
+      background-color: white;
+      border-radius: 3px;
+      padding: 2px;
+    }
+
+    .social-icons {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .social-icons a {
+      color: #ffffff;
+      font-size: 1.5rem;
+      transition: color 0.2s ease;
+    }
+
+    .social-icons a:hover {
+      color: var(--input-border-focus);
+    }
+
+    .category-dropdown {
+      position: absolute;
+      background-color: white;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      margin-top: 0.5rem;
+      border-radius: 8px;
+      width: 300px;
+    
+      display: none;
+      z-index: 1000;
+      padding: 0;
+      list-style: none;
+    }
+
+    .category-item {
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid #e0e0e0;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      color: #333;
+      position: relative;
+    }
+
+    .category-item:last-child {
+      border-bottom: none;
+    }
+
+    .category-item:hover {
+      background-color: #f8f9fa;
+    }
+
+    .category-item:first-child:hover {
+      border-radius: 8px 8px 0 0;
+    }
+
+    .category-item:last-child:hover {
+border-radius: 0 0 8px 8px;
+    }
+
+    .category-item i {
+      font-size: 1.2rem;
+      color: #2b6eff;
+      margin-right: 0.75rem;
+    }
+
+    .category-item .arrow {
+      font-size: 0.8rem;
+      color: #6c757d;
+      margin-left: auto;
+      padding-left: 10px;
+    }
+
+    .subcategory-list {
+      position: absolute;
+      top: -1px;
+      left: 100%;
+      background-color: white;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      border-radius: 0 8px 8px 0;
+      border-left: 1px solid #e0e0e0;
+      width: 250px;
+      display: none;
+      padding: 0;
+      list-style: none;
+      z-index: 1001;
+      margin-top: 0;
+    }
+
+    .subcategory-item {
+      padding: 0.75rem 1rem;
+      color: #555;
+      border-radius: 0 8px 8px 0;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid #e0e0e0;
+      cursor: pointer;
+    }
+
+    .subcategory-item:last-child {
+      border-bottom: none;
+    }
+
+    .subcategory-item:hover {
+      color: #2b6eff;
+      background-color: #f8f9fa;
+      border-radius: 0 8px 8px 0;
+    }
+    .CategorySelected {
+      width: 2rem;
+      background-color: transparent;
+      border: none;
+    }
+
+        .main-container {
+            max-width: 1200px;
+            margin: 1rem auto;
+            padding: 0 1rem;
+        }
+
+        .filter-controls {
+            display: flex;
+            background-color: var(--white-color);
+            padding: 0.75rem;
+            border-radius: 4px;
+            border: 1px solid var(--border-color);
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .filter-controls .filter-label {
+            font-weight: 500;
+            font-size: 1.2rem;
+            margin-right: 1rem;
+        }
+
+        .filter-controls .dropdown-filter {
+            padding: 0.5rem 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            background-color: var(--white-color);
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .banner {
+            margin-top: 1rem;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .banner img {
+            width: 100%;
+            display: block;
+        }
+        
+        .banner-dots {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 5px;
+        }
+
+        .banner-dots .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .banner-dots .dot.active {
+            background-color: var(--white-color);
+        }
+
+        .listings-header {
+            margin-top: 1rem;
+            padding: 0.5rem 0;
+            font-size: 0.9rem;
+            color: var(--grey-color);
+        }
+        
+        .quick-filters {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem 0;
+            align-items: center;
+        }
+        
+        .quick-filters span {
+            font-weight: 500;
+        }
+
+        .quick-filters .filter-chip {
+            padding: 0.5rem 1rem;
+            background-color: var(--white-color);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+        }
+
+        .product-card {
+            background-color: var(--white-color);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .product-card .product-image {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+        
+        .product-card .favorite-icon {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: var(--grey-color);
+            font-size: 1.2rem;
+            background-color: rgba(255,255,255,0.8);
+            border-radius: 50%;
+            padding: 5px;
+            cursor: pointer;
+        }
+
+        .product-card .product-info {
+            padding: 0.75rem;
+        }
+
+        .product-card .product-title {
+            font-size: 1rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            height: 40px;
+            overflow: hidden;
+        }
+
+        .product-card .product-price {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #d0021b;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-card .product-meta {
+            font-size: 0.8rem;
+            color: var(--grey-color);
+            margin-bottom: 0.75rem;
+        }
+        
+        .product-card .seller-info {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border-top: 1px solid var(--light-grey-color);
+            padding-top: 0.75rem;
+        }
+        
+        .product-card .seller-avatar {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+        }
+        
+        .product-card .seller-name {
+            font-size: 0.85rem;
+            color: var(--grey-color);
+            flex-grow: 1;
+        }
+        
+        .product-card .chat-button {
+            background: none;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            color: var(--primary-color);
+            padding: 0.25rem 0.5rem;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 2rem 0;
+            gap: 0.5rem;
+        }
+        
+        .pagination a {
+            color: var(--text-color);
+            text-decoration: none;
+            padding: 0.5rem 0.9rem;
+            border: 1px solid var(--border-color);
+            background-color: var(--white-color);
+            border-radius: 4px;
+        }
+        
+        .pagination a.active, .pagination a:hover {
+            background-color: #fceee2;
+            border-color: #f6a656;
+            color: #f6a656;
+        }
+        
+        .pagination a.arrow {
+            font-size: 1.2rem;
+        }
+
+        /* notification */
+.notification-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    /* justify-content: flex-end; */
+    align-items: flex-start;   
+    z-index: 1900; 
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0s linear 0.3s;
+    padding-top: 65px; 
+    padding-right: 20px;
+}
+
+.notification-modal-overlay.show {
+    opacity: 1;
+    visibility: visible;
+    transition-delay: 0s;
+}
+
+.notification-modal-content {
+    position: absolute;
+    top:70px;
+    right: 400px;
+    background-color: var(--card-bg);
+    border-radius: 8px;
+    width: 100%;
+    max-width: 380px;
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.15);
+    transform: translateX(20px); 
+    transition: transform 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    max-height: calc(100vh - 85px); 
+}
+
+.notification-modal-overlay.show .notification-modal-content {
+    transform: translateX(0);
+}
+
+.notification-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--light-border-color);
+}
+
+.notification-modal-header h4 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-lighter);
+}
+
+.notification-modal-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--text-muted);
+    padding: 0.25rem;
+    line-height: 1;
+}
+.notification-modal-close:hover {
+    color: var(--text-lighter);
+}
+
+.notification-modal-tabs {
+    display: flex;
+    border-bottom: 1px solid var(--light-border-color);
+}
+
+.notification-modal-tabs .tab-button {
+    flex: 1;
+    padding: 0.85rem 1rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    border-bottom: 3px solid transparent;
+    transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.notification-modal-tabs .tab-button:hover {
+    color: var(--text-link-blue);
+}
+
+.notification-modal-tabs .tab-button.active {
+    color: var(--text-link-blue);
+    border-bottom-color: var(--text-link-blue);
+    font-weight: 600;
+}
+
+.notification-modal-body {
+    padding: 0;
+    overflow-y: auto;
+    flex-grow: 1;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.notification-item {
+    display: flex;
+    align-items: flex-start; 
+    padding: 1rem;
+    border-bottom: 1px solid var(--light-border-color);
+    gap: 0.75rem;
+}
+.notification-item:last-child {
+    border-bottom: none;
+}
+
+.notification-icon {
+    font-size: 1.2rem;
+    width: 32px; 
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary-accent);
+}
+.notification-icon.activity {
+    background-color: var(--header-bg); 
+}
+.notification-icon.news {
+    background-color: var(--orange-color); 
+}
+
+
+.notification-text {
+    flex-grow: 1;
+}
+
+.notification-text p {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    margin: 0;
+    line-height: 1.4;
+}
+.notification-text p strong {
+    color: var(--text-lighter);
+}
+
+.notification-time {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    display: block;
+    margin-top: 0.25rem;
+}
+
+  a{
+    text-decoration: none;
+    color: #1a1d23;
+  }      
+    </style>
+</head>
+<body>
+    <header class="header">
+    <div class="header-left">
+      <a href="/Home_ProductDetails/Home.html" class="header-logo">
+        <img src="https://bizweb.dktcdn.net/100/479/080/themes/897121/assets/logo.png?1739930514069"
+          alt="H! TMDT Logo" />
+      </a>
+      <div style="position: relative;">
+        <button class="CategorySelected">
+          <svg class="iconCategory" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+            <g id="SVGRepo_iconCarrier">
+              <path d="M4 6H20M4 12H20M4 18H20" stroke="white" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round"></path>
+            </g>
+          </svg>
+          <ul class="category-dropdown" id="categoryDropdown">
+            <li class="category-item">
+              <i class="fas fa-building"></i> Bất động sản <span class="arrow">></span>
+              <ul class="subcategory-list">
+                <li class="subcategory-item">Chung cư</li>
+                <li class="subcategory-item">Nhà riêng</li>
+                <li class="subcategory-item">Văn phòng</li>
+                <li class="subcategory-item">Đất nền</li>
+              </ul>
+            </li>
+            <li class="category-item">
+              <i class="fas fa-motorcycle"></i> Xe cộ <span class="arrow">></span>
+              <ul class="subcategory-list">
+                <li class="subcategory-item">Ô tô</li>
+                <li class="subcategory-item">Xe máy</li>
+                <li class="subcategory-item">Xe điện</li>
+                <li class="subcategory-item">Xe đạp</li>
+              </ul>
+            </li>
+            <li class="category-item">
+              <i class="fas fa-laptop"></i> Đồ điện tử <span class="arrow">></span>
+              <ul class="subcategory-list">
+                <li class="subcategory-item">Điện thoại</li>
+                <li class="subcategory-item">Máy tính bảng</li>
+                <li class="subcategory-item">Laptop</li>
+                <li class="subcategory-item">Phụ kiện điện tử</li>
+              </ul>
+            </li>
+            <li class="category-item">
+              <i class="fas fa-snowflake"></i> Tủ lạnh, máy lạnh, máy giặt <span class="arrow">></span>
+              <ul class="subcategory-list">
+                <li class="subcategory-item">Tủ lạnh</li>
+                <li class="subcategory-item">Máy lạnh</li>
+                <li class="subcategory-item">Máy giặt</li>
+              </ul>
+            </li>
+            <li class="category-item">
+              <i class="fas fa-couch"></i> Đồ gia dụng, nội thất <span class="arrow">></span>
+              <ul class="subcategory-list">
+                <li class="subcategory-item">Giường</li>
+                <li class="subcategory-item">Tủ</li>
+                <li class="subcategory-item">Bàn ghế</li>
+                <li class="subcategory-item">Thiết bị nhà bếp</li>
+              </ul>
+            </li>
+            <li class="category-item">
+              <i class="fas fa-tshirt"></i> Thời trang, đồ dùng cá nhân <span class="arrow">></span>
+              <ul class="subcategory-list">
+                <li class="subcategory-item">Quần áo</li>
+                <li class="subcategory-item">Giày dép</li>
+                <li class="subcategory-item">Phụ kiện</li>
+                <li class="subcategory-item">Mỹ phẩm</li>
+              </ul>
+            </li>
+            <li class="category-item">
+              <i class="fas fa-paw"></i> Thú cưng <span class="arrow">></span>
+              <ul class="subcategory-list">
+                <li class="subcategory-item">Chó</li>
+                <li class="subcategory-item">Mèo</li>
+                <li class="subcategory-item">Phụ kiện thú cưng</li>
+                <li class="subcategory-item">Thức ăn thú cưng</li>
+              </ul>
+            </li>
+          </ul>
+
+        </button>
+      </div>
+      <button class="header-menu-toggle" aria-label="Toggle menu"><i class="fas fa-bars"></i></button>
+      <div class="search-bar">
+        <input type="text" placeholder="Tìm kiếm sản phẩm" />
+        <button><i class="fas fa-search"></i></button>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="header-links">
+        <a href="#"> Đóng góp ý kiến </a>
+        <a href="#"> Trợ giúp </a>
+      </div>
+      <div class="header-icons">
+        <a class="icon-wrapper"><i class="fas fa-bell"></i><span class="badge">2</span></a>
+        <a href="/Saved_Product/saved_products.html" class="icon-wrapper"><i class="fas fa-shopping-cart"></i><span
+            class="badge">2</span></a>
+        <a href="/Chat/index.html" class="icon-wrapper"><i class="fas fa-comment-dots"></i><span
+            class="badge">3</span></a>
+        <a href="/Profile/profile_edit.html" class="icon-wrapper"><i class="fas fa-user"></i></a>
+      </div>
+      <div class="header-buttons">
+        <a href="" class="btn btn-outline"><i class="fas fa-user"></i> Quản lý tin</a>
+        <a href="/Create_Post/index.html" class="btn btn-post-news"><i class="fas fa-pen"></i> Đăng Tin</a>
+      </div>
+    </div>
+  </header>
+
+    <div class="main-container">
+        <div class="filter-controls">
+            <span class="filter-label"><i class="fas fa-filter"></i> Lọc</span>
+            <select class="dropdown-filter">
+                <option selected>Toàn Quốc</option>
+                <option selected>Việt Nam</option>
+                <option selected>Hàn Quốc</option>
+                <option selected>Nhật Bản</option>
+                <option selected>Trung Quốc</option>
+                <option selected>Mỹ</option>
+            </select>
+            <select class="dropdown-filter">
+                <option selected>Xe ô tô</option>
+                <option selected>Xe máy</option>
+                <option selected>Xe điện</option>
+                <option selected>Xe đạp</option>
+            </select>
+            <select class="dropdown-filter">
+                <option selected>Giá</option>
+            </select>
+            <select class="dropdown-filter">
+                <option selected>Hãng xe</option>
+            </select>
+            <select class="dropdown-filter">
+                <option selected>Dung tích xe</option>
+            </select>
+            <select class="dropdown-filter">
+                <option selected>Tình trạng</option>
+            </select>
+        </div>
+
+        <!-- Banner -->
+        <div class="banner">
+            <img class="banner-image" src="https://img.freepik.com/free-photo/luxury-car-parked-highway-with-sunset-background_181624-60607.jpg" alt="Banner xe sang" style="width:100%; height:100%; object-fit:cover;" />
+            
+            <!-- Dots -->
+            <div class="banner-dots">
+                <span class="dot active"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+            </div>
+        </div>
+
+        <div class="listings-header">
+            <span>67.015 xe máy cũ và mới giá rẻ 09/03/2025</span>
+        </div>
+
+        <div class="quick-filters">
+            <span>Khu vực:</span>
+            <div class="filter-chip">Tp.Hồ Chí Minh</div>
+            <div class="filter-chip">Hà Nội</div>
+            <div class="filter-chip">Đà Nẵng</div>
+            <div class="filter-chip">Cần Thơ</div>
+            <div class="filter-chip">Bình Dương</div>
+            <div class="filter-chip">Nha Trang</div>
+        </div>
+        
+         <div class="quick-filters" style="padding-top: 0;">
+            <span>Dung tích xe:</span>
+            <div class="filter-chip">Trên 175 cc</div>
+            <div class="filter-chip">100 - 175 cc</div>
+            <div class="filter-chip">500 - 100 cc</div>
+            <div class="filter-chip">Dưới 50 cc</div>
+        </div>
+
+        <div class="product-grid">
+            <a href="/Home_ProductDetails/product-detail.html" class="product-card">
+                <i class="far fa-heart favorite-icon"></i>
+                <img src="https://yamaha-motor.com.vn/wp/wp-content/uploads/2024/10/Ja-Std-2024-Red-Metallic-004-768x645.png" alt="Xe Piaggio Liberty" class="product-image">
+                <div class="product-info">
+                    <h3 class="product-title">Bán xe Piaggio Liberty 125 siêu lướt</h3>
+                    <p class="product-price">43.000.000 đ</p>
+                    <p class="product-meta">2024 - Tay ga - Đã sử dụng</p>
+                    <div class="seller-info">
+                        <img src="https://is.vnecdn.net/v101/31/65/11/4116531/assets/images/logo/logo-honda.png" alt="Seller Avatar" class="seller-avatar">
+                        <span class="seller-name">Cửa hàng Honda</span>
+                        <a href="/Chat/index.html" class="chat-button">Chat</a>
+                    </div>
+                </div>
+              </a>
+             <a href="/Home_ProductDetails/product-detail.html" class="product-card">
+                 <i class="far fa-heart favorite-icon"></i>
+                <img src="https://img.baoninhbinh.org.vn//DATA/ARTICLES/2022/4/17/sym-elegant-110-8477-1649899780-babc8.jpg" alt="Xe Piaggio Liberty" class="product-image">
+                <div class="product-info">
+                    <h3 class="product-title">Bán xe Piaggio Liberty 125 siêu lướt</h3>
+                    <p class="product-price">43.000.000 đ</p>
+                    <p class="product-meta">2024 - Tay ga - Đã sử dụng</p>
+                    <div class="seller-info">
+                        <img src="https://is.vnecdn.net/v101/31/65/11/4116531/assets/images/logo/logo-honda.png" alt="Seller Avatar" class="seller-avatar">
+                        <span class="seller-name">Cửa hàng Honda</span>
+                        <a href="/Chat/index.html" class="chat-button">Chat</a>
+                    </div>
+                </div>
+              </a>
+             <a href="/Home_ProductDetails/product-detail.html" class="product-card">
+                <i class="far fa-heart favorite-icon"></i>
+                <img src="https://vcdn1-vnexpress.vnecdn.net/2022/04/14/Wave-Alpha-110-7370-1649899780.jpg?w=460&h=0&q=100&dpr=2&fit=crop&s=ZQMi9OhJX_i04qlwNJDAiw" alt="Xe Piaggio Liberty" class="product-image">
+                <div class="product-info">
+                    <h3 class="product-title">Bán xe Piaggio Liberty 125 siêu lướt</h3>
+                    <p class="product-price">43.000.000 đ</p>
+                    <p class="product-meta">2024 - Tay ga - Đã sử dụng</p>
+                    <div class="seller-info">
+                        <img src="https://is.vnecdn.net/v101/31/65/11/4116531/assets/images/logo/logo-honda.png" alt="Seller Avatar" class="seller-avatar">
+                        <span class="seller-name">Cửa hàng Honda</span>
+                        <a href="/Chat/index.html" class="chat-button">Chat</a>
+                    </div>
+                </div>
+              </a>
+             <a href="/Home_ProductDetails/product-detail.html" class="product-card">
+                <i class="far fa-heart favorite-icon"></i>
+                <img src="https://product.hstatic.net/200000665815/product/xe_dien_yaka_lavia_sp_-_anh_tim_cfbe62e77ae84c7a9da4296e02995fca_master.png" alt="Xe Piaggio Liberty" class="product-image">
+                <div class="product-info">
+                    <h3 class="product-title">Bán xe Piaggio Liberty 125 siêu lướt</h3>
+                    <p class="product-price">43.000.000 đ</p>
+                    <p class="product-meta">2024 - Tay ga - Đã sử dụng</p>
+                    <div class="seller-info">
+                        <img src="https://is.vnecdn.net/v101/31/65/11/4116531/assets/images/logo/logo-honda.png" alt="Seller Avatar" class="seller-avatar">
+                        <span class="seller-name">Cửa hàng Honda</span>
+                        <a href="/Chat/index.html" class="chat-button">Chat</a>
+                    </div>
+                </div>
+              </a>
+        </div>
+        
+        <div class="pagination">
+            <a href="#" class="arrow">&lt;</a>
+            <a href="#" class="active">1</a>
+            <a href="#">2</a>
+            <a href="#">3</a>
+            <a href="#">4</a>
+            <a href="#">5</a>
+            <a href="#" class="arrow">&gt;</a>
+        </div>
+
+    </div>
+    
+      <footer class="main-footer">
+    <div class="footer-top">
+      <div class="footer-feature"><i class="fas fa-truck-fast"></i><span>Miễn phí vận chuyển <br />Cho đơn hàng trên
+          500K</span></div>
+      <div class="footer-feature"><i class="fas fa-shield-alt"></i><span>Thanh toán an toàn <br />100% bảo mật</span>
+      </div>
+      <div class="footer-feature"><i class="fas fa-headset"></i><span>Hỗ trợ khách hàng 24/7 <br />Liên hệ với chúng tôi
+          ngay</span></div>
+      <div class="footer-feature"><i class="fas fa-undo-alt"></i><span>Miễn phí hoàn hàng <br />Nếu sản phẩm có
+          lỗi</span></div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-section">
+        <div class="footer-logo"><img
+            src="https://bizweb.dktcdn.net/100/479/080/themes/897121/assets/logo.png?1739930514069"
+            alt="H! TMDT Logo" /></div>
+        <p>H!TMDT là sàn thương mại điện tử hàng đầu Việt Nam, mang đến trải nghiệm mua sắm tiện lợi và an toàn.</p>
+      </div>
+      <div class="footer-section">
+        <h4>Hỗ trợ khách hàng</h4>
+        <ul>
+          <li><a href="#">Trung tâm trợ giúp</a></li>
+          <li><a href="#">An toàn mua bán</a></li>
+          <li><a href="#">Hỗ trợ khách hàng</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h4>Hướng dẫn</h4>
+        <ul>
+          <li><a href="#">Hướng dẫn mua hàng</a></li>
+          <li><a href="#">Hướng dẫn trả góp</a></li>
+          <li><a href="#">Hướng dẫn chuyển khoản</a></li>
+          <li><a href="#">Hướng dẫn hoàn hàng</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h4>Chấp nhận thanh toán</h4>
+        <div class="payment-methods">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5TmYtrb-zQEppk0up4S5LDpCazv20kY7eMQ&s"
+            alt="MasterCard" />
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn9GcQw7cK1qUl1Vw4nBtRIvPVRV4vQ_pHID4lXOA&s"
+            alt="Visa" />
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/40/JCB_logo.svg/1280px-JCB_logo.svg.png"
+            alt="JCB" />
+        </div>
+        <div class="social-icons">
+          <a href="#" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+          <a href="#" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <div id="notification-modal" class="notification-modal-overlay">
+        <div class="notification-modal-content">
+            <div class="notification-modal-header">
+                <h4>Thông báo</h4>
+                <button id="notification-modal-close-btn" class="notification-modal-close">&times;</button>
+            </div>
+            <div class="notification-modal-tabs">
+                <button class="tab-button active" data-tab="activity">Hoạt động</button>
+                <button class="tab-button" data-tab="news">Tin tức</button>
+            </div>
+            <div class="notification-modal-body">
+                <div id="activity-tab-content" class="tab-content active">
+                    <div class="notification-item" data-order-id="order123">
+                        <div class="notification-icon activity">
+                            <i class="fas fa-file-invoice-dollar"></i>
+                        </div>
+                        <div class="notification-text">
+                            <p><strong>Shop ABC</strong> đã gửi yêu cầu tạo đơn hàng cho sản phẩm "Áo thun nam cao cấp".</p>
+                            <span class="notification-time">2 phút trước</span>
+                        </div>
+                        <a href="#" class="btn btn-view-details">Xem chi tiết</a>
+                    </div>
+                    </div>
+                <div id="news-tab-content" class="tab-content">
+                    <div class="notification-item">
+                        <div class="notification-icon news">
+                            <i class="fas fa-bullhorn"></i>
+                        </div>
+                        <div class="notification-text">
+                            <p>🔥 Flash Sale cuối tháng! Giảm giá đến 50% cho hàng ngàn sản phẩm.</p>
+                            <span class="notification-time">Hôm qua</span>
+                        </div>
+                    </div>
+                    <div class="notification-item">
+                         <div class="notification-icon news">
+                            <i class="fas fa-gift"></i>
+                        </div>
+                        <div class="notification-text">
+                            <p>🎉 Chúc mừng bạn đã nhận được voucher giảm 10% cho đơn hàng tiếp theo.</p>
+                             <span class="notification-time">2 ngày trước</span>
+                        </div>
+                    </div>
+                     
+                </div>
+            </div>
+        </div>
+    </div>
+  <script>
+    const images = [
+        "https://img.freepik.com/free-photo/luxury-car-parked-highway-with-sunset-background_181624-60607.jpg",
+        "https://img.freepik.com/free-photo/white-suv-parking-sunset-time_1150-11107.jpg",
+        "https://img.freepik.com/free-photo/modern-car-front-white-background_93675-132115.jpg",
+        "https://img.freepik.com/free-photo/red-sportscar-motion-night-city_114579-4046.jpg",
+        "https://img.freepik.com/free-photo/yellow-suv-parked-mountain-background_114579-4071.jpg"
+    ];
+
+    let currentIndex = 0;
+    const imgElement = document.querySelector('.banner-image');
+    const dots = document.querySelectorAll('.dot');
+
+    function showImage(index) {
+        imgElement.src = images[index];
+        dots.forEach((dot, i) => {
+            dot.classList.toggle('active', i === index);
+        });
+    }
+
+    function nextImage() {
+        currentIndex = (currentIndex + 1) % images.length;
+        showImage(currentIndex);
+    }
+
+    let interval = setInterval(nextImage, 3000);
+
+    // Click on dot to jump to image
+    dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => {
+            clearInterval(interval); // Dừng auto chuyển tạm thời
+            currentIndex = index;
+            showImage(currentIndex);
+            interval = setInterval(nextImage, 3000); // Bắt đầu lại
+        });
+    });
+    const toggleButton = document.querySelector('.CategorySelected');
+    const dropdown = document.getElementById('categoryDropdown');
+    const categoryItems = document.querySelectorAll('.category-item');
+
+    toggleButton.addEventListener('click', function (e) {
+      e.preventDefault();
+      dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+      document.querySelectorAll('.subcategory-list').forEach(subList => {
+        subList.style.display = 'none';
+      });
+    });
+
+    document.addEventListener('click', function (e) {
+      if (!toggleButton.contains(e.target) && !dropdown.contains(e.target)) {
+        dropdown.style.display = 'none';
+        document.querySelectorAll('.subcategory-list').forEach(subList => {
+          subList.style.display = 'none';
+        });
+      }
+    });
+
+    categoryItems.forEach(item => {
+      item.addEventListener('click', function (e) {
+        e.stopPropagation();
+        document.querySelectorAll('.subcategory-list').forEach(subList => {
+          subList.style.display = 'none';
+        });
+        const subcategoryList = this.querySelector('.subcategory-list');
+        subcategoryList.style.top = '0%';
+        subcategoryList.style.left = '100%';
+        subcategoryList.style.display = subcategoryList.style.display === 'block' ? 'none' : 'block';
+      });
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+    const paginationLinks = document.querySelectorAll('.pagination a');
+    paginationLinks.forEach(link => {
+        link.addEventListener('click', function(event) {
+            event.preventDefault();
+            const currentActive = document.querySelector('.pagination a.active');
+            if (currentActive) {
+                currentActive.classList.remove('active');
+            }
+            this.classList.add('active');
+            const pageNumber = this.textContent;
+        });
+    });
+});
+// notification
+        const notificationIconTrigger = document.querySelector('.header-icons .icon-wrapper i.fa-bell').closest('.icon-wrapper');
+        const notificationModal = document.getElementById('notification-modal');
+        const notificationModalCloseBtn = document.getElementById('notification-modal-close-btn');
+        const notificationTabButtons = document.querySelectorAll('.notification-modal-tabs .tab-button');
+        const notificationTabContents = document.querySelectorAll('.notification-modal-body .tab-content');
+
+        function showNotificationModal() {
+            notificationModal.classList.add('show');
+        }
+
+        function closeNotificationModal() {
+            notificationModal.classList.remove('show');
+        }
+
+        if (notificationIconTrigger) {
+            notificationIconTrigger.addEventListener('click', (event) => {
+                event.stopPropagation(); 
+               
+                showNotificationModal();
+                
+            });
+        }
+
+        if (notificationModalCloseBtn) {
+            notificationModalCloseBtn.addEventListener('click', closeNotificationModal);
+        }
+
+      
+        if (notificationModal) {
+            notificationModal.addEventListener('click', function(event) {
+                if (event.target === notificationModal) {
+                    closeNotificationModal();
+                }
+            });
+        }
+
+       
+        notificationTabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+              
+                notificationTabButtons.forEach(btn => btn.classList.remove('active'));
+                notificationTabContents.forEach(content => content.classList.remove('active'));
+
+               
+                button.classList.add('active');
+                const tabId = button.dataset.tab;
+                document.getElementById(tabId + '-tab-content').classList.add('active');
+            });
+        });
+
+    const activityTabContent = document.getElementById('activity-tab-content'); 
+    if (activityTabContent) {
+        activityTabContent.addEventListener('click', function(event) {
+        if (event.target.classList.contains('btn-view-details')) {
+            event.preventDefault(); 
+            const notificationItem = event.target.closest('.notification-item');
+            const orderId = notificationItem.dataset.orderId;
+
+            window.location.href = `order_review.html?orderId=${orderId}`;
+        }
+    });
+}
+  </script>
+
+</body>
+</html>
