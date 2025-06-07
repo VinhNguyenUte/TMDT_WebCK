@@ -466,7 +466,7 @@
                             <p><strong>Shop ABC</strong> đã gửi yêu cầu tạo đơn hàng cho sản phẩm "Áo thun nam cao cấp".</p>
                             <span class="notification-time">2 phút trước</span>
                         </div>
-                        <a href="#" class="btn btn-view-details">Xem chi tiết</a>
+                        <a href="/Chat/order_review.html" class="btn btn-view-details">Xem chi tiết</a>
                     </div>
                     </div>
                 <div id="news-tab-content" class="tab-content">
@@ -591,7 +591,7 @@
             const notificationItem = event.target.closest('.notification-item');
             const orderId = notificationItem.dataset.orderId;
 
-            window.location.href = `order_review.html?orderId=${orderId}`;
+            window.location.href = '/Chat/order_review.html';
         }
     });
 }
